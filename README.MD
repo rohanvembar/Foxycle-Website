@@ -4,5 +4,5 @@
 ### Team Lead:
 ### DB Lead:
 ### UI Lead: Gina Filangeri
-### Testing Lead:
+### Testing Lead: Rohan Vembar
 ### Architect:
