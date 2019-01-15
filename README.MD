@@ -5,4 +5,4 @@
 ### DB Lead:
 ### UI Lead: Gina Filangeri
 ### Testing Lead: Rohan Vembar
-### Architect:
+### Architect: Sangmin Jung
