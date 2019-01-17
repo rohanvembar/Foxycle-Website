@@ -1,0 +1,14 @@
+Frontend: Client folder
+    Typescript
+    Views
+    Vue - similar to ruby on rails syntax - embedded in html
+    Bulma - framework for styling - just add classes
+
+API and Client are different programs that will open are different ports
+    Independent
+
+For MySQL
+    Root/password
+    Two databases
+        Dev
+        Test
