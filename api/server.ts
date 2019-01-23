@@ -1,4 +1,3 @@
-import cors from "cors";
 import express from "express";
 import { LoginController, UserController } from "./controller";
 
@@ -16,7 +15,6 @@ export class Server {
     return DBConnection.getConnection().then(() => {
       const app: express.Application = express();
 
-      app.use(cors());
       app.use(express.json());
 
       app.use("/", new UserController().router);
