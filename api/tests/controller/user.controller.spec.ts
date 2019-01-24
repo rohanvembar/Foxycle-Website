@@ -2,7 +2,7 @@ import express from "express";
 import request from "supertest";
 import { Connection, getConnection } from "typeorm";
 import { DBConnection } from "../../connection";
-import { User } from "../../entity";
+import { User, Session } from "../../entity";
 import { Server } from "../../server";
 
 describe("/users", () => {
@@ -21,10 +21,22 @@ describe("/users", () => {
     return conn.getRepository(User).save(user);
   };
 
+  function clearDB(): Promise<any> {
+    return connection
+      .getRepository(Session)
+      .delete({})
+      .then(() => {
+        return connection.getRepository(User).delete({});
+      });
+      
+  }
+  
   beforeAll(async () => {
     myApp = await new Server().getMyApp();
     connection = await DBConnection.getConnection();
     await connection.synchronize();
+    await connection.getRepository(Session).delete({});
+    await connection.getRepository(User).delete({});
   });
 
   afterAll(async () => {
