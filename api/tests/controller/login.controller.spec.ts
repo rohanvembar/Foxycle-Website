@@ -18,6 +18,7 @@ describe("/login", () => {
       .then(() => {
         return connection.getRepository(User).delete({});
       });
+      // test comment
   }
 
   beforeAll(async () => {
