@@ -30,7 +30,7 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
-import Login from "@/components/Login.vue";
+import Login from "@/components/SignIn.vue";
 
 @Component({
   components: {

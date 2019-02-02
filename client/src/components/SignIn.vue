@@ -1,5 +1,5 @@
 <template>
-  <modal v-bind:is-showing="isShowing" title="Login" success-button="Login" v-on:success="success" v-on:cancel="cancel">
+  <modal v-bind:is-showing="isShowing" title="Sign In" success-button="Sign In" v-on:success="success" v-on:cancel="cancel">
     <form  v-on:submit.prevent="onSubmit">
       <p v-if="error">{{ error }}</p>
       <div class="field">
@@ -29,8 +29,8 @@ import Modal from "./Modal.vue";
     Modal
   }
 })
-export default class Signup extends Vue {
-  signup: LoginForm = {
+export default class SignIn extends Vue {
+  signin: SignInForm = {
     emailAddress: "",
     password: ""
   };
@@ -39,10 +39,10 @@ export default class Signup extends Vue {
 
   success() {
     this.error = false;
-    axios.post(APIConfig.buildUrl('/login'), {
-      ...this.signup
-    }).then((response: AxiosResponse<LoginResponse>) => {
-      this.$store.commit('login', response.data.token);
+    axios.post(APIConfig.buildUrl('/signin'), {
+      ...this.signin
+    }).then((response: AxiosResponse<SignInResponse>) => {
+      this.$store.commit('Sign In', response.data.token);
       this.$emit("success");
     }).catch((reason: any) => {
       this.error = reason;
@@ -54,11 +54,11 @@ export default class Signup extends Vue {
   }
 }
 
-interface LoginResponse {
+interface SignInResponse {
   token: string
 }
 
-export interface LoginForm {
+export interface SignInForm {
   emailAddress: string;
   password: string;
 }
