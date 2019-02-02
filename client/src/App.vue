@@ -22,7 +22,7 @@
     </div>
     <router-view/>
     <Signup v-bind:is-showing="showSignup" v-on:success="successSignup()" v-on:cancel="cancelSignup()"/>
-    <Login v-bind:is-showing="showLogin" v-on:success="successLogin()" v-on:cancel="cancelLogin()"/>
+    <SignIn v-bind:is-showing="showLogin" v-on:success="successSignin()" v-on:cancel="cancelSignin()"/>
   </div>
 </template>
 
@@ -30,12 +30,12 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
-import Login from "@/components/SignIn.vue";
+import SignIn from "@/components/SignIn.vue";
 
 @Component({
   components: {
     Signup,
-    Login
+    SignIn
   }
 })
 export default class App extends Vue {
@@ -54,10 +54,10 @@ export default class App extends Vue {
   showLoginModal() {
     this.showLogin = true;
   }
-  successLogin() {
+  successSignin() {
     this.showLogin = false;
   }
-  cancelLogin() {
+  cancelSignin() {
     this.showLogin = false;
   }
 }

@@ -5,13 +5,13 @@
       <div class="field">
         <label class="label">Email Address</label>
         <div class="control">
-          <input class="input" type="text" placeholder="email address" v-bind="signup.emailAddress"/>
+          <input class="input" type="text" placeholder="email address" v-bind="signin.emailAddress"/>
         </div>
       </div>
       <div class="field">
         <label class="label">Password</label>
         <div class="control">
-          <input class="input" type="password" placeholder="password" v-bind="signup.firstName"/>
+          <input class="input" type="password" placeholder="password" v-bind="signin.firstName"/>
         </div>
       </div>
     </form>
