@@ -68,11 +68,10 @@ export default class Shop extends Vue {
 </script>
 
 <style scoped>
-
   .shop {
     display: flex;
     align-items: top;
-    justify-content: center;
+    justify-content: space-evenly;
   }
 
   .sort-by{

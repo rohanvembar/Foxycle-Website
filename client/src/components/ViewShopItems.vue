@@ -5,63 +5,63 @@
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>
 	
             <figure>
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>
 	
             <figure>
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>
             
             <figure>
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>
             
             <figure>
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>
 	
             <figure>
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>
             
             <figure>
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>	
             
             <figure>
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>
   
             <figure>
             <img src="../assets/transparentlogo.png">
             <figcaption>Bike</figcaption>
               <span class="price">$44</span>
-              <a class="button" href="#">Buy Now</a>
+              <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
             </figure>	
           </div>
         </div> 
