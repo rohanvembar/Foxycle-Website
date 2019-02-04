@@ -7,13 +7,13 @@
       </div>
       <div class="card-body">
         <p class="section-title">Basic Tune-Up - $25</p>
-        Includes brake inspection and adjustments, derailleur inspection and adjustments, tire inspection and inflation, safety check of all bolts and wipe down of frame.
+        <p>Includes brake inspection and adjustments, derailleur inspection and adjustments, tire inspection and inflation, safety check of all bolts and wipe down of frame.</p>
 
         <p class="section-title">Premium Tune-Up - $35</p>
-        Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and lube and frame clean and polish.
+        <p>Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and lube and frame clean and polish.</p>
 
         <p class="section-title">Brake System Tune-Up - $45</p>
-        Includes brake pad installation, brake inspection and adjustments and inspection of cables and housing.
+        <p>Includes brake pad installation, brake inspection and adjustments and inspection of cables and housing.</p>
 
       </div>
     </div>
@@ -23,7 +23,14 @@
         <p class="card-title-text">Adjustments & Repairs</p>
       </div>
       <div class="card-body">
-        body
+        <p class="section-title">Basic Tune-Up - $25</p>
+        <p>Includes brake inspection and adjustments, derailleur inspection and adjustments, tire inspection and inflation, safety check of all bolts and wipe down of frame.</p>
+
+        <p class="section-title">Premium Tune-Up - $35</p>
+        <p>Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and lube and frame clean and polish.</p>
+
+        <p class="section-title">Brake System Tune-Up - $45</p>
+        <p>Includes brake pad installation, brake inspection and adjustments and inspection of cables and housing.</p>
       </div>
     </div>
     <div class="indivisual-card">
@@ -32,7 +39,14 @@
         <p class="card-title-text">Installations</p>
       </div>
       <div class="card-body">
-        body
+        <p class="section-title">Basic Tune-Up - $25</p>
+        <p>Includes brake inspection and adjustments, derailleur inspection and adjustments, tire inspection and inflation, safety check of all bolts and wipe down of frame.</p>
+
+        <p class="section-title">Premium Tune-Up - $35</p>
+        <p>Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and lube and frame clean and polish.</p>
+
+        <p class="section-title">Brake System Tune-Up - $45</p>
+        <p>Includes brake pad installation, brake inspection and adjustments and inspection of cables and housing.</p>
       </div>
     </div>
   </div>
@@ -77,6 +91,7 @@ export default class Services extends Vue {
   align-items: center;
   justify-content: center;
   padding-top:30px;
+  font-size: 20px;
 }
 
 .card-body {
