@@ -18,7 +18,7 @@
     <div class="navbar blue-background bar">
       <div class="navbar-menu">
         <div class="navbar-start">
-          <router-link class="is-tab" to="/">
+          <router-link class="is-tab logo-padding" to="/">
             <img alt="Foxycle logo" src="./assets/transparentlogo.png">
           </router-link> 
         </div>
@@ -105,5 +105,9 @@ export default class App extends Vue {
 
 .white-font {
   color: white;
+}
+
+.logo-padding {
+  padding: 10px;
 }
 </style>
