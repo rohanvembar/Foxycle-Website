@@ -1,5 +1,5 @@
 <template>
-  <div>Order Confirmation</div>
+  <div class="main-background">Order Confirmation</div>
 </template>
 
 <script lang="ts">

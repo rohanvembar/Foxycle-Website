@@ -1,5 +1,5 @@
 <template>
-  <div>Employee Management</div>
+  <div class="main-background">Employee Management</div>
 </template>
 
 <script lang="ts">

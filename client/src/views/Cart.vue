@@ -1,5 +1,5 @@
 <template>
-  <div>Cart</div>
+  <div class="main-background">Cart</div>
 </template>
 
 <script lang="ts">

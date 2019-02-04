@@ -1,6 +1,6 @@
 <template>
-<div id="app">
-    <div class="navbar bar">
+<div id="app" class="main-background">
+    <div class="navbar bar main-background">
       <div class="navbar-menu">
         <div class="navbar-end">
           <div class="navbar-item">
@@ -18,7 +18,7 @@
     <div class="navbar blue-background bar">
       <div class="navbar-menu">
         <div class="navbar-start">
-          <router-link class="navbar-item is-tab" to="/">
+          <router-link class="is-tab" to="/">
             <img alt="Foxycle logo" src="./assets/transparentlogo.png">
           </router-link> 
         </div>
@@ -53,9 +53,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faShoppingCart)
+library.add(faShoppingCart);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 @Component({
   components: {
@@ -91,12 +91,7 @@ export default class App extends Vue {
 
 <style lang="scss">
 @import "~bulma/css/bulma.css";
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
+@import "./assets/mainstyle.scss";
 
 .blue-background {
   background-color: #3c90FB;

@@ -1,5 +1,5 @@
 <template>
-  <div>Order Tracking</div>
+  <div class="main-background">Order Tracking</div>
 </template>
 
 <script lang="ts">

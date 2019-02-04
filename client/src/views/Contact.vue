@@ -1,5 +1,37 @@
 <template>
-  <div>Contact</div>
+  <div class="main-background cards">
+    <div>
+      <p class="title">Hours</p>
+      <div class="content hours">
+        <div>
+          <p>Monday to Friday:</p>
+          <p>Saturday:</p>
+          <p>Sunday:</p>
+        </div>
+        <div class="times">
+          <p>10 AM - 6 PM</p>
+          <p>10 AM - 5 PM</p>
+          <p>12 PM - 5 PM</p>
+        </div>
+      </div>
+      <p class="title">Phone</p>
+      <div class="content">
+        <p>(805) 111-1111</p>
+      </div>
+      <p class="title">Address</p>
+      <div class="content">
+        <p>1 Grand Avenue</p>
+        <p>San Luis Obispo, CA 93407</p>
+      </div>
+      <p class="title">Email</p>
+      <div class="content">
+        <p>info@foxycle.com</p>
+      </div>
+    </div>
+    <div>
+      <img alt="map" src="../assets/map.png">
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -11,3 +43,32 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class Contact extends Vue {
 }
 </script>
+
+<style lang="scss">
+.cards {
+  padding:10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.content {
+  font-size: 15px;
+  line-height: 10px;
+}
+
+.hours {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.times {
+  padding-left: 15px;
+}
+</style>

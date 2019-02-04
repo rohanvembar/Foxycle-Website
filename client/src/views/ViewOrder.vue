@@ -1,5 +1,5 @@
 <template>
-  <div>View Order</div>
+  <div class="main-background">View Order</div>
 </template>
 
 <script lang="ts">
