@@ -72,7 +72,7 @@ export default class Services extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cards {
   padding:30px;
   display: flex;

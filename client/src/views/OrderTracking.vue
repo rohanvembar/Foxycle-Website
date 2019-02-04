@@ -16,7 +16,7 @@ export default class OrderTracking extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
   .track {
     padding:100px 20px 30px 20px;

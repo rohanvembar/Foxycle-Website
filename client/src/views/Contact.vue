@@ -44,7 +44,7 @@ export default class Contact extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cards {
   padding:10px;
   display: flex;
