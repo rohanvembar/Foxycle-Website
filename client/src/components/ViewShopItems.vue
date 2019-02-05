@@ -3,7 +3,9 @@
         <div id="wrap">
 	        <div id="columns" class="columns_4">
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
@@ -12,7 +14,9 @@
                 </figure>
 	
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
@@ -21,7 +25,9 @@
                 </figure>
         
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
@@ -30,7 +36,9 @@
                 </figure>
                 
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active"> 
@@ -39,7 +47,9 @@
                 </figure>
                 
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
@@ -48,7 +58,9 @@
                 </figure>
 	
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
@@ -57,7 +69,9 @@
                 </figure>
                 
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
@@ -66,7 +80,9 @@
                 </figure>	
             
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
@@ -75,7 +91,9 @@
                 </figure>
     
                 <figure>
+                    <router-link to="/itempage">
                     <img src="../assets/transparentlogo.png">
+                    </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
