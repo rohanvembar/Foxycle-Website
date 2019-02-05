@@ -5,6 +5,8 @@
         <div class="navbar-start">
           <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link>
           <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active">About</router-link>
+          <router-link class="navbar-item is-tab" to="/todos" exact-active-class="is-active">ToDos</router-link>
+
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
@@ -41,6 +43,7 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
 import Login from "@/components/Login.vue";
+import ToDos from "@/components/ToDos.vue";
 import { APIConfig } from "@/utils/api.utils";
 
 @Component({
