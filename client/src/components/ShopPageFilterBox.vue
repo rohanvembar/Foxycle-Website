@@ -98,6 +98,6 @@ export default class ShopPageFilterBox extends Vue {
   border-radius: 50%;
   display: inline-block;
   margin: 5px;
-  background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet); 
+  background-image: linear-gradient(to top, red,orange,yellow,green,blue,indigo,violet); 
 }
 </style>
