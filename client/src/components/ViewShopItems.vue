@@ -150,9 +150,9 @@ export default class ViewShopItems extends Vue {
 	margin-right: 0;
 }
 #columns figure:hover{
-	-webkit-transform: scale(1.1);
-	-moz-transform:scale(1.1);
-	transform: scale(1.1);
+	-webkit-transform: scale(1);
+	-moz-transform:scale(1);
+	transform: scale(1);
 
 }
 #columns:hover figure:not(:hover) {
