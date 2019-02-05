@@ -2,6 +2,14 @@
 <div id="app" class="main-background">
     <div class="navbar bar main-background">
       <div class="navbar-menu">
+<<<<<<< HEAD
+=======
+        <div class="navbar-start">
+          <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
+          <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active">About</router-link>
+           <router-link class="navbar-item is-tab" to="/todos" exact-active-class="is-active">My ToDos</router-link>
+        </div>
+>>>>>>> gina
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">

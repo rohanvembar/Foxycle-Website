@@ -25,7 +25,7 @@
       <div class="field">
         <label class="label">Password</label>
         <div class="control">
-          <input class="input" type="password" placeholder="password" v-model="signup.firstName"/>
+          <input class="input" type="password" placeholder="password" v-model="signup.password"/>
         </div>
       </div>
     </form>

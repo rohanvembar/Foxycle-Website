@@ -1,7 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+<<<<<<< HEAD
 import MyProfile from "./views/MyProfile.vue";
+=======
+import ToDos from "./views/ToDos.vue";
+>>>>>>> gina
 
 Vue.use(Router);
 
@@ -24,6 +28,7 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
+<<<<<<< HEAD
       path: "/editorder",
       name: "editorder",
       component: () => import("./views/AdminEditOrder.vue")
@@ -87,6 +92,11 @@ export default new Router({
       path: "/my-profile",
       name: "myProfile",
       component: MyProfile
+=======
+      path: "/todos",
+      name:"todos",
+      component: ToDos
+>>>>>>> gina
     }
   ]
 });
