@@ -46,12 +46,14 @@
 
 <script lang="ts">
 import Vue from "vue";
+import axios from "axios";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
 import SignIn from "@/components/SignIn.vue";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { APIConfig } from "@/utils/api.utils";
 
 library.add(faShoppingCart);
 
@@ -66,7 +68,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 export default class App extends Vue {
   public showSignup: boolean = false;
   public showLogin: boolean = false;
-
   showSignupModal() {
     this.showSignup = true;
   }
@@ -79,11 +80,24 @@ export default class App extends Vue {
   showLoginModal() {
     this.showLogin = true;
   }
-  successSignin() {
+  successLogin() {
     this.showLogin = false;
   }
-  cancelSignin() {
+  cancelLogin() {
     this.showLogin = false;
+  }
+  get isLoggedIn(): boolean {
+    return !!this.$store.state.userId;
+  }
+  logout() {
+    debugger;
+    axios
+      .post(APIConfig.buildUrl("/logout"), null, {
+        headers: { token: this.$store.state.userToken }
+      })
+      .then(() => {
+        this.$store.commit("logout");
+      });
   }
 }
 </script>
