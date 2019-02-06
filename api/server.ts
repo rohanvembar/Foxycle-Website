@@ -3,6 +3,7 @@ import express from "express";
 import { LoginController, UserController } from "./controller";
 
 import { DBConnection } from "./connection";
+import { TodoController } from "./controller/todo.controller";
 
 export class Server {
   private myApp: Promise<express.Application>;
@@ -21,6 +22,7 @@ export class Server {
 
       app.use("/", new UserController().router);
       app.use("/", new LoginController().router);
+      app.use("/", new TodoController().router);
 
       return app;
     });

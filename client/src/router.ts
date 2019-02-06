@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-import MyProfile from "./views/MyProfile.vue";
 import ToDos from "./views/ToDos.vue";
+import MyProfile from "./views/MyProfile.vue";
 
 Vue.use(Router);
 
@@ -15,16 +15,6 @@ export default new Router({
       name: "home",
       component: Home
     },
-
-    {
-      path: "/todos",
-      name: "todos",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "todos" */ "./views/ToDos.vue")
-    },
     {
       path: "/about",
       name: "about",
@@ -33,6 +23,11 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },
+    {
+      path: "/todos",
+      name: "todos",
+      component: ToDos
     },
     {
       path: "/my-profile",

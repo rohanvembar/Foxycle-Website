@@ -7,13 +7,13 @@ export class ToDo {
     @PrimaryGeneratedColumn()
     public id!: number;
 
-    @Column()
+    @Column({default: null})
     public title!: string;
 
-    @Column()
+    @Column({default: null})
     public complete!: boolean;
 
-    @Column()
+    @Column({default: null})
     public dueDate!: Date;
 
     @OneToOne((type) => User, {cascade: true})

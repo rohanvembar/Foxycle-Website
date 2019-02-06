@@ -9,7 +9,7 @@ export class TodoController extends DefaultController {
     protected initializeRoutes(): express.Router {
         const router = express.Router();
 
-        router.route("/todos").post((req: Request, res: Response) => {
+        router.route("/todo").post((req: Request, res: Response) => {
             const token = req.get("token");
             const sessionRepo = getRepository(Session);
             const todoRepo = getRepository(ToDo);
