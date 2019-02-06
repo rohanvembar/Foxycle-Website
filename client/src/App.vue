@@ -1,42 +1,40 @@
 <template>
-<div id="app" class="main-background">
-    <div class="navbar bar main-background">
-      <div class="navbar-menu">
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <router-link class="button white-font blue-background" to="/ordertracking" exact-active-class="is-active">Track Order</router-link>
-              <a class="button white-font blue-background" v-on:click="showLoginModal()">
-                Log in
-              </a>
-            </div>
-          </div>
+<div id="app" class="main-background ">
+    <div class="navbar-padding"></div>
+    <nav class="navbar is-info navbar-custom">
+    <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="#" style="font-weight:bold;">
+            
+          <img src="./assets/transparentlogo.png" class="logo-padding"/>
+            <hr> foxycle
+          </a>
         </div>
-      </div>
-    </div>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <!-- TODO - doesnt work when resizing window -->
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
 
-    <div class="navbar blue-background bar">
-      <div class="navbar-menu">
-        <div class="navbar-start">
-          <router-link class="is-tab logo-padding" to="/">
-            <img alt="Foxycle logo" src="./assets/transparentlogo.png">
-          </router-link> 
-        </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <router-link class="navbar-item is-tab white-font" to="/" exact-active-class="is-active">Home</router-link>          
-              <router-link class="navbar-item is-tab white-font" to="/shop" exact-active-class="is-active">Shop</router-link>
-              <router-link class="navbar-item is-tab white-font" to="/services" exact-active-class="is-active">Services</router-link>
-              <router-link class="navbar-item is-tab white-font" to="/contact" exact-active-class="is-active">Contact</router-link>
-              <router-link class="navbar-item is-tab white-font" to="/cart" exact-active-class="is-active">
+        </a>
+    <div id="navMenu" class="navbar-menu">
+    <div class="navbar-end">
+            <router-link class="navbar-item " to="/" exact-active-class="is-active">home</router-link>          
+              <router-link class="navbar-item" to="/shop" exact-active-class="is-active">shop</router-link>
+              <router-link class="navbar-item" to="/services" exact-active-class="is-active">services</router-link>
+              <router-link class="navbar-item" to="/contact" exact-active-class="is-active">contact</router-link>
+              <router-link class="navbar-item" to="/ordertracking" exact-active-class="is-active">track order</router-link>
+              <a class="navbar-item" v-on:click="showLoginModal()">
+                log in
+              </a>
+              <router-link class="navbar-item" to="/cart" exact-active-class="is-active">
                 <font-awesome-icon icon="shopping-cart" />
               </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+    </div>
+    </div>
+    </nav>    
+    
     <router-view/>
     <Signup v-bind:is-showing="showSignup" v-on:success="successSignup()" v-on:cancel="cancelSignup()"/>
     <SignIn v-bind:is-showing="showLogin" v-on:success="successSignin()" v-on:cancel="cancelSignin()"/>
@@ -46,12 +44,14 @@
 
 <script lang="ts">
 import Vue from "vue";
+import axios from "axios";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
 import SignIn from "@/components/SignIn.vue";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { APIConfig } from "./utils/api.utils";
 
 library.add(faShoppingCart);
 
@@ -66,7 +66,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 export default class App extends Vue {
   public showSignup: boolean = false;
   public showLogin: boolean = false;
-
   showSignupModal() {
     this.showSignup = true;
   }
@@ -79,11 +78,24 @@ export default class App extends Vue {
   showLoginModal() {
     this.showLogin = true;
   }
-  successSignin() {
+  successLogin() {
     this.showLogin = false;
   }
-  cancelSignin() {
+  cancelLogin() {
     this.showLogin = false;
+  }
+  get isLoggedIn(): boolean {
+    return !!this.$store.state.userId;
+  }
+  logout() {
+    debugger;
+    axios
+      .post(APIConfig.buildUrl("/logout"), null, {
+        headers: { token: this.$store.state.userToken }
+      })
+      .then(() => {
+        this.$store.commit("logout");
+      });
   }
 }
 </script>
@@ -93,21 +105,5 @@ export default class App extends Vue {
 @import "~bulma/css/bulma.css";
 @import "./assets/mainstyle.scss";
 
-.blue-background {
-  background-color: #3c90FB;
-}
 
-.bar {
-  width: 90%;
-  border-radius: 15px;
-  margin: auto;
-}
-
-.white-font {
-  color: white;
-}
-
-.logo-padding {
-  padding: 10px;
-}
 </style>

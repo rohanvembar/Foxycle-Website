@@ -3,7 +3,7 @@
     <div class="carousel-div"> 
       <carousel :navigationEnabled="true" 
       :autoplay="true" :autoplayTimeout=5000
-      :perPage=1 paginationActiveColor="#42b983"
+      :perPage=1 paginationActiveColor="#239CEC"
       paginationColor="#b2ebd1" :speed=300>
         <slide class="VueCarousel-slide">
           Slide 1 Content
