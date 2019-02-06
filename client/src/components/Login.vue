@@ -48,7 +48,7 @@ export default class Signup extends Vue {
   @Prop(Boolean) isShowing: boolean = false;
   success() {
     this.error = false;
-    debugger;
+    //debugger;
     axios
       .post(APIConfig.buildUrl("/login"), {
         emailAddress: this.signup.emailAddress,

@@ -55,14 +55,10 @@ export default class Signup extends Vue {
   error: string | boolean = false;
 
   success() {
-<<<<<<< HEAD
-    this.error = false;
-=======
     debugger;
     this.error = false;
     // this.signup.firstName = "done";
->>>>>>> 741e3335db43397093bd5c5fd609569345cb4687
-    console.log('hello');
+    console.log("hello");
     axios
       .post(APIConfig.buildUrl("/users"), {
         ...this.signup
@@ -70,14 +66,9 @@ export default class Signup extends Vue {
       .then((response: AxiosResponse<iUser>) => {
         this.$emit("success");
       })
-<<<<<<< HEAD
-      .catch((reason: any) => {
-        this.error = reason;
-=======
       .catch((errorResponse: any) => {
         debugger;
         this.error = errorResponse.response.data.reason;
->>>>>>> 741e3335db43397093bd5c5fd609569345cb4687
       });
   }
 
