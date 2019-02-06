@@ -2,52 +2,36 @@
 <div id="app" class="main-background">
     <div class="navbar bar main-background">
       <div class="navbar-menu">
-<<<<<<< HEAD
-=======
         <div class="navbar-start">
           <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
           <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active">About</router-link>
-           <router-link class="navbar-item is-tab" to="/todos" exact-active-class="is-active">My ToDos</router-link>
+          <router-link class="navbar-item is-tab" to="/todos" exact-active-class="is-active">My ToDos</router-link> 
         </div>
->>>>>>> gina
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <router-link class="button white-font blue-background" to="/ordertracking" exact-active-class="is-active">Track Order</router-link>
-              <a class="button white-font blue-background" v-on:click="showLoginModal()">
-                Log in
+              <a class="button is-primary" v-if="!isLoggedIn" v-on:click="showSignupModal()">
+                <strong>Sign up</strong>
               </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="navbar blue-background bar">
-      <div class="navbar-menu">
-        <div class="navbar-start">
-          <router-link class="is-tab logo-padding" to="/">
-            <img alt="Foxycle logo" src="./assets/transparentlogo.png">
-          </router-link> 
-        </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <router-link class="navbar-item is-tab white-font" to="/" exact-active-class="is-active">Home</router-link>          
-              <router-link class="navbar-item is-tab white-font" to="/shop" exact-active-class="is-active">Shop</router-link>
-              <router-link class="navbar-item is-tab white-font" to="/services" exact-active-class="is-active">Services</router-link>
-              <router-link class="navbar-item is-tab white-font" to="/contact" exact-active-class="is-active">Contact</router-link>
-              <router-link class="navbar-item is-tab white-font" to="/cart" exact-active-class="is-active">
-                <font-awesome-icon icon="shopping-cart" />
-              </router-link>
+              <router-link
+                class="button is-text"
+                v-if="isLoggedIn"
+                to="/my-profile"
+                exact-active-class="is-active">My Profile</router-link>
+              <a class="button is-light" v-if="!isLoggedIn" v-on:click="showLoginModal()">Log in</a>
+              <a class="button is-light" v-if="isLoggedIn" v-on:click="logout">Log out</a>
             </div>
           </div>
         </div>
       </div>
     </div>
     <router-view/>
-    <Signup v-bind:is-showing="showSignup" v-on:success="successSignup()" v-on:cancel="cancelSignup()"/>
-    <SignIn v-bind:is-showing="showLogin" v-on:success="successSignin()" v-on:cancel="cancelSignin()"/>
+    <Signup
+      v-bind:is-showing="showSignup"
+      v-on:success="successSignup()"
+      v-on:cancel="cancelSignup()"
+    />
+    <Login v-bind:is-showing="showLogin" v-on:success="successLogin()" v-on:cancel="cancelLogin()"/>
   </div>
 
 </template>
@@ -57,7 +41,7 @@ import Vue from "vue";
 import axios from "axios";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
-import SignIn from "@/components/SignIn.vue";
+import Login from "@/components/Login.vue";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -70,7 +54,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 @Component({
   components: {
     Signup,
-    SignIn
+    Login
   }
 })
 export default class App extends Vue {
