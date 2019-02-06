@@ -27,7 +27,7 @@ export class ToDoController extends DefaultController {
       });
       router.route("/todos/:id").put((req: Request, res: Response) => {
         const todoRepo = getRepository(ToDo);
-        todo.findOne(req.params.id).then((foundToDo: ToDo) => {
+        todoRepo.findOne(req.params.id).then((foundToDo: ToDo | undefined) => {
           // save updates here
         });
       });

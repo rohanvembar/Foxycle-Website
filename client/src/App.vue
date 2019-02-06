@@ -3,7 +3,7 @@
     <div class="navbar bar main-background">
       <div class="navbar-menu">
         <div class="navbar-start">
-          <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link> 
+          <router-link class="navbar-item is-tab" to="/" exact-active-class="is-active">Home</router-link>
           <router-link class="navbar-item is-tab" to="/about" exact-active-class="is-active">About</router-link>
           <router-link class="navbar-item is-tab" to="/todos" exact-active-class="is-active">My ToDos</router-link> 
         </div>
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <router-view/>
+    <router-view class="container"/>
     <Signup
       v-bind:is-showing="showSignup"
       v-on:success="successSignup()"
@@ -37,8 +37,8 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import axios from "axios";
+import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
 import Login from "@/components/Login.vue";
@@ -63,24 +63,31 @@ export default class App extends Vue {
   showSignupModal() {
     this.showSignup = true;
   }
+
   successSignup() {
     this.showSignup = false;
   }
+
   cancelSignup() {
     this.showSignup = false;
   }
+
   showLoginModal() {
     this.showLogin = true;
   }
+
   successLogin() {
     this.showLogin = false;
   }
+
   cancelLogin() {
     this.showLogin = false;
   }
+
   get isLoggedIn(): boolean {
     return !!this.$store.state.userId;
   }
+
   logout() {
     debugger;
     axios

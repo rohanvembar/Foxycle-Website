@@ -66,8 +66,10 @@ export default class Profile extends Vue {
   currentStatus: number | null = null;
   uploadError: string | null = null;
   uploadedFile: any = null;
+
   @Prop({ default: null })
   user!: iUser | null;
+
   upload(formData: any) {
     const url = `${APIConfig.url}/photos/upload`;
     return (
@@ -83,9 +85,11 @@ export default class Profile extends Vue {
         )
     );
   }
+
   save(formData: FormData) {
     // upload data to the server
     this.currentStatus = STATUS_SAVING;
+
     this.upload(formData)
       .then(x => {
         this.uploadedFile = x;
@@ -102,32 +106,41 @@ export default class Profile extends Vue {
     this.fileCount = event.target.files.length;
     // handle file changes
     const formData = new FormData();
+
     if (!files.length) return;
+
     // append the files to FormData
     Array.from(Array(files.length).keys()).map(x => {
       formData.append(name, files[x], files[x].name);
     });
+
     // save it
     this.save(formData);
   }
+
   reset() {
     // reset form to initial state
     this.currentStatus = STATUS_INITIAL;
     this.uploadError = null;
   }
+
   mounted() {
     this.reset();
   }
+
   //computed
   get isInitial() {
     return this.currentStatus === STATUS_INITIAL;
   }
+
   get isSaving() {
     return this.currentStatus === STATUS_SAVING;
   }
+
   get isSuccess() {
     return this.currentStatus === STATUS_SUCCESS;
   }
+
   get isFailed() {
     return this.currentStatus === STATUS_FAILED;
   }

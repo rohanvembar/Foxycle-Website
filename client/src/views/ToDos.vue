@@ -1,4 +1,5 @@
 <template>
+<div>
     <div>
         <h1 class="title">Things To Do</h1>
         <div class="todos">
@@ -24,6 +25,16 @@
             </table>  
         </div>
     </div>
+  <div class="todos">
+    <div>Hi from todos</div>
+
+    <div v-for="(todo, index) in mytodos" v-bind:key="index">
+      <span>{{ todo.name }}</span>
+      <span>{{ todo.duedate }}</span>
+    </div>
+    <button class="button" v-on:click="addTodoItem">Add</button>
+  </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -74,11 +85,22 @@ export default class ToDos extends Vue {
     });
     this.mytodos = target;
   }
-}
+//@Component
+//export default class ToDos extends Vue {
+//  mytodos: ToDo[] = [
+//    { name: "Tod one", duedate: undefined },
+//    { name: "todo two", duedate: undefined },
+//    { name: "todo three", duedate: undefined }
+//  ];
+ // addTodoItem() {
+ //   this.mytodos.push({name: `todo${new Date().getTime()}`, duedate: undefined});
+//  }
+//}
 
 interface ToDo {
   name: string;
   duedate: string | undefined;
+}
 }
 </script>
 
