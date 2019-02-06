@@ -5,7 +5,7 @@
     <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="#" style="font-weight:bold;">
-            
+        
           <img src="./assets/transparentlogo.png" class="logo-padding"/>
             <hr> foxycle
           </a>
@@ -18,18 +18,23 @@
 
         </a>
     <div id="navMenu" class="navbar-menu">
+    <div class="navbar-start">
+        
+      <div class="navbar-item"></div>
+      <router-link class="navbar-item " to="/" exact-active-class="is-active">home</router-link>          
+      <router-link class="navbar-item" to="/shop" exact-active-class="is-active">shop</router-link>
+      <router-link class="navbar-item" to="/services" exact-active-class="is-active">services</router-link>
+      <router-link class="navbar-item" to="/contact" exact-active-class="is-active">contact</router-link>
+    </div>
+
     <div class="navbar-end">
-            <router-link class="navbar-item " to="/" exact-active-class="is-active">home</router-link>          
-              <router-link class="navbar-item" to="/shop" exact-active-class="is-active">shop</router-link>
-              <router-link class="navbar-item" to="/services" exact-active-class="is-active">services</router-link>
-              <router-link class="navbar-item" to="/contact" exact-active-class="is-active">contact</router-link>
-              <router-link class="navbar-item" to="/ordertracking" exact-active-class="is-active">track order</router-link>
-              <a class="navbar-item" v-on:click="showLoginModal()">
-                log in
-              </a>
-              <router-link class="navbar-item" to="/cart" exact-active-class="is-active">
-                <font-awesome-icon icon="shopping-cart" />
-              </router-link>
+      <router-link class="navbar-item" to="/ordertracking" exact-active-class="is-active">track order</router-link>
+      <a class="navbar-item" v-on:click="showLoginModal()">
+      log in
+      </a>
+      <router-link class="navbar-item" to="/cart" exact-active-class="is-active">
+      <font-awesome-icon icon="shopping-cart" />
+      </router-link>
     </div>
     </div>
     </div>

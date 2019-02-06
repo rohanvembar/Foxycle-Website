@@ -11,7 +11,9 @@
       <ShopPageFilterBox />
       <ViewShopItems />
     </div>
+
   </div>
+  
 </template>
 
 <script lang="ts">
