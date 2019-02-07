@@ -12,13 +12,12 @@
 						<tr>
 							<td>todo 1</td>
 							<td>8/8/8888</td>
-							<td><button type="button">Delete</button>
 							<button type="button">Completed</button></td>
 						</tr>
-						<!-- <tr v-for="(todo, index) in mytodos" :key="index">
-								<td>{{ todo.name }}</td>
-								<td>{{ todo.duedate }}</td>
-						</tr> -->
+						<tr v-for="(todo, index) in mytodos.todos" :key="index">
+								<td>{{ todo.title }}</td>
+								<td>{{ todo.dueDate }}</td>
+						</tr> 
 				</table>
 				</center>
 				<br>
@@ -45,10 +44,7 @@ import { iUser } from "../models/user.interface";
 @Component
 export default class ToDos extends Vue {
   todo: iTodos | null = null;
-
-	// mytodos: Todo[] = [
-
-	// ];
+  mytodos: ToDo[] = [];
 
 	todoitem: TodoForm = {
 			userId: "",
@@ -61,9 +57,10 @@ export default class ToDos extends Vue {
 	getTodo(){
 		axios
         .get(APIConfig.buildUrl('/todos'))
-        .then((res: AxiosResponse<{ todo: iTodos }>) => {
-			  	console.log(this.todo);
-         	this.todo = res.data.todo;
+        .then((res: AxiosResponse) => {
+					 this.mytodos = res.data;
+					 console.log(this.mytodos.todos);
+
 		  });
 		  
 	}
@@ -90,11 +87,18 @@ export default class ToDos extends Vue {
 	}
 } 
 
-export interface TodoForm {
+interface TodoForm {
 		userId: string,
 		dueDate: Date,
 		complete: string,
 		title: string,
 
+}
+
+interface ToDo {
+  id: number | undefined;
+  title: string;
+  complete: boolean;
+  dueDate: string | undefined;
 }
 </script>
