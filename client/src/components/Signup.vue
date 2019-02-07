@@ -55,7 +55,6 @@ export default class Signup extends Vue {
   error: string | boolean = false;
 
   success() {
-    debugger;
     this.error = false;
     // this.signup.firstName = "done";
     console.log("hello");
@@ -67,7 +66,6 @@ export default class Signup extends Vue {
         this.$emit("success");
       })
       .catch((errorResponse: any) => {
-        debugger;
         this.error = errorResponse.response.data.reason;
       });
   }

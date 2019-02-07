@@ -13,8 +13,8 @@
                         </button>
                     </td>
                     <td>
-                      <button v-if="!t.complete" class="button"  v-on:click="completeTodoItem(t)">
-                        complete
+                      <button v-if="!t.complete" class="button complete_button"  v-on:click="completeTodoItem(t)">
+                        <font-awesome-icon icon="check-circle" />
                       </button>
                     </td>
                 </tr>
@@ -44,10 +44,10 @@ import { Component, Prop } from "vue-property-decorator";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { iUser } from '@/models/user.interface';
-library.add(faTrash)
-library.add(faPlus)
+library.add(faTrash, faPlus, faCheckCircle)
 Vue.component("font-awesome-icon", FontAwesomeIcon)
 
 @Component
@@ -85,23 +85,18 @@ export default class ToDos extends Vue {
     const id = todo.id;
     console.log(id);
     this.error = false;
-    //console.log(this.$store.state.userToken);
     axios.delete(APIConfig.buildUrl("/todos/"+id), {})
     .then((response: AxiosResponse<DeleteResponse>) => {
       console.log("deleting a todo");
       const deletedTodo = response.data;
 
       this.mytodos = this.mytodos.filter(mytodo => {
-        console.log(mytodo.id + " " + deletedTodo.id);
         return mytodo.id != deletedTodo.id;
       });
 
-      console.log(deletedTodo);
-      console.log(this.mytodos);
       this.$emit("success");
     }).catch((response: AxiosResponse) => {
-      console.log("catch");
-      this.error = response.data.error;
+      this.error = "bad";
     });     
   }
 
@@ -126,7 +121,7 @@ export default class ToDos extends Vue {
       this.$emit("success");
     }).catch((response: AxiosResponse) => {
       console.log("catch");
-      this.error = response.data.error;
+      this.error = "bad";
     });  
   }
 
@@ -155,7 +150,7 @@ export default class ToDos extends Vue {
       this.$emit("success");
     }).catch((response: AxiosResponse) => {
       console.log("catch");
-      this.error = response.data.error;
+      this.error = "bad";
     });
   }
 }
@@ -223,6 +218,12 @@ td {
 }
 .delete_button:hover {
   background-color: #a43d3d;
+}
+.complete_button {
+  background-color: #1161d1;
+}
+.complete_button:hover {
+  background-color: #063e8d;
 }
 .title {
   display: flex;

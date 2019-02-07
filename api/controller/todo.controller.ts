@@ -17,7 +17,7 @@ export class ToDoController extends DefaultController {
       const sessionRepo = getRepository(Session);
       const todoRepo = getRepository(ToDo);
       const todo = new ToDo();
-      sessionRepo.findOne(token).then((foundSession: Session | undefined) => {
+      sessionRepo.findOne(token, { relations: ["user"] }).then((foundSession: Session | undefined) => {
         const user = foundSession!.user;
         todo.dueDate = req.body.dueDate;
         todo.complete = false;
@@ -31,22 +31,23 @@ export class ToDoController extends DefaultController {
     })
     .get((req: Request, res: Response) => {
       console.log("retrieving all todos");
+      const token = req.get("token");
       const todoRepo = getRepository(ToDo);
-      todoRepo.find().then((todos: ToDo[]) => {
+      todoRepo.find({ where: { id: token } }).then((todos: ToDo[]) => {
         res.status(200).send( todos );
       })
     });
     router.route("/todos/:id")
     .put((req: Request, res: Response) => {
       const todoRepo = getRepository(ToDo);
-      todoRepo.findOne(req.params.id).then((foundToDo: ToDo | undefined) => {
+      todoRepo.findOneOrFail(req.params.id).then((foundToDo: ToDo) => {
         if (foundToDo == undefined) {
           return;
         }
         foundToDo.complete = true;
-        todoRepo.save(foundToDo).then((savedTodo: ToDo) => {
-          res.status(200).send(foundToDo);
-          console.log(savedTodo);
+        todoRepo.save(foundToDo).then((updatedTodo: ToDo) => {
+          res.status(200).send(updatedTodo);
+          console.log(updatedTodo);
         });          
       });
     })
@@ -62,7 +63,6 @@ export class ToDoController extends DefaultController {
         });          
       });        
     });
-
     return router;
   }
 }
