@@ -7,7 +7,7 @@
 						<tr v-for="(todo, index) in mytodos.todos" :key="index">
 								<td>{{ todo.title }}</td>
 								<td>{{ todo.dueDate }}</td>
-								<button type="button">Delete</button>
+								<button type="button" v-on:click="deleteTodo(todo)">Delete</button>
 
 						</tr> 
 				</table>
@@ -55,6 +55,15 @@ export default class ToDos extends Vue {
 
 		  });
 		  
+	}
+
+	deleteTodo(t: ToDo){
+		console.log(t.id);
+		axios
+		.delete(APIConfig.buildUrl("/todos/" + t.id), {
+			
+		});
+
 	}
 	pushToDB(){
 		this.error = false;
