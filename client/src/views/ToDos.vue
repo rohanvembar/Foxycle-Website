@@ -4,19 +4,11 @@
 				<button type="button" v-on:click="getTodo">refresh</button></td>
 
 				<table border='2' style="width:50%">
-						<tr>
-								<th>Item</th>
-								<th>Due Date</th>
-								<th>Modify</th>
-						</tr>
-						<tr>
-							<td>todo 1</td>
-							<td>8/8/8888</td>
-							<button type="button">Completed</button></td>
-						</tr>
 						<tr v-for="(todo, index) in mytodos.todos" :key="index">
 								<td>{{ todo.title }}</td>
 								<td>{{ todo.dueDate }}</td>
+								<button type="button">Delete</button>
+
 						</tr> 
 				</table>
 				</center>

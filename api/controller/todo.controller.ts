@@ -25,7 +25,6 @@ export class TodoController extends DefaultController {
                         res.status(200).send({todo});
                     });
                 });
-                
             })
             .get((req: Request, res: Response) => {
                 const todoRepo = getRepository(ToDo);
