@@ -12,7 +12,7 @@ export class ToDo {
   public complete!: boolean;
 
   @Column()
-  public dueDate!: Date;
+  public dueDate!: string;
 
   @OneToOne((type) => User, { cascade: true })
   @JoinColumn()
