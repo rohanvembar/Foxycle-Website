@@ -38,9 +38,9 @@
 
  <script lang="ts">
 import Vue from "vue";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
-import { Component, Prop } from "vue-property-decorator";
+import { Component, Prop, Watch } from "vue-property-decorator";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -60,18 +60,7 @@ export default class ToDos extends Vue {
   error: string | boolean = false;
 
   created() {
-    this.error = false;
-    axios.get(APIConfig.buildUrl("/todos"), {
-      headers : {
-        "token" : this.$store.state.userToken
-      }
-    }).then((response: AxiosResponse) => {
-      this.mytodos = response.data;
-      console.log(response.data)
-      this.$emit("success");
-    }).catch((response: AxiosResponse) => {
-      this.error = "bad";
-    });     
+    this.getAllTodos();
   }
 
   parseDate(date: string) {
@@ -81,6 +70,23 @@ export default class ToDos extends Vue {
     var year = splitDate[0];
     return month + "/" + day + "/" + year;
   }
+
+  getAllTodos() {
+    this.error = false;
+    axios.get(APIConfig.buildUrl("/todos"), {
+      headers : {
+        "token" : this.$store.state.userToken
+      }
+    }).then((response: AxiosResponse) => {
+      this.mytodos = response.data;
+      console.log(response.data)
+      this.$emit("success");
+    }).catch((res: AxiosError) => {
+      this.error = res.response && res.response.data.error;
+      console.log(this.error);
+    }); 
+  }
+
   deleteTodoItem(todo: ToDo) {
     const id = todo.id;
     console.log(id);
@@ -111,7 +117,6 @@ export default class ToDos extends Vue {
     }).then((response: AxiosResponse<CompletedResponse>) => {
       console.log("completing a todo");
       const completedTodo = response.data;
-
       this.mytodos = this.mytodos.map(function(mytodo) { 
         return mytodo.id == completedTodo.id ? completedTodo : mytodo; 
       });
@@ -159,25 +164,28 @@ interface ToDo {
   title: string;
   complete: boolean;
   dueDate: string | undefined;
- // user: iUser;
+  user: number | undefined;
 }
 interface ToDoResponse {
   id: number;
   title: string;
   complete: boolean;
   dueDate: string;
+  user: number | undefined;
 }
 interface CompletedResponse {
   id: number;
   title: string;
   dueDate: string;
   complete: boolean;
+  user: number | undefined;
 }
 interface DeleteResponse {
   id: number;
   title: string;
   dueDate: string;
   complete: boolean;
+  user: number | undefined;
 }
 interface AllToDoResponse {
   todos: ToDo[];

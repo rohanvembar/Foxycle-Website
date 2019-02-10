@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
@@ -46,6 +46,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { APIConfig } from "@/utils/api.utils";
+import ToDos from '@/views/ToDos.vue';
 
 library.add(faShoppingCart);
 
