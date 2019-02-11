@@ -51,13 +51,21 @@
             <td></td>
             <td></td>
             <td>$18,299.97</td>          
-          </tr>                         
-        </table>
-      </div>
-      <div class="checkout-btn">
+          </tr>  
+          <br>     
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><div class="checkout-btn">
         <router-link class="button" to="/checkout" exact-active-class="is-active">
           Checkout
-        </router-link></div>
+        </router-link></div></td>   
+          </tr>                  
+        </table>
+      </div>
+      
     </div>
   </div>
 </template>
