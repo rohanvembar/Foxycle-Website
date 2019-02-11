@@ -29,20 +29,25 @@
 
     <div class="navbar-end">
       <router-link class="navbar-item" to="/ordertracking" exact-active-class="is-active">track order</router-link>
-      <a class="navbar-item" v-on:click="showLoginModal()">
+      <a class="navbar-item" v-if="!isLoggedIn" v-on:click="showLoginModal()">
       log in
       </a>
-      <router-link class="navbar-item" to="/cart" exact-active-class="is-active">
+
+      <router-link class="navbar-item" to="/cart" v-if="!isLoggedIn" exact-active-class="is-active">
       <font-awesome-icon icon="shopping-cart" />
       </router-link>
-      <router-link class="navbar-item" to="/vieworder" exact-active-class="is-active">Orders</router-link>
+      <router-link class="navbar-item" to="/vieworder" exact-active-class="is-active" v-if="isLoggedIn">manage orders</router-link>
+      <router-link class="navbar-item" to="/admineditproduct" exact-active-class="is-active" v-if="isLoggedIn">manage items</router-link>
+      <a class="navbar-item" v-if="isLoggedIn" v-on:click="logout()">
+        <font-awesome-icon icon="sign-out-alt"/>
+      </a>  
     </div>
     </div>
     </div>
     </nav>    
     
     <router-view/>
-    <SignIn v-bind:is-showing="showLogin" v-on:success="successSignin()" v-on:cancel="cancelLogin()"/>
+    <SignIn v-bind:is-showing="showLogin" v-on:success="successLogin()" v-on:cancel="cancelLogin()"/>
   </div>
 
 </template>
@@ -71,6 +76,8 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 export default class App extends Vue {
   public showSignup: boolean = false;
   public showLogin: boolean = false;
+  public showEmployee: boolean = false;
+
   showSignupModal() {
     this.showSignup = true;
   }
@@ -85,6 +92,7 @@ export default class App extends Vue {
   }
   successLogin() {
     this.showLogin = false;
+    this.showEmployee = true;
   }
   cancelLogin() {
     this.showLogin = false;
@@ -100,6 +108,7 @@ export default class App extends Vue {
       })
       .then(() => {
         this.$store.commit("logout");
+        this.$router.push({ path : '/' });
       });
   }
 }
