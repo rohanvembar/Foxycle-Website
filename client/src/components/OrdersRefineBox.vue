@@ -5,9 +5,9 @@
         <select name="status">
             <option selected="true" value="all">All</option>
             <option value="0">Not Started</option>
-            <option value="1">Complete</option>
-            <option value="2">In Progress</option>  
-            <option value="3">Cancelled</option>     
+            <option value="1">In Progress</option>
+            <option value="2">Complete</option>  
+            <option value="3">Canceled</option>     
         </select>         
     </div>
  
@@ -25,7 +25,6 @@ export default class OrdersRefineBox extends Vue {
  .refine-box {
     height : 270px;
     background : white;
-    left : 10px;
     text-align : left;
     margin-bottom: 40px;
     padding:10px;
