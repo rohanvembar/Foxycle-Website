@@ -35,6 +35,7 @@
       <router-link class="navbar-item" to="/cart" exact-active-class="is-active">
       <font-awesome-icon icon="shopping-cart" />
       </router-link>
+      <router-link class="navbar-item" to="/vieworder" exact-active-class="is-active">Orders</router-link>
     </div>
     </div>
     </div>

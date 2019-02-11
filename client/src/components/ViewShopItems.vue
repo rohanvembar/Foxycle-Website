@@ -3,13 +3,8 @@
         <div id="wrap">
 	        <div id="columns" class="columns_4">
                 <figure>
-<<<<<<< HEAD
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-=======
                     <router-link to="/itempage">
                     <img src="../assets/itempage_bike.png">
->>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -19,24 +14,8 @@
                 </figure>
 	
                 <figure>
-<<<<<<< HEAD
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-        
-                <figure>
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-=======
                     <router-link to="/itempage">
                     <img src="../assets/itempage_bike.png">
->>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -47,13 +26,8 @@
     
                 
                 <figure>
-<<<<<<< HEAD
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-=======
                     <router-link to="/itempage">
                     <img src="../assets/itempage_bike.png">
->>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -63,13 +37,8 @@
                 </figure>
                 
                 <figure>
-<<<<<<< HEAD
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-=======
                     <router-link to="/itempage">
                     <img src="../assets/itempage_bike.png">
->>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -79,13 +48,8 @@
                 </figure>
 	
                 <figure>
-<<<<<<< HEAD
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-=======
                     <router-link to="/itempage">
                     <img src="../assets/itempage_bike.png">
->>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -95,13 +59,8 @@
                 </figure>
                 
                 <figure>
-<<<<<<< HEAD
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-=======
                     <router-link to="/itempage">
                     <img src="../assets/itempage_bike.png">
->>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -111,13 +70,8 @@
                 </figure>
             
                 <figure>
-<<<<<<< HEAD
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-=======
                     <router-link to="/itempage">
                     <img src="../assets/itempage_bike.png">
->>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -127,13 +81,8 @@
                 </figure>
     
                 <figure>
-<<<<<<< HEAD
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
-=======
                     <router-link to="/itempage">
                     <img src="../assets/itempage_bike.png">
->>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
