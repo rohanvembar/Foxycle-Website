@@ -3,8 +3,13 @@
         <div id="wrap">
 	        <div id="columns" class="columns_4">
                 <figure>
+<<<<<<< HEAD
                     <router-link to = "/itempage">
                         <img src="../assets/transparentlogo.png">
+=======
+                    <router-link to="/itempage">
+                    <img src="../assets/itempage_bike.png">
+>>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -14,6 +19,7 @@
                 </figure>
 	
                 <figure>
+<<<<<<< HEAD
                     <router-link to = "/itempage">
                         <img src="../assets/transparentlogo.png">
                     </router-link>
@@ -27,6 +33,27 @@
                 <figure>
                     <router-link to = "/itempage">
                         <img src="../assets/transparentlogo.png">
+=======
+                    <router-link to="/itempage">
+                    <img src="../assets/itempage_bike.png">
+>>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
+                    </router-link>
+                    <figcaption>Bike</figcaption>
+                    <span class="price">$44</span>
+                    <router-link class="button" to="/cart" exact-active-class="is-active">
+                    Add to Cart
+                    </router-link>
+                </figure>
+    
+                
+                <figure>
+<<<<<<< HEAD
+                    <router-link to = "/itempage">
+                        <img src="../assets/transparentlogo.png">
+=======
+                    <router-link to="/itempage">
+                    <img src="../assets/itempage_bike.png">
+>>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -36,19 +63,13 @@
                 </figure>
                 
                 <figure>
+<<<<<<< HEAD
                     <router-link to = "/itempage">
                         <img src="../assets/transparentlogo.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-                
-                <figure>
-                    <router-link to = "/itempage">
-                        <img src="../assets/transparentlogo.png">
+=======
+                    <router-link to="/itempage">
+                    <img src="../assets/itempage_bike.png">
+>>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -58,8 +79,13 @@
                 </figure>
 	
                 <figure>
+<<<<<<< HEAD
                     <router-link to = "/itempage">
                         <img src="../assets/transparentlogo.png">
+=======
+                    <router-link to="/itempage">
+                    <img src="../assets/itempage_bike.png">
+>>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -69,8 +95,13 @@
                 </figure>
                 
                 <figure>
+<<<<<<< HEAD
                     <router-link to = "/itempage">
                         <img src="../assets/transparentlogo.png">
+=======
+                    <router-link to="/itempage">
+                    <img src="../assets/itempage_bike.png">
+>>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -80,8 +111,13 @@
                 </figure>
             
                 <figure>
+<<<<<<< HEAD
                     <router-link to = "/itempage">
                         <img src="../assets/transparentlogo.png">
+=======
+                    <router-link to="/itempage">
+                    <img src="../assets/itempage_bike.png">
+>>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -91,8 +127,13 @@
                 </figure>
     
                 <figure>
+<<<<<<< HEAD
                     <router-link to = "/itempage">
                         <img src="../assets/transparentlogo.png">
+=======
+                    <router-link to="/itempage">
+                    <img src="../assets/itempage_bike.png">
+>>>>>>> a83c1266b37d7a4116409265499d1a75556a906f
                     </router-link>
                     <figcaption>Bike</figcaption>
                     <span class="price">$44</span>
@@ -166,15 +207,14 @@ div#columns figure {
 	margin: 0 0px 15px;
 	-webkit-column-break-inside: avoid;
 	-moz-column-break-inside: avoid;
-	column-break-inside: avoid;
 	padding: 15px;
 	padding-bottom: 5px;
 	background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
 	opacity: 1;
-	-webkit-transition: all .3s ease;
-	-moz-transition: all .3s ease;
-	-o-transition: all .3s ease;
-	transition: all .3s ease;
+	-webkit-transition: all .2s ease;
+	-moz-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease;
 }
 
 div#columns figure img {
@@ -193,23 +233,20 @@ div#columns figure figcaption {
   text-overflow:ellipsis;
 }
 
-a.button{
-  padding:10px;
-  background:salmon;
-  margin:10px;
+.button{
+  background: #239CEC;
+  margin:px;
   display:block;
   text-align:center;
   color:#fff;
-  transition:all 1s linear;
+  transition: 0.3s;
   text-decoration:none;
   text-shadow:1px 1px 3px rgba(0,0,0,0.3);
   border-radius:3px;
-  border-bottom:3px solid #ff6536;
   box-shadow:1px 1px 3px rgba(0,0,0,0.3);
 }
-a.button:hover{
-  background:#ff6536;
-  border-bottom:3px solid salmon;
+.button:hover{
+  background:#40B883;
   color:#f1f2f3;
 }
 @media screen and (max-width: 960px) { 

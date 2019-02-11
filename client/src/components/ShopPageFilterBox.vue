@@ -23,12 +23,7 @@
           <option value="75-100">$75 - $100</option>  
           <option value="100+">$100 +</option>                           
         </select>       
-        <p>Color</p>
-        <button class="reddot"></button>
-        <button class="bluedot"></button>
-        <button class="greendot"></button>
-        <button class="orangedot"></button>
-        <button class="rainbowdot"></button>
+        
         <p>Store Pickup</p>
         <select name="pickup">
           <option selected="true" value="all">Either</option>
