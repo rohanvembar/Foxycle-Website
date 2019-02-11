@@ -42,8 +42,7 @@
     </nav>    
     
     <router-view/>
-    <Signup v-bind:is-showing="showSignup" v-on:success="successSignup()" v-on:cancel="cancelSignup()"/>
-    <SignIn v-bind:is-showing="showLogin" v-on:success="successSignin()" v-on:cancel="cancelSignin()"/>
+    <SignIn v-bind:is-showing="showLogin" v-on:success="successSignin()" v-on:cancel="cancelLogin()"/>
   </div>
 
 </template>

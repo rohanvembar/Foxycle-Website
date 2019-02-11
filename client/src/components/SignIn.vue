@@ -1,7 +1,7 @@
 <template>
   <modal
     v-bind:is-showing="isShowing"
-    title="Login"
+    title="Login - Employees Only"
     success-button="Login"
     v-on:success="success"
     v-on:cancel="cancel"
@@ -9,12 +9,12 @@
     <form v-on:submit.prevent="onSubmit">
       <p v-if="error">{{ error }}</p>
       <div class="field">
-        <label class="label">Email Address</label>
+        <label class="label">Employee ID</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            placeholder="email address"
+            placeholder="employee ID"
             v-model="signup.emailAddress"
           >
         </div>
