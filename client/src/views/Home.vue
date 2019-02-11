@@ -6,16 +6,16 @@
       :perPage=1 paginationActiveColor="#239CEC"
       paginationColor="#b2ebd1" :speed=300>
         <slide class="VueCarousel-slide">
-          Slide 1 Content
+          <img src="../assets/bikefield.jpg">
         </slide>
         <slide class="VueCarousel-slide">
-          Slide 2 Content
+          <img src="../assets/childbike.jpg">
         </slide>
         <slide class="VueCarousel-slide">
-          Slide 3 Content
+          <img src="../assets/mountainbike.jpg">
         </slide>
         <slide class="VueCarousel-slide">
-          Slide 4 Content
+          <img src="../assets/womanbike.jpg">
         </slide>   
       </carousel>
     </div>
@@ -44,7 +44,6 @@ export default class Home extends Vue {
 
 .VueCarousel-slide {
   position: relative;
-  background: #42b983;
   color: #fff;
   font-family: Arial;
   font-size: 24px;
