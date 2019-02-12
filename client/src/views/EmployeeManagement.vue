@@ -17,7 +17,7 @@
     </div>
 
 
-    <div v-else class='error'>
+    <div v-else>
       <!-- put page here -->
       yay you have access
     </div>

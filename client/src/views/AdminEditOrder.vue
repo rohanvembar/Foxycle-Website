@@ -18,7 +18,7 @@
     </div>
 
 
-    <div v-else class='error'>
+    <div v-else>
       <div class="main-background">
         <div class = "header">Manage Orders</div>
         <div class="sort-by">
@@ -53,6 +53,9 @@ import ViewOrderItems from "@/components/ViewOrderItems.vue";
   }
 })
 export default class AdminEditOrder extends Vue {
+    get isLoggedIn(): boolean {
+      return !!this.$store.state.userId;
+    }
 }
 </script>
 
