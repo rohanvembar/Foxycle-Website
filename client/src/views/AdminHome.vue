@@ -19,23 +19,25 @@
 
     <div v-else class='error'>
       <!-- put page here -->
-      yay you have access
+      Admin Home Page
     </div>
   </div>
 </template>
 
 
+
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
-import { APIConfig } from "../utils/api.utils";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
-@Component
-export default class EmployeeManagement extends Vue {
-
+export default class AdminHome extends Vue {
+  
     get isLoggedIn(): boolean {
-    return !!this.$store.state.userId;
+      console.log(this.$store.state.userId);
+      return !!this.$store.state.userId;
     }
-    
 }
 </script>
+
+<style lang="scss">
+
+</style>

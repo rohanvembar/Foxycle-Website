@@ -24,6 +24,12 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
+      path: "/admin",
+      name: "admin",
+      component: () => import("./views/AdminHome.vue")
+
+    },
+    {
       path: "/editorder",
       name: "editorder",
       component: () => import("./views/AdminEditOrder.vue")
@@ -87,6 +93,11 @@ export default new Router({
       path: "/my-profile",
       name: "myProfile",
       component: MyProfile
-    }
+    },    
+    {
+      path: "/employeemanagement",
+      name: "employeemanagement",
+      component: () => import("./views/EmployeeManagement.vue")
+    },
   ]
 });

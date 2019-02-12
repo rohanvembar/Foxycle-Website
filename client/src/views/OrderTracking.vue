@@ -1,8 +1,11 @@
 <template>
   <div class="main-background track">
-    <p class="title">Track Your Order</p>
+    <h1>Track Your Order</h1>
     <input class="input-bar" placeholder="Order Number" type="text">
-    <button class="button submit-button">Track</button>
+    <router-link to="/vieworder" exact-active-class="is-active">
+        <button class="button submit-button is-info">Track</button>
+    </router-link>
+
   </div>
 </template>
 
@@ -33,8 +36,8 @@ export default class OrderTracking extends Vue {
 
   .input-bar {
     padding:5px;
-    font-size: 25px;
-    width: 50%;
+    font-size: 15px;
+    width: 20%;
     height: 50px;
   }
 

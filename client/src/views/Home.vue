@@ -4,7 +4,7 @@
       <carousel :navigationEnabled="true" 
       :autoplay="true" :autoplayTimeout=5000
       :perPage=1 paginationActiveColor="#239CEC"
-      paginationColor="#b2ebd1" :speed=300>
+      paginationColor="#b2ebd1" :speed=300 :loop="true">
         <slide class="VueCarousel-slide">
           <img src="../assets/bikefield.jpg">
         </slide>
@@ -53,9 +53,9 @@ export default class Home extends Vue {
 
 .carousel-div {
   padding: 30px;
-  display: flex;
   align-items: center;
   justify-content: center;
+  width: 50%
 }
 
 .home {
