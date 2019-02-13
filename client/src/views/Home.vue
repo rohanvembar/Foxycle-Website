@@ -19,23 +19,40 @@
         </slide>   
       </carousel>
     </div>
-    <div class="annoucements">
-      Announcements
+    <div class="announcements">
+      <div v-for="(a, index) in announcements" v-bind:key="index" class="announcement"> 
+        <div class="announcement-title">
+          <p>{{a.title}}</p>
+          <p>{{a.date}}</p>
+        </div>
+        <p class="announcement-body">{{a.body}}</p>
+      </div> 
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { iAnnouncement } from "../models/announcement.interface";
 const { Carousel, Slide } = require('vue-carousel');
 
 @Component({
-    components: {
+  components: {
     Carousel,
     Slide
   }
 })
 export default class Home extends Vue {
+  announcements: iAnnouncement[] = [
+    {id:1, title:"announcement #1", date:"February 13, 2019", body:"The most recent announcement"},
+    {id:2, title:"announcement #2", date:"February 11, 2019", body:"An important message you definitely need to know about"},
+    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"},
+    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"},
+    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"},
+    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"},
+    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"}
+  ];
+
 
 }
 </script>
@@ -60,20 +77,37 @@ export default class Home extends Vue {
 
 .home {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   justify-content: center;
 }
 
-.annoucements {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 75%;
-  height: 300px;
-  background-color: white;
-    border-radius: 5px;
+.announcements{
+  overflow-y: scroll;
+  height: 500px;
+  margin: 30px;
+  border: 1px solid black;
+}
 
+.announcement {
+  border: 1px solid black;
+  padding: 10px;
+  margin: 30px;
+  background-color: white;  
+}
+
+.announcement-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0097f2;
+  padding: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.announcement-body {
+  padding: 10px;
 }
 
 </style>
