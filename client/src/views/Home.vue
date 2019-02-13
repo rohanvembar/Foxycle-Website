@@ -34,6 +34,8 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { iAnnouncement } from "../models/announcement.interface";
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { APIConfig } from "../utils/api.utils";
 const { Carousel, Slide } = require('vue-carousel');
 
 @Component({
@@ -43,15 +45,28 @@ const { Carousel, Slide } = require('vue-carousel');
   }
 })
 export default class Home extends Vue {
-  announcements: iAnnouncement[] = [
-    {id:1, title:"announcement #1", date:"February 13, 2019", body:"The most recent announcement"},
-    {id:2, title:"announcement #2", date:"February 11, 2019", body:"An important message you definitely need to know about"},
-    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"},
-    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"},
-    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"},
-    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"},
-    {id:1, title:"announcement #1", date:"October 1, 2018", body:"This is an announcement"}
-  ];
+  error: string | boolean = false;
+  announcements: iAnnouncement[] = [];
+
+  created() {
+    this.getAllAnnouncements();
+  }
+
+  getAllAnnouncements() {
+    this.error = false;
+    axios.get(APIConfig.buildUrl("/announcements"), {
+      headers : {
+        "token" : this.$store.state.userToken
+      }
+    }).then((response: AxiosResponse) => {
+      this.announcements = response.data;
+      console.log(response.data)
+      this.$emit("success");
+    }).catch((res: AxiosError) => {
+      this.error = res.response && res.response.data.error;
+      console.log(this.error);
+    }); 
+  }
 
 
 }
@@ -85,6 +100,7 @@ export default class Home extends Vue {
 .announcements{
   overflow-y: scroll;
   height: 500px;
+  width: 500px;
   margin: 30px;
   border: 1px solid black;
 }
