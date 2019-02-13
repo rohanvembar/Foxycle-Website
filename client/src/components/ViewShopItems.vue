@@ -20,29 +20,29 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { APIConfig } from "../utils/api.utils";
 
 @Component
 export default class ViewShopItems extends Vue {
-items: iShopItem[] = [
-    {id:1, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
-    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
-    delivery: true, quantity: 3, description: "bike"},
-    {id:2, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
-    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
-    delivery: true, quantity: 3, description: "bike"},
-    {id:3, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
-    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
-    delivery: true, quantity: 3, description: "bike"},
-    {id:4, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
-    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
-    delivery: true, quantity: 3, description: "bike"},
-    {id:5, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
-    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg",  
-    delivery: true, quantity: 3, description: "bike"},
-    {id:6, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
-    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
-    delivery: true, quantity: 3, description: "bike"},
-  ];
+    error: string | boolean = false;
+    items: iShopItem[] = [];
+
+    created() {
+        this.getAllItems();
+    }
+
+    getAllItems() {
+        this.error = false;
+        axios.get(APIConfig.buildUrl("/shopitems")).then((response: AxiosResponse) => {
+            this.items = response.data;
+            console.log(response.data)
+            this.$emit("success");
+        }).catch((res: AxiosError) => {
+            this.error = res.response && res.response.data.error;
+            console.log(this.error);
+        }); 
+    }
 }
 </script>
 
