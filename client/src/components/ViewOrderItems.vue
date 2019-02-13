@@ -1,83 +1,27 @@
 <template>
     <div id="table">
         <div class="row1">
-            <div class="cell">Order #</div>
-            <div class="cell">Date</div>
+            <div class="cell_row1">Product</div>
+            <div class="cell_row1">Price</div>
+            <div class="cell_row1">
+                Quantity       
+            </div>
+        </div>       
+        <div class="row">
             <div class="cell">
-                Order Status       
+                <div class="cell_img"><img class="itempage-image" src="../assets/itempage_bike.png"></div>
+                <div class="cell_product_name">Foxycle Extreme Pro 5000</div>
             </div>
+            <div class="cell">$3999.99</div>
+            <div class="cell">1</div>
         </div>
         <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
+            <div class="cell">
+                <div class="cell_img"><img class="itempage-image" src="../assets/itempage_bike.png"></div>
+                <div class="cell_product_name">Foxycle Extreme Pro 5000</div>
             </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
+            <div class="cell">$3999.99</div>
+            <div class="cell">1</div>
         </div>
         
     </div>
@@ -98,42 +42,62 @@ export default class ViewOrderItems extends Vue {
     }
     .row {
         display:table-row; 
-        background : white;
-        border : 2px solid;
-        border-color: black;
     }
     .row1 {
         display:table-row; 
-        background : white;
-        border : 2px solid;
-        border-color: black;        
         font-weight: bold;
+        margin-bottom: 40px;
+        padding-bottom:40px;
+    }
+    .cell_row1{
+        display:table-cell;
+        text-align : center;
+        vertical-align: middle;
+        margin-left: 40px;
+        padding-left:80px;
+        padding-right:80px;
+        margin-bottom: 20px;
+        padding-bottom:30px;
+        font-size: 40px;
+        align-items: center; 
+        align-content: center;
+    }
+    .cell_img{
+        display:table-cell;
+        text-align : center;
+        vertical-align: middle;
+        margin-left: 40px;
+        padding-left:80px;
+        padding-bottom:20px;
+        font-size: 20px;
+        align-items: center; 
+        align-content: center;
+    }
+    .cell_product_name{
+        display:table-cell;
+        text-align : center;
+        vertical-align: middle;
+        margin-left: 40px;
+        padding-left: 20px;
+        padding-right:80px;
+        padding-bottom:20px;
+        font-size: 20px;
+        align-items: center; 
+        align-content: center;
     }
     .cell{
         display:table-cell;
-        border-top : 2px solid;
-        border-bottom : 2px solid;
         text-align : center;
         vertical-align: middle;
         margin-left: 40px;
         padding-left:80px;
         padding-right:80px;
-        font-size: 40px;
+        padding-bottom:20px;
+        font-size: 20px;
         align-items: center; 
         align-content: center;
     }
-    .cell_s{
-        display:table-cell;
-        border-top : 2px solid;
-        border-bottom : 2px solid;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left:80px;
-        padding-right:80px;
-        padding-bottom: 12px;
-        font-size: 40px;
-        align-items: center; 
-        align-content: center;
+    .itempage-image{
+        height: 70px;
     }
 </style>
