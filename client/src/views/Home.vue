@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="carousel-div"> 
-      <carousel :navigationEnabled="true" 
+      <carousel 
       :autoplay="true" :autoplayTimeout=5000
       :perPage=1 paginationActiveColor="#239CEC"
       paginationColor="#b2ebd1" :speed=300 :loop="true">
@@ -19,15 +19,15 @@
         </slide>   
       </carousel>
     </div>
-    <div class="announcements">
-      <div v-for="(a, index) in announcements" v-bind:key="index" class="announcement"> 
-        <div class="announcement-title">
-          <p>{{a.title}}</p>
-          <p>{{a.date}}</p>
-        </div>
-        <p class="announcement-body">{{a.body}}</p>
-      </div> 
-    </div>
+      <div class="announcements">
+        <article v-for="(a, index) in announcements" v-bind:key="index" class="message is-info"> 
+          <div class="message-header">
+            <p>{{a.title}}</p>
+            <p>{{a.date}}</p>
+          </div>
+          <p class="message-body">{{a.body}}</p>
+        </article> 
+      </div>
   </div>
 </template>
 
@@ -67,8 +67,6 @@ export default class Home extends Vue {
       console.log(this.error);
     }); 
   }
-
-
 }
 </script>
 
@@ -84,10 +82,10 @@ export default class Home extends Vue {
 }
 
 .carousel-div {
-  padding: 30px;
+  padding-top: 30px;
   align-items: center;
   justify-content: center;
-  width: 50%
+  width: 100%
 }
 
 .home {
@@ -95,35 +93,17 @@ export default class Home extends Vue {
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
+  margin: 0 auto;
+  width: 90%; 
 }
 
 .announcements{
   overflow-y: scroll;
-  height: 500px;
-  width: 500px;
-  margin: 30px;
-  border: 1px solid black;
-}
+  height: 450px;
+  margin-top:  30px;
+  margin-left: 30px;
+  margin-bottom: 300px;
 
-.announcement {
-  border: 1px solid black;
-  padding: 10px;
-  margin: 30px;
-  background-color: white;  
-}
-
-.announcement-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #0097f2;
-  padding: 5px;
-  color: white;
-  font-weight: bold;
-}
-
-.announcement-body {
-  padding: 10px;
 }
 
 </style>
