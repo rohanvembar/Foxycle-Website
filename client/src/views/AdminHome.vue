@@ -19,7 +19,7 @@
 
     <div v-else class='error'>
       <!-- put page here -->
-      Admin Home Page
+      Welcome, Owner
     </div>
   </div>
 </template>

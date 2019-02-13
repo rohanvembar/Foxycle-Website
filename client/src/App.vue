@@ -1,7 +1,7 @@
 <template>
 <div id="app" class="main-background">
     <div class="navbar-padding"></div>
-    <nav class="navbar is-info navbar-custom">
+    <nav class="navbar is-info navbar-custom ">
     <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="#" style="font-weight:bold;">
@@ -21,10 +21,10 @@
     <div class="navbar-start">
         
       <div class="navbar-item"></div>
-      <router-link class="navbar-item " v-if="!isLoggedIn" to="/" exact-active-class="is-active">home</router-link>          
-      <router-link class="navbar-item" v-if="!isLoggedIn" to="/shop" exact-active-class="is-active">shop</router-link>
-      <router-link class="navbar-item" v-if="!isLoggedIn" to="/services" exact-active-class="is-active">services</router-link>
-      <router-link class="navbar-item" v-if="!isLoggedIn" to="/contact" exact-active-class="is-active">contact</router-link>
+      <router-link class="navbar-item" to="/" exact-active-class="is-active">home</router-link>          
+      <router-link class="navbar-item"  to="/shop" exact-active-class="is-active">shop</router-link>
+      <router-link class="navbar-item"  to="/services" exact-active-class="is-active">services</router-link>
+      <router-link class="navbar-item"  to="/contact" exact-active-class="is-active">contact</router-link>
       <router-link class="navbar-item" v-if="isLoggedIn" to="/admin" exact-active-class="is-active">admin home</router-link>
     </div>
 
@@ -37,9 +37,17 @@
       <router-link class="navbar-item" to="/cart" v-if="!isLoggedIn" exact-active-class="is-active">
       <font-awesome-icon icon="shopping-cart" />
       </router-link>
-      <router-link class="navbar-item" to="/employeemanagement" exact-active-class="is-active" v-if="isLoggedIn">manage employees</router-link>
-      <router-link class="navbar-item" to="/editorder" exact-active-class="is-active" v-if="isLoggedIn">manage orders</router-link>
-      <router-link class="navbar-item" to="/editproduct" exact-active-class="is-active" v-if="isLoggedIn">manage items</router-link>
+
+      <div class="navbar-item has-dropdown is-hoverable" v-if="isLoggedIn">
+        <a class="navbar-link">
+          manage
+        </a>
+          <div class="navbar-dropdown">
+            <router-link class="navbar-item" to="/employeemanagement" exact-active-class="is-active" v-if="isLoggedIn">employees</router-link>
+            <router-link class="navbar-item" to="/editorder" exact-active-class="is-active" v-if="isLoggedIn">orders</router-link>
+            <router-link class="navbar-item" to="/editproduct" exact-active-class="is-active" v-if="isLoggedIn">inventory</router-link>
+          </div>
+      </div>
       <a class="navbar-item" v-if="isLoggedIn" v-on:click="logout()">
         <font-awesome-icon icon="sign-out-alt"/>
       </a>  
