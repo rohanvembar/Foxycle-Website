@@ -43,9 +43,15 @@
           manage
         </a>
           <div class="navbar-dropdown">
-            <router-link class="navbar-item" to="/employeemanagement" exact-active-class="is-active" v-if="isLoggedIn">employees</router-link>
-            <router-link class="navbar-item" to="/editorder" exact-active-class="is-active" v-if="isLoggedIn">orders</router-link>
-            <router-link class="navbar-item" to="/editproduct" exact-active-class="is-active" v-if="isLoggedIn">inventory</router-link>
+            <router-link class="navbar-item" to="/employeemanagement" exact-active-class="is-active" v-if="isLoggedIn">
+              <span class="navicon"><font-awesome-icon icon="users" fixed-width/></span>employees
+            </router-link>
+            <router-link class="navbar-item" to="/editorder" exact-active-class="is-active" v-if="isLoggedIn">
+                <div class="navicon"><font-awesome-icon icon="receipt" fixed-width/></div>orders
+            </router-link>
+            <router-link class="navbar-item" to="/editproduct" exact-active-class="is-active" v-if="isLoggedIn">
+                <div class="navicon"><font-awesome-icon icon="truck-loading" fixed-width/></div>inventory
+            </router-link>
           </div>
       </div>
       <a class="navbar-item" v-if="isLoggedIn" v-on:click="logout()">
@@ -131,5 +137,8 @@ export default class App extends Vue {
 @import "~bulma/css/bulma.css";
 @import "./assets/mainstyle.scss";
 
+.navicon {
+  padding-right: 10px;
+}
 
 </style>
