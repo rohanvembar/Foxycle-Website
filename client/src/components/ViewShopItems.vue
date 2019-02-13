@@ -2,90 +2,12 @@
     <div>
         <div id="wrap">
 	        <div id="columns" class="columns_4">
-                <figure>
+                <figure v-for="(item, index) in items" v-bind:key="index">
                     <router-link to="/itempage">
-                    <img src="../assets/itempage_bike.png">
+                    <img :src="item.image">
                     </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-	
-                <figure>
-                    <router-link to="/itempage">
-                    <img src="../assets/itempage_bike.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-    
-                
-                <figure>
-                    <router-link to="/itempage">
-                    <img src="../assets/itempage_bike.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-                
-                <figure>
-                    <router-link to="/itempage">
-                    <img src="../assets/itempage_bike.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-	
-                <figure>
-                    <router-link to="/itempage">
-                    <img src="../assets/itempage_bike.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-                
-                <figure>
-                    <router-link to="/itempage">
-                    <img src="../assets/itempage_bike.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-            
-                <figure>
-                    <router-link to="/itempage">
-                    <img src="../assets/itempage_bike.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
-                    <router-link class="button" to="/cart" exact-active-class="is-active">
-                    Add to Cart
-                    </router-link>
-                </figure>
-    
-                <figure>
-                    <router-link to="/itempage">
-                    <img src="../assets/itempage_bike.png">
-                    </router-link>
-                    <figcaption>Bike</figcaption>
-                    <span class="price">$44</span>
+                    <figcaption>{{item.name}}</figcaption>
+                    <span class="price">${{item.price}}</span>
                     <router-link class="button" to="/cart" exact-active-class="is-active">
                     Add to Cart
                     </router-link>
@@ -97,10 +19,30 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { iShopItem } from "../models/shopitem.interface";
 
 @Component
 export default class ViewShopItems extends Vue {
-  //@Prop() private msg!: string;
+items: iShopItem[] = [
+    {id:1, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
+    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
+    delivery: true, quantity: 3, description: "bike"},
+    {id:2, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
+    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
+    delivery: true, quantity: 3, description: "bike"},
+    {id:3, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
+    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
+    delivery: true, quantity: 3, description: "bike"},
+    {id:4, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
+    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
+    delivery: true, quantity: 3, description: "bike"},
+    {id:5, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
+    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg",  
+    delivery: true, quantity: 3, description: "bike"},
+    {id:6, name:"bike", price:49.99, brand:"bike", categories:["bike"], 
+    image: "https://previews.123rf.com/images/snehit/snehit1005/snehit100500162/7029057-an-illustration-of-colorful-bike.jpg", 
+    delivery: true, quantity: 3, description: "bike"},
+  ];
 }
 </script>
 
