@@ -30,7 +30,7 @@
         </div>
         <div class="orders">
           <OrdersRefineBox />
-          <ViewOrderItems />
+          <ManageOrderItems />
         </div>
       </div>
     </div>
@@ -44,11 +44,11 @@ import axios, { AxiosResponse } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import OrdersRefineBox from "@/components/OrdersRefineBox.vue";
-import ViewOrderItems from "@/components/ViewOrderItems.vue";
+import ManageOrderItems from "@/components/ManageOrderItems.vue";
 
 @Component({
   components: {
-    ViewOrderItems,
+    ManageOrderItems,
     OrdersRefineBox
   }
 })
@@ -78,7 +78,7 @@ export default class AdminEditOrder extends Vue {
   }
   .orders{
     padding: 10px;
-    margin-right: 100px;
+    margin-right: 150px;
     margin-bottom: 20px;
     display: flex;
     align-items: top;
