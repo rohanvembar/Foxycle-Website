@@ -5,11 +5,11 @@ import store from "./store";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
-import { faReceipt } from '@fortawesome/free-solid-svg-icons'
-import { faUsers } from '@fortawesome/free-solid-svg-icons'
-import { faTruckLoading } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { faReceipt } from "@fortawesome/free-solid-svg-icons";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faTruckLoading } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faUpload);

@@ -1,6 +1,6 @@
 <template>
   <div class="main-background cards">
-    <div>
+    <div class="box">
       <p class="title">Hours</p>
       <div class="content hours">
         <div>
@@ -29,7 +29,11 @@
       </div>
     </div>
     <div>
-      <img alt="map" src="../assets/map.png">
+     <div class="mapouter">
+       <div class="gmap_canvas">
+         <iframe width="600" height="450" id="gmap_canvas" src="https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+         </iframe></div>
+         </div>
     </div>
   </div>
 </template>

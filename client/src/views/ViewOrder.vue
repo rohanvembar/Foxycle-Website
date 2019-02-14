@@ -2,9 +2,8 @@
   <div>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <center><h3>Order#: 1000</h3></center>
-      <!-- <div class = "header">Order #12345678 - In Progress</div> -->
     <div>
-      <step-progress :steps="['Order Received', 'Order Processed','Order Shipped', 'Order Delivered']" :current-step=2 icon-class="fas fa-check"></step-progress>
+      <step-progress :steps="['Received', 'Processed','Shipped', 'Delivered']" :current-step=2 icon-class="fas fa-check"></step-progress>
     </div>
     <br>
     <br>
@@ -22,7 +21,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import OrdersRefineBox from "@/components/OrdersRefineBox.vue";
 import ViewOrderItems from "@/components/ViewOrderItems.vue";
 import StepProgress from 'vue-step-progress';
-import 'vue-step-progress/dist/main.css';
+
+import '../assets/step.css';
 
 
 @Component({
@@ -37,7 +37,7 @@ export default class ViewOrder extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
   .header{
       align-items: left;

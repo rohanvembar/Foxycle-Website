@@ -27,7 +27,6 @@ export default new Router({
       path: "/admin",
       name: "admin",
       component: () => import("./views/AdminHome.vue")
-
     },
     {
       path: "/editorder",
@@ -93,11 +92,11 @@ export default new Router({
       path: "/my-profile",
       name: "myProfile",
       component: MyProfile
-    },    
+    },
     {
       path: "/employeemanagement",
       name: "employeemanagement",
       component: () => import("./views/EmployeeManagement.vue")
-    },
+    }
   ]
 });

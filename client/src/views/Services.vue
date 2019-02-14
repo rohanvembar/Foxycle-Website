@@ -83,7 +83,9 @@ export default class Services extends Vue {
 .indivisual-card {
   background-color: white;
   width: 27%;
-  border-radius: 30px;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+
 }
 
 .card-title {
