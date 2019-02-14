@@ -58,7 +58,7 @@ export default class ViewOrderItems extends Vue {
         padding-right:80px;
         margin-bottom: 20px;
         padding-bottom:30px;
-        font-size: 40px;
+        font-size: 20px;
         align-items: center; 
         align-content: center;
     }
@@ -69,7 +69,7 @@ export default class ViewOrderItems extends Vue {
         margin-left: 40px;
         padding-left:80px;
         padding-bottom:20px;
-        font-size: 20px;
+        font-size: 15px;
         align-items: center; 
         align-content: center;
     }
@@ -81,7 +81,7 @@ export default class ViewOrderItems extends Vue {
         padding-left: 20px;
         padding-right:80px;
         padding-bottom:20px;
-        font-size: 20px;
+        font-size: 15px;
         align-items: center; 
         align-content: center;
     }
@@ -93,7 +93,7 @@ export default class ViewOrderItems extends Vue {
         padding-left:80px;
         padding-right:80px;
         padding-bottom:20px;
-        font-size: 20px;
+        font-size: 15px;
         align-items: center; 
         align-content: center;
     }
