@@ -1,98 +1,122 @@
 <template>
-  <div class="item-page-main-background">
-    <div class="itempage-main-content"> 
-      <div class="itempage-title">
-        Foxcycle Extreme Pro 500
-      </div>
-      <div class="itempage-subtitle">
-        Built For Something
+  <div v-if="loadedItem" class="item-page-main-background">
+    <div class="itempage-main-content">
+      <div class="itempage-title">{{shopItem.item.name}}</div>
+      <div class="itempage-subtitle">Built For Something
         <hr class="itempage-line">
       </div>
       <div class="itempage-row">
         <div class="itempage-image-column">
-          <img class="itempage-image" src="../assets/itempage_bike.png">
+          <img class="itempage-image" :src="shopItem.item.image">
         </div>
-        <div class="itempage-details-column"><table>
-          <tr>
-            <td>Price</td>
-          </tr>
-          <tr>
-            <td class="itempage-price-box">
-              <center>$2,999</center>
-            </td>
-          </tr>
-          <tr>
-            <td>Category</td>
-          </tr>
-          <tr>
-            <td class="itempage-category-box">
-              <center>Mountain Bikes</center>
-            </td>
-          </tr>
-          <tr>
-            <td>Quantity</td>
-          </tr>
-          <tr>
-            <input type="number" min="1" max="100" value="1">
-          </tr>
-          <tr>
-            <td class="itempage-cart-button">
-              <router-link class="button" to="/cart" exact-active-class="is-active">
-              Add to Cart
-              </router-link>
-            </td>
-          </tr>
-        </table></div>
+        <div class="itempage-details-column">
+          <table>
+            <tr>
+              <td>Price</td>
+            </tr>
+            <tr>
+              <td class="itempage-price-box">
+                <center>${{shopItem.item.price}}</center>
+              </td>
+            </tr>
+            <tr>
+              <td>Quantity</td>
+            </tr>
+            <tr>
+              <input type="number" min="1" max="100" value="1">
+            </tr>
+            <tr>
+              <td class="itempage-cart-button">
+                <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div class="itempage-dividing-line">
         <hr>
       </div>
       <div class="itempage-specifications">
-        <div class="itempage-specs-title">
-          Specifications
+        <div class="itempage-specs-title">Specifications</div>
+        <div class="itempage-specs-table">
+          <table>
+            <tr class="itempage-specs-categories">
+              <td>Frameset</td>
+            </tr>
+            <hr class="itempage-specs-dividing-line">
+            <tr class="itempage-specs-subcategories">
+              <td>Frame</td>
+            </tr>
+            <hr class="itempage-specs-dividing-line">
+            <tr class="itempage-specs-subcategories">
+              <td>Front Suspension</td>
+            </tr>
+            <hr class="itempage-specs-dividing-line">
+            <tr class="itempage-specs-subcategories">
+              <td>Rear Suspension</td>
+            </tr>
+            <hr class="itempage-specs-dividing-line">
+            <tr class="itempage-specs-categories">
+              <td>Drivetrain</td>
+            </tr>
+            <hr class="itempage-specs-dividing-line">
+            <tr class="itempage-specs-subcategories">
+              <td>Front Suspension</td>
+            </tr>
+            <hr class="itempage-specs-dividing-line">
+            <tr class="itempage-specs-subcategories">
+              <td>Rear Suspension</td>
+            </tr>
+          </table>
         </div>
-        <div class="itempage-specs-table"><table>
-          <tr class="itempage-specs-categories">
-            <td>Frameset</td>
-          </tr>
-          <hr class="itempage-specs-dividing-line">
-          <tr class="itempage-specs-subcategories">
-            <td>Frame</td>
-          </tr>
-          <hr class="itempage-specs-dividing-line">
-          <tr class="itempage-specs-subcategories">
-            <td>Front Suspension</td>
-          </tr>
-          <hr class="itempage-specs-dividing-line">
-          <tr class="itempage-specs-subcategories">
-            <td>Rear Suspension</td>
-          </tr>
-          <hr class="itempage-specs-dividing-line">
-          <tr class="itempage-specs-categories">
-            <td>Drivetrain</td>
-          </tr>
-          <hr class="itempage-specs-dividing-line">
-          <tr class="itempage-specs-subcategories">
-            <td>Front Suspension</td>
-          </tr>
-          <hr class="itempage-specs-dividing-line">
-          <tr class="itempage-specs-subcategories">
-            <td>Rear Suspension</td>
-          </tr>
-        </table></div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
-
+import { iShopItem } from "../models/shopitem.interface";
 
 @Component
 export default class ItemPage extends Vue {
+  error: string | boolean = false;
+  // shopItem: iShopItem = {
+  //   id: 0,
+  //   name: "",
+  //   price: 0,
+  //   brand: "",
+  //   categories: [""],
+  //   image: "",
+  //   delivery: true,
+  //   quantity: 0,
+  //   description: ""
+  // };
+  shopItem: iShopItem | undefined;
+  loadedItem: boolean = false;
+
+  created() {
+    this.getItem();
+  }
+
+  getItem() {
+    this.error = false;
+    console.log("itemid: " + this.$route.params.itemid)
+    axios
+      .get(APIConfig.buildUrl("/shopitem/" + this.$route.params.itemid))
+      .then((response: AxiosResponse) => {
+        this.shopItem = response.data;
+        this.loadedItem = true;
+        console.log(response.data);
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log(this.error);
+      });
+  }
 }
 </script>
 
@@ -100,12 +124,11 @@ export default class ItemPage extends Vue {
 
 
 <style lang="scss" scoped>
-
 .itempage-main-content {
-    padding-left: 20%;
-    padding-right:20%;
-    padding-top: 3%;
-    //justify-content: center;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 3%;
+  //justify-content: center;
 }
 
 .item-page-main-background {
@@ -132,8 +155,8 @@ export default class ItemPage extends Vue {
 
 .itempage-specs-table {
   background-color: #ffffff;
-  box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.16);
-  padding:1%;
+  box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.16);
+  padding: 1%;
 }
 
 .itempage-specs-categories {
@@ -146,25 +169,25 @@ export default class ItemPage extends Vue {
 }
 
 .itempage-row {
-    padding-top: 2%;
-    content: "";
-    display: table;
-    clear: both;
+  padding-top: 2%;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .itempage-image-column {
-    float: left;
-    //width: 75%;
+  float: left;
+  //width: 75%;
 }
 
 .itempage-image {
-    max-height: 250px;
+  max-height: 250px;
 }
 
 .itempage-details-column {
-    float: right;
-    padding-left: 100px;
-    //width: 25%;
+  float: right;
+  padding-left: 100px;
+  //width: 25%;
 }
 
 .itempage-line {
@@ -177,7 +200,7 @@ export default class ItemPage extends Vue {
   margin-top: 3%;
   width: 100%;
   height: 5px;
-  background-color: #3C8CFF;
+  background-color: #3c8cff;
 }
 
 .itempage-specs-dividing-line {
@@ -206,20 +229,20 @@ export default class ItemPage extends Vue {
   padding-top: 20px;
 }
 
-.button{
-  background: #239CEC;
-  margin:px;
-  display:block;
-  text-align:center;
-  color:#fff;
+.button {
+  background: #239cec;
+  margin: px;
+  display: block;
+  text-align: center;
+  color: #fff;
   transition: 0.3s;
-  text-decoration:none;
-  text-shadow:1px 1px 3px rgba(0,0,0,0.3);
-  border-radius:3px;
-  box-shadow:1px 1px 3px rgba(0,0,0,0.3);
+  text-decoration: none;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
-.button:hover{
-  background:#40B883;
-  color:#f1f2f3;
+.button:hover {
+  background: #40b883;
+  color: #f1f2f3;
 }
 </style>

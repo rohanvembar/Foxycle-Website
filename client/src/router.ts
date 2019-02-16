@@ -59,7 +59,7 @@ export default new Router({
       component: () => import("./views/EmployeeManagement.vue")
     },
     {
-      path: "/itempage",
+      path: "/itempage/:itemid",
       name: "itempage",
       component: () => import("./views/ItemPage.vue")
     },
@@ -92,11 +92,6 @@ export default new Router({
       path: "/my-profile",
       name: "myProfile",
       component: MyProfile
-    },
-    {
-      path: "/employeemanagement",
-      name: "employeemanagement",
-      component: () => import("./views/EmployeeManagement.vue")
     }
   ]
 });
