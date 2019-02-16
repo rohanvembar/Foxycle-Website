@@ -1,13 +1,17 @@
 <template>
   <div class="main-background confirmation">
-    <p class="title">Thank You</p>
-    <p class="orderNum">Your order number is: 12345678</p>
-    <p class="orderNum">Your receipt will be mailed to you within 24 hours</p>
-    <br>
-    <br>
-    <br>
-    <router-link class="button shopping-button" to="/shop" exact-active-class="is-active">
-                  Continue Shopping</router-link>
+    <p class="title">thank you</p>
+    <img
+      src="https://media1.tenor.com/images/80687e7f6e3b0fb028ebe55180793aaf/tenor.gif?itemid=5306880"
+    >
+    <p class="orderNum">your order number is: 12345678</p>
+    <p class="orderNum">your receipt will be emailed to you within 24 hours</p>
+
+    <router-link
+      class="button is-medium is-info"
+      to="/shop"
+      exact-active-class="is-active"
+    >continue shopping</router-link>
   </div>
 </template>
 
@@ -19,36 +23,28 @@ import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class OrderConfirmation extends Vue {
-}
+export default class OrderConfirmation extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+.confirmation {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .confirmation {
-    padding:100px 20px 30px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.title {
+  font-size: 55px;
+  text-decoration: none;
+  padding-bottom: 10px;
+}
 
-  .title {
-    font-size: 55px;
-    text-decoration: none;
-    padding-bottom: 20px;
-  }
-
-   .orderNum {
-     font-size: 18px;
-     padding-top: 10px;
-   }
-
-  .shopping-button {
-    margin: 20px;
-    background-color: rgb(20, 157, 248);
-    color: white;
-  }
-
+.orderNum {
+  font-size: 18px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
 </style>
 

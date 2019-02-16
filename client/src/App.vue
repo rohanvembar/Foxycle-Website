@@ -51,7 +51,9 @@
               v-if="!isLoggedIn"
               exact-active-class="is-active"
             >
-              <font-awesome-icon icon="shopping-cart"/>
+              <div class="badge is-badge-success is-badge-small" data-badge="">
+                <font-awesome-icon icon="shopping-cart"/>
+              </div>
             </router-link>
 
             <div class="navbar-item has-dropdown is-hoverable" v-if="isLoggedIn">
@@ -88,7 +90,7 @@
                   </div>inventory
                 </router-link>
                 <hr class="navbar-divider">
-    
+
                 <router-link
                   class="navbar-item"
                   to="/"

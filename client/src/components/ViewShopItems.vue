@@ -11,7 +11,7 @@
           </router-link>
           <figcaption>{{item.name}}</figcaption>
           <span class="price">${{item.price}}</span>
-          <div class="button" v-on:click="toast">Add to Cart</div>
+          <div class="button" v-on:click="toast">add to cart</div>
         </figure>
       </div>
     </div>
