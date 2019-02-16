@@ -1,10 +1,15 @@
 <template>
   <div>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous"
+    >
     <div id="wrap">
       <div id="columns" class="columns_4">
         <figure v-for="(item, index) in items" v-bind:key="index">
-          <router-link to="/itempage">
+          <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
             <div class="imagediv">
               <img :src="item.image" class="image">
             </div>
@@ -37,11 +42,14 @@ export default class ViewShopItems extends Vue {
 
   toast() {
     const ele = document.getElementById("toast");
-    ele.className = "show";
-    setTimeout(function() {
-      ele.className = ele.className.replace("show", "");
-    }, 3000);
+    if (ele) {
+      ele.className = "show";
+      setTimeout(function() {
+        ele.className = ele.className.replace("show", "");
+      }, 3000);
+    }
   }
+
   created() {
     this.getAllItems();
   }
@@ -60,6 +68,8 @@ export default class ViewShopItems extends Vue {
         console.log(this.error);
       });
   }
+
+  goToItemPage() {}
 }
 </script>
 
@@ -85,7 +95,7 @@ export default class ViewShopItems extends Vue {
 }
 #toast #img {
   width: 55px;
-  height:55px;
+  height: 55px;
 
   float: left;
 
