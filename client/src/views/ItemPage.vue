@@ -37,38 +37,8 @@
         <hr>
       </div>
       <div class="itempage-specifications">
-        <div class="itempage-specs-title">Specifications</div>
-        <div class="itempage-specs-table">
-          <table>
-            <tr class="itempage-specs-categories">
-              <td>Frameset</td>
-            </tr>
-            <hr class="itempage-specs-dividing-line">
-            <tr class="itempage-specs-subcategories">
-              <td>Frame</td>
-            </tr>
-            <hr class="itempage-specs-dividing-line">
-            <tr class="itempage-specs-subcategories">
-              <td>Front Suspension</td>
-            </tr>
-            <hr class="itempage-specs-dividing-line">
-            <tr class="itempage-specs-subcategories">
-              <td>Rear Suspension</td>
-            </tr>
-            <hr class="itempage-specs-dividing-line">
-            <tr class="itempage-specs-categories">
-              <td>Drivetrain</td>
-            </tr>
-            <hr class="itempage-specs-dividing-line">
-            <tr class="itempage-specs-subcategories">
-              <td>Front Suspension</td>
-            </tr>
-            <hr class="itempage-specs-dividing-line">
-            <tr class="itempage-specs-subcategories">
-              <td>Rear Suspension</td>
-            </tr>
-          </table>
-        </div>
+        <div class="itempage-specs-title">Description</div>
+        {{shopItem.item.description}}
       </div>
     </div>
   </div>
