@@ -8,6 +8,7 @@ Vue.use(Vuex);
 interface iRootState {
   userToken: string | null;
   userId: number | null;
+  itemids: number[];
 }
 
 interface iLoginPayload {
@@ -17,7 +18,8 @@ interface iLoginPayload {
 
 const state: iRootState = {
   userToken: null,
-  userId: null
+  userId: null,
+  itemids: []
 };
 
 const mutations: MutationTree<iRootState> = {
@@ -28,6 +30,9 @@ const mutations: MutationTree<iRootState> = {
   logout(state) {
     state.userToken = null;
     state.userId = null;
+  },
+  cart(state, id) {
+    state.itemids.push(id);
   }
 };
 

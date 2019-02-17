@@ -16,7 +16,7 @@
           </router-link>
           <figcaption>{{item.name}}</figcaption>
           <span class="price">${{item.price}}</span>
-          <div class="button" v-on:click="toast">add to cart</div>
+          <div class="button" v-on:click="toast(item.id)">add to cart</div>
         </figure>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default class ViewShopItems extends Vue {
   error: string | boolean = false;
   items: iShopItem[] = [];
 
-  toast() {
+  toast(id:number) {
     const ele = document.getElementById("toast");
     if (ele) {
       ele.className = "show";
@@ -48,6 +48,12 @@ export default class ViewShopItems extends Vue {
         ele.className = ele.className.replace("show", "");
       }, 3000);
     }
+    this.addToCart(id);
+  }
+
+  addToCart(id:number) {
+    this.$store.commit("cart", id);
+    console.log(this.$store.state.itemids)
   }
 
   created() {
