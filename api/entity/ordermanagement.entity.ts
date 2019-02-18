@@ -1,7 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany } from "typeorm";
+import { Column, Entity, PrimaryColumn, ManyToMany } from "typeorm";
 @Entity()
 export class OrderManagement {
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     public orderNumber!: number;
 
     @Column()
