@@ -2,7 +2,7 @@
   <div class="main-background">
     <div class="container">
       <div class="cart-table">
-        <table>
+        <table v-if="cartLoaded">
           <tr>
             <th>Product</th>
             <th></th>
@@ -10,32 +10,14 @@
             <th>Quantity</th>
             <th>Total</th>
           </tr>
-          <tr>
+          <tr v-for="(item, index) in cart" v-bind:key="index">
             <td>
-              <img src="../assets/transparentlogo.png">
+              <img :src="item.image">
             </td>
-            <td>Foxycle Extreme Pro 5000</td>
-            <td>$3999.99</td>
+            <td>{{item.name}}</td>
+            <td>${{item.price}}</td>
             <td>1</td>
             <td>$3999.99</td>
-          </tr>
-          <tr>
-            <td>
-              <img src="../assets/transparentlogo.png">
-            </td>
-            <td>Foxycle Extreme Pro 1000</td>
-            <td>$5999.99</td>
-            <td>1</td>
-            <td>$5999.99</td>
-          </tr>
-          <tr>
-            <td>
-              <img src="../assets/transparentlogo.png">
-            </td>
-            <td>Foxycle Extreme Pro 6000</td>
-            <td>$7999.99</td>
-            <td>1</td>
-            <td>$7999.99</td>
           </tr>
           <tr class="bot-bord">
             <td>Subtotal</td>
@@ -86,6 +68,7 @@ import { iShopItem } from "../models/shopitem.interface";
 export default class Cart extends Vue {
   error: string | boolean = false;
   cart!: iShopItem[];
+  cartLoaded: Boolean = false;
 
   created() {
     this.getCart();
@@ -93,7 +76,6 @@ export default class Cart extends Vue {
 
   getCart() {
     this.error = false;
-    console.log("itemid: " + this.$route.params.itemid);
     axios
       .get(APIConfig.buildUrl("/cart"), {
         headers: {
@@ -102,6 +84,7 @@ export default class Cart extends Vue {
       })
       .then((response: AxiosResponse) => {
         this.cart = response.data;
+        this.cartLoaded = true;
         console.log(response.data);
         this.$emit("success");
       })

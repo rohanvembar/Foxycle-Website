@@ -29,11 +29,18 @@
       </div>
     </div>
     <div>
-     <div class="mapouter">
-       <div class="gmap_canvas">
-         <iframe width="600" height="450" id="gmap_canvas" src="https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-         </iframe></div>
-         </div>
+      <div class="mapouter">
+        <div class="gmap_canvas">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3256.4995892881607!2d-120.67430488460542!3d35.29356598028646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80ecf051fa383c77%3A0x95e0baf262f65f3a!2sSloDoCo+Donuts!5e0!3m2!1sen!2sus!4v1550464765757"
+            width="600"
+            height="450"
+            frameborder="0"
+            style="border:0"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,13 +51,12 @@ import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class Contact extends Vue {
-}
+export default class Contact extends Vue {}
 </script>
 
 <style lang="scss" scoped>
 .cards {
-  padding:10px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-around;
