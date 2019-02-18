@@ -250,7 +250,16 @@ export default class Checkout extends Vue {
 
   placeOrder() {
     this.ordernumber  = this.orderNumber();
-    console.log(this.ordernumber);
+    axios
+      .post(APIConfig.buildUrl("/neworder"), {
+
+      })
+      .then((response: AxiosResponse) => {
+        console.log(response.data);
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("catch");
+      });
   }
 }
 </script>
