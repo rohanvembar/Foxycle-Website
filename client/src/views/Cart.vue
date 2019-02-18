@@ -1,6 +1,7 @@
 <template>
   <div class="main-background">
     <div class="container">
+      <div class="add-to-cart"><div v-if="!itemsInCart">Add to your cart!</div></div>
       <div class="cart-table">
         <table>
           <tr>
@@ -24,21 +25,24 @@
             <td></td>
             <td></td>
             <td></td>
-            <td>${{subtotal}}</td>
+            <td v-if="itemsInCart">${{subtotal}}</td>
+            <td v-if="!itemsInCart">-</td>
           </tr>
           <tr>
             <td>Shipping</td>
             <td></td>
             <td></td>
             <td></td>
-            <td>${{shipping}}</td>
+            <td v-if="itemsInCart">${{shipping}}</td>
+            <td v-if="!itemsInCart">-</td>
           </tr>
           <tr class="tot-bord">
             <td>Total</td>
             <td></td>
             <td></td>
             <td></td>
-            <td>${{total}}</td>
+            <td v-if="itemsInCart">${{total}}</td>
+            <td v-if="!itemsInCart">-</td>
           </tr>
           <br>
           <tr>
@@ -48,7 +52,8 @@
             <td></td>
             <td>
               <div class="checkout-btn">
-                <router-link class="button" to="/checkout" exact-active-class="is-active">Checkout</router-link>
+                <router-link v-if="itemsInCart" class="button" to="/checkout" exact-active-class="is-active">Checkout</router-link>
+                <div v-if="!itemsInCart" disabled class="button">Checkout</div>
               </div>
             </td>
           </tr>
@@ -68,6 +73,7 @@ import { iShopItem } from "../models/shopitem.interface";
 export default class Cart extends Vue {
   error: string | boolean = false;
   cart: iShopItem[] = this.$store.state.items;
+  itemsInCart: boolean = (this.cart.length != 0);
   subtotal: number = 0;
   shipping: number = 10;
   total: number = 0;
@@ -90,25 +96,12 @@ export default class Cart extends Vue {
 </script>
 
 <style scoped>
-.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
+.add-to-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
 .container {
   width: 75%;
   background-color: white;
