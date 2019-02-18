@@ -282,6 +282,7 @@ export default class Checkout extends Vue {
       .catch((response: AxiosError) => {
         console.log("catch");
       });
+    this.$store.state.items = [];
   }
 }
 </script>

@@ -11,13 +11,13 @@
             <th>Quantity</th>
             <th>Total</th>
           </tr>
-          <tr v-for="(item, index) in cart" v-bind:key="index">
+          <tr v-for="(cartitem, index) in cart" v-bind:key="index">
             <td>
-              <img :src="item.image">
+              <img :src="cartitem.item.image">
             </td>
-            <td>{{item.name}}</td>
-            <td>${{item.price}}</td>
-            <td>1</td>
+            <td>{{cartitem.item.name}}</td>
+            <td>${{cartitem.item.price}}</td>
+            <td>{{cartitem.quantity}}</td>
             <td></td>
           </tr>
           <tr class="bot-bord">
@@ -68,19 +68,21 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import { iCart } from "../models/cart.interface";
 
 @Component
 export default class Cart extends Vue {
   error: string | boolean = false;
-  cart: iShopItem[] = this.$store.state.items;
-  itemsInCart: boolean = (this.cart.length != 0);
+  items: iShopItem[] = this.$store.state.items;
+  cart: iCart[] = [];
+  itemsInCart: boolean = (this.items.length != 0);
   subtotal: number = 0;
   shipping: number = 10;
   total: number = 0;
 
   computeSubtotal() {
     for (var i in this.cart) {
-      this.subtotal += this.cart[i].price;
+      this.subtotal += this.items[i].price;
     }
   }
 
@@ -91,6 +93,21 @@ export default class Cart extends Vue {
   created() {
     this.computeSubtotal();
     this.computeTotal();
+    var flag = true;
+    for (var i in this.items) {
+      for (var j in this.cart) {
+        flag = true;
+        if (this.cart[j].item.id === this.items[i].id) {
+          this.cart[j] = {item: this.cart[j].item, quantity: this.cart[j].quantity + 1}
+          flag = false;
+        } else {
+          flag = true;
+        }
+      }
+      if (flag) {
+        this.cart.push({item: this.items[i], quantity: 1})
+      }
+    }
   }
 }
 </script>
