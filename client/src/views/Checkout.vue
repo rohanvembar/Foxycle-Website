@@ -153,41 +153,27 @@
                 <th></th>
                 <th>Total</th>
               </tr>
-              <tr>
+              <tr v-for="(item, index) in cart" v-bind:key="index">
                 <td>
-                  <img src="../assets/transparentlogo.png">
+                  <img :src="item.image">
                 </td>
-                <td class="iName">Foxycle Extreme Pro 5000</td>
-                <td>$3999.99</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="../assets/transparentlogo.png">
-                </td>
-                <td class="iName">Foxycle Extreme Pro 1000</td>
-                <td>$5999.99</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="../assets/transparentlogo.png">
-                </td>
-                <td class="iName">Foxycle Extreme Pro 6000</td>
-                <td>$7999.99</td>
+                <td class="iName">{{item.name}}</td>
+                <td>${{item.price}}</td>
               </tr>
               <tr class="bot-bord">
                 <td>Subtotal</td>
                 <td></td>
-                <td>$17999.97</td>
+                <td>${{subtotal}}</td>
               </tr>
               <tr>
                 <td>Shipping</td>
                 <td></td>
-                <td>$300</td>
+                <td>${{shipping}}</td>
               </tr>
               <tr class="tot-bord">
                 <td>Total</td>
                 <td></td>
-                <td>$18,299.97</td>
+                <td>${{total}}</td>
               </tr>
               <br>
               <tr>
@@ -195,7 +181,7 @@
                 <td></td>
                 <td>
                   <div class="checkout-btn">
-                    <div class="button is-success" v-on:click="loading()">
+                    <div class="button is-success" v-on:click="loading(), placeOrder()">
                       <i class="fas fa-check iconpadding"></i>place order
                     </div>
 
@@ -221,17 +207,44 @@
 import axios, { AxiosResponse } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { iShopItem } from "../models/shopitem.interface";
 
 @Component
 export default class Checkout extends Vue {
-  loading() {
-    const ele = document.getElementById("pageloader");
-    ele.classList.toggle("is-active");
-    setTimeout(function() {
-      ele.classList.toggle("is-active");
-    }, 3000);
+  cart: iShopItem[] = this.$store.state.items; 
+  subtotal: number = 0;
+  shipping: number = 10;
+  total: number = 0;
 
-    setTimeout(() => this.$router.push({ path: "/orderconfirmation" }), 3500);
+  computeSubtotal() {
+    for (var i in this.cart) {
+      this.subtotal += this.cart[i].price;
+    }
+  }
+
+  computeTotal() {
+    this.total = this.subtotal + this.shipping;
+  }
+
+  created() {
+    this.computeSubtotal();
+    this.computeTotal();
+  }
+
+  loading() {
+      const ele = document.getElementById("pageloader");
+      if (ele) {
+      ele.classList.toggle("is-active");
+      setTimeout(function() {
+        ele.classList.toggle("is-active");
+      }, 3000);
+
+      setTimeout(() => this.$router.push({ path: "/orderconfirmation" }), 3500);
+    }
+  }
+
+  placeOrder() {
+    //axios stuff
   }
 }
 </script>
