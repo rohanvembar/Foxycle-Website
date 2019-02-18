@@ -11,7 +11,7 @@ export class OrderManagementController extends DefaultController {
     protected initializeRoutes(): express.Router {
         const router = express.Router();
         const orderRepo = getRepository(OrderManagement);
-        router.route("/order")
+        router.route("/orders")
             .get((req: Request, res: Response) => {
                 console.log("retrieving all orders");
                 orderRepo.find().then((orders: OrderManagement[]) => {
