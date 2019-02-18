@@ -64,7 +64,7 @@ export default new Router({
       component: () => import("./views/ItemPage.vue")
     },
     {
-      path: "/orderconfirmation",
+      path: "/orderconfirmation/:ordernumber",
       name: "orderconfirmation",
       component: () => import("./views/OrderConfirmation.vue")
     },

@@ -140,8 +140,6 @@
             </div>
           </div>
         </div>
-
-        
       </div>
       <div class="column">
         <div class="center">
@@ -211,10 +209,11 @@ import { iShopItem } from "../models/shopitem.interface";
 
 @Component
 export default class Checkout extends Vue {
-  cart: iShopItem[] = this.$store.state.items; 
+  cart: iShopItem[] = this.$store.state.items;
   subtotal: number = 0;
   shipping: number = 10;
   total: number = 0;
+  ordernumber: string = "";
 
   computeSubtotal() {
     for (var i in this.cart) {
@@ -232,19 +231,26 @@ export default class Checkout extends Vue {
   }
 
   loading() {
-      const ele = document.getElementById("pageloader");
-      if (ele) {
+    const ele = document.getElementById("pageloader");
+    if (ele) {
       ele.classList.toggle("is-active");
       setTimeout(function() {
         ele.classList.toggle("is-active");
       }, 3000);
 
-      setTimeout(() => this.$router.push({ path: "/orderconfirmation" }), 3500);
+      setTimeout(() => this.$router.push({name: 'orderconfirmation', params: { ordernumber: this.ordernumber}}), 3500);
     }
   }
 
+  orderNumber() {
+    let now = Date.now().toString();
+    now += now + Math.floor(Math.random() * 10);
+    return [now.slice(0, 4), now.slice(4, 10), now.slice(10, 14)].join("-");
+  }
+
   placeOrder() {
-    //axios stuff
+    this.ordernumber  = this.orderNumber();
+    console.log(this.ordernumber);
   }
 }
 </script>

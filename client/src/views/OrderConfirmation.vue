@@ -4,7 +4,7 @@
     <img
       src="https://media1.tenor.com/images/80687e7f6e3b0fb028ebe55180793aaf/tenor.gif?itemid=5306880"
     >
-    <p class="orderNum">your order number is: 12345678</p>
+    <p class="orderNum">your order number is: {{ordernumber}}</p>
     <p class="orderNum">your receipt will be emailed to you within 24 hours</p>
 
     <router-link
@@ -23,7 +23,12 @@ import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class OrderConfirmation extends Vue {}
+export default class OrderConfirmation extends Vue {
+  ordernumber: string = "";
+  created() {
+    this.ordernumber = this.$route.params.ordernumber;
+    }
+}
 </script>
 
 <style lang="scss" scoped>
