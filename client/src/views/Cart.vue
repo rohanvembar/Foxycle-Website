@@ -81,12 +81,16 @@ export default class Cart extends Vue {
   loadingTrue: boolean = (!this.itemsFromDB && this.itemsInCart);
   subtotal: number = 0;
   shipping: number = 10;
-  total: number = this.subtotal + this.shipping;
+  total: number = 0;
 
   computeSubtotal() {
     for (var i in this.cart) {
       this.subtotal += this.cart[i].price;
     }
+  }
+
+  computeTotal() {
+    this.total = this.subtotal + this.shipping;
   }
 
   created() {
@@ -106,6 +110,7 @@ export default class Cart extends Vue {
         this.itemsFromDB = true;
         this.loadingTrue = false;
         this.computeSubtotal();
+        this.computeTotal();
         console.log(response.data);
         this.$emit("success");
       })
