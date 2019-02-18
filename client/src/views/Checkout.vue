@@ -149,27 +149,32 @@
               <tr>
                 <th>Product</th>
                 <th></th>
+                <th>Quantity</th>
                 <th>Total</th>
               </tr>
-              <tr v-for="(item, index) in cart" v-bind:key="index">
+              <tr v-for="(cartitem, index) in cart" v-bind:key="index">
                 <td>
-                  <img :src="item.image">
+                  <img :src="cartitem.item.image">
                 </td>
-                <td class="iName">{{item.name}}</td>
-                <td>${{item.price}}</td>
+                <td class="iName">{{cartitem.item.name}}</td>
+                <td class="iName">{{cartitem.quantity}}</td>
+                <td>${{cartitem.item.price}}</td>
               </tr>
               <tr class="bot-bord">
                 <td>Subtotal</td>
+                <td></td>
                 <td></td>
                 <td>${{subtotal}}</td>
               </tr>
               <tr>
                 <td>Shipping</td>
                 <td></td>
+                <td></td>
                 <td>${{shipping}}</td>
               </tr>
               <tr class="tot-bord">
                 <td>Total</td>
+                <td></td>
                 <td></td>
                 <td>${{total}}</td>
               </tr>
@@ -206,18 +211,20 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import { iCart } from "../models/cart.interface";
 
 @Component
 export default class Checkout extends Vue {
-  cart: iShopItem[] = this.$store.state.items;
+  items: iShopItem[] = this.$store.state.items;
+  cart: iCart[] = [];
   subtotal: number = 0;
   shipping: number = 10;
   total: number = 0;
   ordernumber: string = "";
 
   computeSubtotal() {
-    for (var i in this.cart) {
-      this.subtotal += this.cart[i].price;
+    for (var i in this.items) {
+      this.subtotal += this.items[i].price;
     }
   }
 
@@ -228,6 +235,21 @@ export default class Checkout extends Vue {
   created() {
     this.computeSubtotal();
     this.computeTotal();
+    var flag = true;
+    for (var i in this.items) {
+      for (var j in this.cart) {
+        flag = true;
+        if (this.cart[j].item.id === this.items[i].id) {
+          this.cart[j] = {item: this.cart[j].item, quantity: this.cart[j].quantity + 1}
+          flag = false;
+        } else {
+          flag = true;
+        }
+      }
+      if (flag) {
+        this.cart.push({item: this.items[i], quantity: 1})
+      }
+    }
   }
 
   loading() {
