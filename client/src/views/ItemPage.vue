@@ -67,8 +67,8 @@ export default class ItemPage extends Vue {
   addToCart() {
     if (this.shopItem) {
       console.log(this.shopItem);
-      this.$store.commit("cart", this.shopItem.id);
-      console.log(this.$store.state.itemids)
+      this.$store.commit("cart", this.shopItem);
+      console.log(this.$store.state.items)
     }
   }
 

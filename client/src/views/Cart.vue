@@ -1,10 +1,6 @@
 <template>
   <div class="main-background">
     <div class="container">
-      <div class="loadinginfo">
-        <div v-if="loadingTrue" class="loader"></div>
-        <div v-if="!itemsInCart">Add to your cart!</div>
-      </div>
       <div class="cart-table">
         <table>
           <tr>
@@ -28,24 +24,21 @@
             <td></td>
             <td></td>
             <td></td>
-            <td v-if="itemsFromDB">${{subtotal}}</td>
-            <td v-if="!itemsFromDB">-</td>
+            <td>${{subtotal}}</td>
           </tr>
           <tr>
             <td>Shipping</td>
             <td></td>
             <td></td>
             <td></td>
-            <td v-if="itemsFromDB">${{shipping}}</td>
-            <td v-if="!itemsFromDB">-</td>
+            <td>${{shipping}}</td>
           </tr>
           <tr class="tot-bord">
             <td>Total</td>
             <td></td>
             <td></td>
             <td></td>
-            <td v-if="itemsFromDB">${{total}}</td>
-            <td v-if="!itemsFromDB">-</td>
+            <td>${{total}}</td>
           </tr>
           <br>
           <tr>
@@ -55,8 +48,7 @@
             <td></td>
             <td>
               <div class="checkout-btn">
-                <router-link v-if="itemsFromDB" class="button" to="/checkout" exact-active-class="is-active">Checkout</router-link>
-                <div v-if="!itemsFromDB" disabled class="button" exact-active-class="is-active">Checkout</div>
+                <router-link class="button" to="/checkout" exact-active-class="is-active">Checkout</router-link>
               </div>
             </td>
           </tr>
@@ -75,10 +67,7 @@ import { iShopItem } from "../models/shopitem.interface";
 @Component
 export default class Cart extends Vue {
   error: string | boolean = false;
-  cart: iShopItem[] = [];
-  itemsFromDB: boolean = false;
-  itemsInCart: boolean = (this.$store.state.itemids.length != 0);
-  loadingTrue: boolean = (!this.itemsFromDB && this.itemsInCart);
+  cart: iShopItem[] = this.$store.state.items;
   subtotal: number = 0;
   shipping: number = 10;
   total: number = 0;
@@ -94,30 +83,8 @@ export default class Cart extends Vue {
   }
 
   created() {
-    this.getCart();
-  }
-
-  getCart() {
-    this.error = false;
-    axios
-      .get(APIConfig.buildUrl("/cart"), {
-        headers: {
-          "cartItems": this.$store.state.itemids
-        }
-      })
-      .then((response: AxiosResponse) => {
-        this.cart = response.data;
-        this.itemsFromDB = true;
-        this.loadingTrue = false;
-        this.computeSubtotal();
-        this.computeTotal();
-        console.log(response.data);
-        this.$emit("success");
-      })
-      .catch((res: AxiosError) => {
-        this.error = res.response && res.response.data.error;
-        console.log(this.error);
-      });
+    this.computeSubtotal();
+    this.computeTotal();
   }
 }
 </script>
@@ -131,12 +98,6 @@ export default class Cart extends Vue {
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
-}
-
-.loadinginfo {
-  display: flex;
-  justify-content: center;
-  align-content: center;
 }
 
 @-webkit-keyframes spin {

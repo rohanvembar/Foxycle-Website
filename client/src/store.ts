@@ -2,13 +2,14 @@ import Vue from "vue";
 import Vuex, { MutationTree, ActionTree } from "vuex";
 
 import { iUser } from "@/models/user.interface";
+import { iShopItem } from "@/models/shopitem.interface";
 
 Vue.use(Vuex);
 
 interface iRootState {
   userToken: string | null;
   userId: number | null;
-  itemids: number[];
+  items: iShopItem[];
 }
 
 interface iLoginPayload {
@@ -19,7 +20,7 @@ interface iLoginPayload {
 const state: iRootState = {
   userToken: null,
   userId: null,
-  itemids: []
+  items: []
 };
 
 const mutations: MutationTree<iRootState> = {
@@ -32,7 +33,7 @@ const mutations: MutationTree<iRootState> = {
     state.userId = null;
   },
   cart(state, id) {
-    state.itemids.push(id);
+    state.items.push(id);
   }
 };
 

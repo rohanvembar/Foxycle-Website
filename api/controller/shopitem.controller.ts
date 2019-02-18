@@ -46,36 +46,6 @@ export class ShopItemController extends DefaultController {
                     }
                 );
             });
-        router.route("/cart")
-            .get((req: Request, res: Response) => {
-                const ids = req.get("cartItems");
-                console.log("cart item ids: " + ids)
-                if (!ids) {
-                    res.status(404);
-                    return;
-                }
-                var items: ShopItem[] = [];
-                const idList = ids.split(",");
-                const needed: number = idList.length;
-                var received = 0;
-                var failed = 0;
-                for (let i in idList) {
-                    console.log("looking for id #" + idList[i])
-                    shopItemRepo.findOne(idList[i]).then((item: ShopItem | undefined) => {
-                        if (!item) {
-                            failed ++;
-                            res.status(404);
-                            return;
-                        }
-                        items.push(item);
-                        received ++;
-                        if(failed + received === needed) {
-                            console.log(items)
-                            res.send(items);
-                        }
-                    });
-                }
-            });
         return router;
     }
 }
