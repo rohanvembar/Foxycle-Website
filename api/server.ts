@@ -1,8 +1,9 @@
 import cors from "cors";
 import express from "express";
-import { LoginController, UserController, AnnouncementController, ShopItemController } from "./controller";
+import { LoginController, UserController, AnnouncementController, ShopItemController, OrderManagementController } from "./controller";
 
 import { DBConnection } from "./connection";
+import { OrderManagement } from "./entity";
 
 export class Server {
   private myApp: Promise<express.Application>;
@@ -23,6 +24,7 @@ export class Server {
       app.use("/", new LoginController().router);
       app.use("/", new AnnouncementController().router);
       app.use("/", new ShopItemController().router);
+      app.use("/", new OrderManagementController().router);
 
       return app;
     });

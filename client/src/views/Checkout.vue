@@ -240,14 +240,17 @@ export default class Checkout extends Vue {
       for (var j in this.cart) {
         flag = true;
         if (this.cart[j].item.id === this.items[i].id) {
-          this.cart[j] = {item: this.cart[j].item, quantity: this.cart[j].quantity + 1}
+          this.cart[j] = {
+            item: this.cart[j].item,
+            quantity: this.cart[j].quantity + 1
+          };
           flag = false;
         } else {
           flag = true;
         }
       }
       if (flag) {
-        this.cart.push({item: this.items[i], quantity: 1})
+        this.cart.push({ item: this.items[i], quantity: 1 });
       }
     }
   }
@@ -260,7 +263,14 @@ export default class Checkout extends Vue {
         ele.classList.toggle("is-active");
       }, 3000);
 
-      setTimeout(() => this.$router.push({name: 'orderconfirmation', params: { ordernumber: this.ordernumber}}), 3500);
+      setTimeout(
+        () =>
+          this.$router.push({
+            name: "orderconfirmation",
+            params: { ordernumber: this.ordernumber }
+          }),
+        3500
+      );
     }
   }
 
@@ -270,11 +280,25 @@ export default class Checkout extends Vue {
     return [now.slice(0, 4), now.slice(4, 10), now.slice(10, 14)].join("-");
   }
 
+  parseDate(date: Date) {
+    var mm = date.getMonth() + 1;
+    var dd = date.getDate();
+
+    return [
+      date.getFullYear(),
+      (mm > 9 ? "" : "0") + mm,
+      (dd > 9 ? "" : "0") + dd
+    ].join("");
+  }
+
   placeOrder() {
-    this.ordernumber  = this.orderNumber();
+    this.ordernumber = this.orderNumber();
     axios
       .post(APIConfig.buildUrl("/neworder"), {
-
+        orderNumber: this.orderNumber,
+        status: 1,
+        date: this.parseDate(new Date()),
+        address: ""
       })
       .then((response: AxiosResponse) => {
         console.log(response.data);
