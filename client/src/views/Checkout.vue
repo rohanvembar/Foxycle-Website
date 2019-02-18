@@ -202,7 +202,7 @@
 
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
@@ -257,7 +257,7 @@ export default class Checkout extends Vue {
       .then((response: AxiosResponse) => {
         console.log(response.data);
       })
-      .catch((response: AxiosResponse) => {
+      .catch((response: AxiosError) => {
         console.log("catch");
       });
   }
