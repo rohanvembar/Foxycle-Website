@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div v-if="orderloaded">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <center><h3>Order#: 1000</h3></center>
+    <center><h3>Order#: {{order.orderNumber}}</h3></center>
     <div>
-      <step-progress :steps="['Received', 'Processed','Shipped', 'Delivered']" :current-step=2 icon-class="fas fa-check"></step-progress>
+      <step-progress :steps="['Received', 'Processed','Shipped', 'Delivered']" :current-step=order.status icon-class="fas fa-check"></step-progress>
     </div>
     <br>
     <br>
@@ -15,12 +15,13 @@
 
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import OrdersRefineBox from "@/components/OrdersRefineBox.vue";
 import ViewOrderItems from "@/components/ViewOrderItems.vue";
 import StepProgress from 'vue-step-progress';
+import { iOrder } from "../models/order.interface";
 
 import '../assets/step.css';
 
@@ -32,7 +33,29 @@ import '../assets/step.css';
   }
 })
 export default class ViewOrder extends Vue {
+  order!: iOrder;
+  error: string | boolean = false;
+  orderloaded: boolean = false;
 
+  created() {
+    this.getOrder();
+  }
+  getOrder() {
+    this.error = false;
+    console.log("[ViewOrder.vue] ordernumber: " + this.$route.params.ordernumber)
+    axios
+      .get(APIConfig.buildUrl("/order/" + this.$route.params.ordernumber))
+      .then((response: AxiosResponse) => {
+        this.order = response.data;
+        this.orderloaded = true;
+        console.log("[ViewOrder.vue] order: " + JSON.stringify(this.order));
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log(this.error);
+      })  
+}
 
 }
 </script>

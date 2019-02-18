@@ -84,7 +84,7 @@ export default new Router({
       component: () => import("./views/Shop.vue")
     },
     {
-      path: "/vieworder",
+      path: "/vieworder/:ordernumber",
       name: "vieworder",
       component: () => import("./views/ViewOrder.vue")
     },

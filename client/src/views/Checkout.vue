@@ -274,10 +274,21 @@ export default class Checkout extends Vue {
     }
   }
 
-  orderNumber() {
-    let now = Date.now().toString();
-    now += now + Math.floor(Math.random() * 10);
-    return [now.slice(0, 4), now.slice(4, 10), now.slice(10, 14)].join("-");
+  generate() {
+    var len;
+    var timestamp;
+    len = 8;
+    timestamp = +new Date();
+    var ts = timestamp.toString();
+    var parts = ts.split("").reverse();
+    var id = "";
+
+    for (var i = 0; i < len; ++i) {
+      var index = Math.floor(Math.random() * (parts.length - 1 - 0 + 1)) + 0;
+      id += parts[index];
+    }
+
+    return id;
   }
 
   parseDate(date: Date) {
@@ -292,10 +303,10 @@ export default class Checkout extends Vue {
   }
 
   placeOrder() {
-    this.ordernumber = this.orderNumber();
+    this.ordernumber = this.generate();
     axios
       .post(APIConfig.buildUrl("/neworder"), {
-        orderNumber: this.orderNumber,
+        orderNumber: this.ordernumber,
         status: 1,
         date: this.parseDate(new Date()),
         address: ""
