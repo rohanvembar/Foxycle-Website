@@ -1,8 +1,12 @@
 <template>
   <div class="main-background">
     <div class="container">
+      <div class="loadinginfo">
+        <div v-if="loadingTrue" class="loader"></div>
+        <div v-if="!itemsInCart">Add to your cart!</div>
+      </div>
       <div class="cart-table">
-        <table v-if="cartLoaded">
+        <table>
           <tr>
             <th>Product</th>
             <th></th>
@@ -17,28 +21,31 @@
             <td>{{item.name}}</td>
             <td>${{item.price}}</td>
             <td>1</td>
-            <td>$3999.99</td>
+            <td></td>
           </tr>
           <tr class="bot-bord">
             <td>Subtotal</td>
             <td></td>
             <td></td>
             <td></td>
-            <td>$17999.97</td>
+            <td v-if="itemsFromDB">${{subtotal}}</td>
+            <td v-if="!itemsFromDB">-</td>
           </tr>
           <tr>
             <td>Shipping</td>
             <td></td>
             <td></td>
             <td></td>
-            <td>$300</td>
+            <td v-if="itemsFromDB">${{shipping}}</td>
+            <td v-if="!itemsFromDB">-</td>
           </tr>
           <tr class="tot-bord">
             <td>Total</td>
             <td></td>
             <td></td>
             <td></td>
-            <td>$18,299.97</td>
+            <td v-if="itemsFromDB">${{total}}</td>
+            <td v-if="!itemsFromDB">-</td>
           </tr>
           <br>
           <tr>
@@ -48,7 +55,8 @@
             <td></td>
             <td>
               <div class="checkout-btn">
-                <router-link class="button" to="/checkout" exact-active-class="is-active">Checkout</router-link>
+                <router-link v-if="itemsFromDB" class="button" to="/checkout" exact-active-class="is-active">Checkout</router-link>
+                <div v-if="!itemsFromDB" disabled class="button" exact-active-class="is-active">Checkout</div>
               </div>
             </td>
           </tr>
@@ -67,8 +75,19 @@ import { iShopItem } from "../models/shopitem.interface";
 @Component
 export default class Cart extends Vue {
   error: string | boolean = false;
-  cart!: iShopItem[];
-  cartLoaded: Boolean = false;
+  cart: iShopItem[] = [];
+  itemsFromDB: boolean = false;
+  itemsInCart: boolean = (this.$store.state.itemids.length != 0);
+  loadingTrue: boolean = (!this.itemsFromDB && this.itemsInCart);
+  subtotal: number = 0;
+  shipping: number = 10;
+  total: number = this.subtotal + this.shipping;
+
+  computeSubtotal() {
+    for (var i in this.cart) {
+      this.subtotal += this.cart[i].price;
+    }
+  }
 
   created() {
     this.getCart();
@@ -84,7 +103,9 @@ export default class Cart extends Vue {
       })
       .then((response: AxiosResponse) => {
         this.cart = response.data;
-        this.cartLoaded = true;
+        this.itemsFromDB = true;
+        this.loadingTrue = false;
+        this.computeSubtotal();
         console.log(response.data);
         this.$emit("success");
       })
@@ -97,6 +118,31 @@ export default class Cart extends Vue {
 </script>
 
 <style scoped>
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+.loadinginfo {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 .container {
   width: 75%;
   background-color: white;
