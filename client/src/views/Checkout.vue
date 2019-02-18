@@ -291,31 +291,30 @@ export default class Checkout extends Vue {
     return id;
   }
 
-  parseDate(date: Date) {
+  parseDate() {
+    var date = new Date();
     var mm = date.getMonth() + 1;
     var dd = date.getDate();
-
-    return [
-      date.getFullYear(),
-      (mm > 9 ? "" : "0") + mm,
-      (dd > 9 ? "" : "0") + dd
-    ].join("");
+    var prettyDate = (mm > 9 ? "" : "0") + mm + "." + (dd > 9 ? "" : "0") + dd + "." + date.getFullYear();
+    console.log("[Checkout.vue] date ordered: " + prettyDate)
+    return prettyDate;
   }
 
   placeOrder() {
     this.ordernumber = this.generate();
+    var orderdate = this.parseDate()
     axios
       .post(APIConfig.buildUrl("/neworder"), {
         orderNumber: this.ordernumber,
         status: 1,
-        date: this.parseDate(new Date()),
+        date: orderdate,
         address: ""
       })
       .then((response: AxiosResponse) => {
-        console.log(response.data);
+        console.log("[Checkout.vue]" + response.data);
       })
       .catch((response: AxiosError) => {
-        console.log("catch");
+        console.log("[Checkout.vue]" + "catch");
       });
     this.$store.state.items = [];
   }

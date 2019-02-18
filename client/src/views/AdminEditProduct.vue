@@ -73,7 +73,7 @@ export default class AdminEditProduct extends Vue {
         description: "blah"
       })
       .then((response: AxiosResponse) => {
-        console.log(response.data);
+        console.log("[AdminEditProduct.vue]" + response.data);
         this.savedItem = response.data;
         this.$emit("success");
         this.newItemTitle = "";
@@ -81,7 +81,7 @@ export default class AdminEditProduct extends Vue {
         this.newItemImage = "";
       })
       .catch((response: AxiosResponse) => {
-        console.log("catch");
+        console.log("[AdminEditProduct.vue]" + "catch");
       });
   }
 }

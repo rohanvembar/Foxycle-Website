@@ -7,9 +7,9 @@
                 Order Status       
             </div>
         </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
+        <div v-for="(order, index) in orders" v-bind:key="index" class="row">
+            <div class="cell">{{order.orderNumber}}</div>
+            <div class="cell">{{order.dateOrdered}}</div>
             <div class="cell_s">
                 <select name="status">
                     <option selected="true" value="1">In Progress</option>
@@ -19,75 +19,37 @@
                 </select> 
             </div>
         </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select disabled name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select disabled name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select disabled name="status">
-                    <option value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option selected="true" value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select disabled name="status">
-                    <option value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option selected="true" value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="cell">12345678</div>
-            <div class="cell">01.23.19</div>
-            <div class="cell_s">
-                <select disabled name="status">
-                    <option value="1">In Progress</option>
-                    <option selected="true" value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
-                </select> 
-            </div>
-        </div>
-        
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { iOrder } from "../models/order.interface";
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { APIConfig } from "../utils/api.utils";
 
 @Component
 export default class ManageOrderItems extends Vue {
+error: string | boolean = false;
+orders: iOrder[] = [];
+
+created() {
+    this.getOrders();
+}
+
+getOrders() {
+    this.error = false;
+    axios
+      .get(APIConfig.buildUrl("/orders"))
+      .then((response: AxiosResponse) => {
+        this.orders = response.data;
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log("[EditOrder.vue]" + this.error);
+      });   
+}
 }
 </script>
 

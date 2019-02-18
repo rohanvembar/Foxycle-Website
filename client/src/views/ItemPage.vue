@@ -66,26 +66,24 @@ export default class ItemPage extends Vue {
 
   addToCart() {
     if (this.shopItem) {
-      console.log(this.shopItem);
       this.$store.commit("cart", this.shopItem);
-      console.log(this.$store.state.items)
     }
   }
 
   getItem() {
     this.error = false;
-    console.log("itemid: " + this.$route.params.itemid)
+    console.log("[ItemPage.vue] itemid: " + this.$route.params.itemid)
     axios
       .get(APIConfig.buildUrl("/shopitem/" + this.$route.params.itemid))
       .then((response: AxiosResponse) => {
         this.shopItem = response.data;
         this.loadedItem = true;
-        console.log(response.data);
-        this.$emit("success");
+        console.log("[ItemPage.vue]" + response.data);
+        this.$emit("[ItemPage.vue]" + "success");
       })
       .catch((res: AxiosError) => {
         this.error = res.response && res.response.data.error;
-        console.log(this.error);
+        console.log("[ItemPage.vue]" + this.error);
       });
   }
 }

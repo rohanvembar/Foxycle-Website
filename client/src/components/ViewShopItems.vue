@@ -53,7 +53,7 @@ export default class ViewShopItems extends Vue {
 
   addToCart(item:iShopItem) {
     this.$store.commit("cart", item);
-    console.log(this.$store.state.items)
+    console.log("[ViewShopItems.vue]" + this.$store.state.items)
   }
 
   created() {
@@ -66,12 +66,12 @@ export default class ViewShopItems extends Vue {
       .get(APIConfig.buildUrl("/shopitems"))
       .then((response: AxiosResponse) => {
         this.items = response.data;
-        console.log(response.data);
+        console.log("[ViewShopItems.vue]" + response.data);
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
         this.error = res.response && res.response.data.error;
-        console.log(this.error);
+        console.log("[ViewShopItems.vue]" + this.error);
       });
   }
 
