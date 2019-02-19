@@ -18,7 +18,7 @@
     </div>
 
     <div v-else>
-      <div class="main-background sections">
+      <div class="main-background row-sections">
         <div class="message is-info">
           <h1 class="message-header">New Announcement</h1>
           <div class="announcement-input">
@@ -43,9 +43,9 @@
             <div class="message-header">
               <p>{{a.title}}</p>
               <p>{{a.date}}</p>
-              <button v-on:click="deleteAnnouncement(a)" class="button">delete</button>
             </div>
             <p class="message-body">{{a.body}}</p>
+            <div class="delete-button "><button v-on:click="deleteAnnouncement(a)" class="button">delete</button></div>
           </div>
         </div>
       </div>
@@ -157,10 +157,16 @@ export default class AdminEditInfo extends Vue {
   font-size: 50px;
   font-weight: bold;
 }
-.sections {
+.row-sections {
   display: flex;
   justify-content: space-evenly;
   align-items: flex-start;
+}
+.column-sections {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .announcement-input {
   padding: 20px;
@@ -173,5 +179,10 @@ export default class AdminEditInfo extends Vue {
   margin: 10px;
   line-height: 20px;
   width: 100%;
+}
+.delete-button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;    
 }
 </style>
