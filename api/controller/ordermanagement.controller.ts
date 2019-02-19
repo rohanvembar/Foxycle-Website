@@ -42,6 +42,18 @@ export class OrderManagementController extends DefaultController {
                         }
                     });
             });
+        router.route("/updatestatus/:id/:status")
+            .put((req: Request, res: Response) => {
+                orderRepo.findOneOrFail(req.params.id).then((foundOrder: OrderManagement) => {
+                    if (foundOrder == undefined) {
+                        return;
+                    }
+                    foundOrder.status = req.params.status;
+                    orderRepo.save(foundOrder).then((updatedOrder: OrderManagement) => {
+                        res.status(200).send(updatedOrder);
+                    });
+                });
+            });
         return router;
     }
 }
