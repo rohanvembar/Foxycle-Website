@@ -12,10 +12,10 @@
             <div class="cell">{{order.dateOrdered}}</div>
             <div class="cell_s">
                 <select name="status">
-                    <option selected="true" value="1">In Progress</option>
-                    <option value="0">Not Started</option>
-                    <option value="2">Complete</option>  
-                    <option value="3">Canceled</option>     
+                    <option value=1 :selected="order.status === 1 ? 'selected' : ''">Not Started</option>
+                    <option value=2 :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
+                    <option value=3 :selected="order.status === 3 ? 'selected' : ''">Complete</option>  
+                    <option value=4 :selected="order.status === 4 ? 'selected' : ''">Canceled</option>     
                 </select> 
             </div>
         </div>
