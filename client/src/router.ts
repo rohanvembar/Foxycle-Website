@@ -92,6 +92,11 @@ export default new Router({
       path: "/my-profile",
       name: "myProfile",
       component: MyProfile
+    },
+    {
+      path: "/editinfo",
+      name: "editinfo",
+      component: () => import("./views/AdminEditInfo.vue")
     }
   ]
 });

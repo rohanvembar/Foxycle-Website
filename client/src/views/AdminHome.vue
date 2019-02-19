@@ -53,7 +53,7 @@
               <span class="right">
                 <router-link
                   class="button is-dark is-focused is-medium is-rounded"
-                  to="/"
+                  to="/editinfo"
                   exact-active-class="is-active"
                 >add or edit</router-link>
               </span>
