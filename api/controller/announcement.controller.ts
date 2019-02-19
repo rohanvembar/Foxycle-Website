@@ -15,6 +15,7 @@ export class AnnouncementController extends DefaultController {
       .get((req: Request, res: Response) => {
         console.log("retrieving all announcements");
         announcementRepo.find().then((announcements: Announcement[]) => {
+          announcements = announcements.reverse();
           res.status(200).send(announcements);
         })
       });
@@ -28,6 +29,18 @@ export class AnnouncementController extends DefaultController {
         announcementRepo.save(newAnnouncement).then((savedAnnouncement: Announcement) => {
           res.status(200).send(savedAnnouncement);
           console.log(savedAnnouncement);
+        });
+      });
+    router.route("/announcements/:id")
+      .delete((req: Request, res: Response) => {
+        announcementRepo.findOne(req.params.id).then((foundAnnouncement: Announcement | undefined) => {
+          if (foundAnnouncement == undefined) {
+            return;
+          }
+          announcementRepo.delete(foundAnnouncement).then(x => {
+            res.status(200).send(foundAnnouncement);
+            console.log(foundAnnouncement);
+          });
         });
       });
     return router;
