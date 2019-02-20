@@ -29,8 +29,8 @@
           </select>
         </div>
         <div class="orders">
-          <OrdersRefineBox />
-          <ManageOrderItems />
+          <OrdersRefineBox @change = "onUpdateRefinelist"/>
+          <ManageOrderItems :refinelist= "refinement"/>
         </div>
       </div>
     </div>
@@ -53,8 +53,13 @@ import ManageOrderItems from "@/components/ManageOrderItems.vue";
   }
 })
 export default class AdminEditOrder extends Vue {
+    refinement: String[] = [];
     get isLoggedIn(): boolean {
       return !!this.$store.state.userId;
+    }
+
+    onUpdateRefinelist(newRefinelist){
+      this.refinement = newRefinelist;
     }
 }
 </script>

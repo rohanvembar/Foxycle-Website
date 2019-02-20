@@ -5,15 +5,16 @@
       <div class="cell1">Date</div>
       <div class="cell1">Order Status</div>
     </div>
-    <div v-for="(order, index) in orders" v-bind:key="index" class="row">
+    <div v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
       <div class="cell">{{order.orderNumber}}</div>
       <div class="cell">{{order.dateOrdered}}</div>
       <div class="cell_s">
-        <select v-on:change="updateStatus($event, order)">
-          <option value="1" :selected="order.status === 1 ? 'selected' : ''">Not Started</option>
-          <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
-          <option value="3" :selected="order.status === 3 ? 'selected' : ''">Complete</option>
-          <option value="4" :selected="order.status === 4 ? 'selected' : ''">Canceled</option>
+        <select v-model = "order.status" v-on:change="updateStatus($event, order)">
+          <option value="1" :selected="order.status === 1 ? 'selected' : ''">Received</option>
+          <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Process</option>
+          <option value="3" :selected="order.status === 3 ? 'selected' : ''">Shipped</option>
+          <option value="4" :selected="order.status === 4 ? 'selected' : ''">Delivered</option>
+          <option value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
         </select>
       </div>
     </div>
@@ -28,6 +29,9 @@ import { APIConfig } from "../utils/api.utils";
 
 @Component
 export default class ManageOrderItems extends Vue {
+  @Prop()
+  refinelist: String[]
+
   error: string | boolean = false;
   orders: iOrder[] = [];
 
@@ -35,7 +39,7 @@ export default class ManageOrderItems extends Vue {
     console.log("[ManageOrderItems.vue] updating to status " + e.target.value);
     axios
       .put(
-        APIConfig.buildUrl("/updatestatus/" + order.orderNumber + "/" + e.target.value)
+        APIConfig.buildUrl("/updatestatus/" + order.orderNumber + "/" + e.target.value), order
       )
       .then((response: AxiosResponse) => {
         console.log("[ManageOrderItems.vue] updated order: " + JSON.stringify(response.data));
@@ -63,6 +67,14 @@ export default class ManageOrderItems extends Vue {
         this.error = res.response && res.response.data.error;
         console.log("[EditOrder.vue]" + this.error);
       });
+  }
+
+  get refinedOrders(){
+    const l = this.refinelist;
+    return this.orders.filter(function(s){
+      const stat = (s.status).toString();
+      return l.includes(stat);
+    })
   }
 }
 </script>

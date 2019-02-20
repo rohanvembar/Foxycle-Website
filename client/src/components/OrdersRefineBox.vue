@@ -1,27 +1,33 @@
 <template>
-    <div class="refine-box">
+    <div class="refine-box" v-on:change = "updateRefineList">
         <p class="refine-title">Refine By</p>
         <div>
-            <label class="container">Not Started
-                <input type="checkbox" checked="checked">
+            <label class="container">Received
+                <input type="checkbox" value="1" v-model="refinelist">
                 <span class="checkmark"></span>
             </label>
         </div>
         <div>
             <label class="container">In Progress
-                <input type="checkbox">
+                <input type="checkbox" value="2" v-model="refinelist">
                 <span class="checkmark"></span>
             </label>
         </div>
         <div>
-            <label class="container">Complete
-                <input type="checkbox">
+            <label class="container">Shipped
+                <input type="checkbox" value="3" v-model="refinelist">
                 <span class="checkmark"></span>
             </label>
+        </div>
+        <div>
+            <label class="container">Delivered
+                <input type="checkbox" value="4" v-model="refinelist">
+                <span class="checkmark"></span>
+            </label>    
         </div>
         <div>
             <label class="container">Canceled
-                <input type="checkbox">
+                <input type="checkbox" value="5" v-model="refinelist">
                 <span class="checkmark"></span>
             </label>    
         </div> 
@@ -33,6 +39,10 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class OrdersRefineBox extends Vue {
+  refinelist: String[] = [];
+  updateRefineList(){
+    this.$emit('change', this.refinelist);
+  }
 }
 </script>
 
