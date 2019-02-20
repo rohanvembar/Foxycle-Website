@@ -1,14 +1,15 @@
 <template>
-
   <div v-if="loadedItem" class="item-page-main-background">
-    <div class="itempage-main-content">
-      <div class="itempage-title">{{shopItem.name}}</div>
-      <div class="itempage-subtitle">Built For Something
-        <hr class="itempage-line">
+    <button class="button" v-on:click="changeItem">Save Item</button>
+    <div class="itempage-main-content">Name
+      <div class="itempage-title">
+        <input type="text" v-model="name">
       </div>
+      <hr class="itempage-line">
       <div class="itempage-row">
         <div class="itempage-image-column">
           <img class="itempage-image" :src="shopItem.image">
+          <input type="text" v-model="image" placeholder="image url...">
         </div>
         <div class="itempage-details-column">
           <table>
@@ -17,22 +18,35 @@
             </tr>
             <tr>
               <td class="itempage-price-box">
-                <center>${{shopItem.price}}</center>
+                <center>
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    v-model="price"
+                    placeholder="price..."
+                  >
+                </center>
+              </td>
+            </tr>
+            <tr>
+              <td>Brand</td>
+            </tr>
+            <tr>
+              <td class="itempage-price-box">
+                <center>
+                  <input type="text" v-model="brand">
+                </center>
               </td>
             </tr>
             <tr>
               <td>Quantity</td>
             </tr>
             <tr>
-              <input type="number" min="1" max="100" value="1">
-            </tr>
-            <tr>
-              <td class="itempage-cart-button">
-                <button class="button" v-on:click="addToCart" exact-active-class="is-active">
-                <router-link
-                  to="/cart"
-                >Add to Cart</router-link>
-                </button>
+              <td class="itempage-price-box">
+                <center>
+                  <input type="number" min="1" step="1" v-model="quantity">
+                </center>
               </td>
             </tr>
           </table>
@@ -43,7 +57,7 @@
       </div>
       <div class="itempage-specifications">
         <div class="itempage-specs-title">Description</div>
-        {{shopItem.description}}
+        <textarea class="description-box" v-model="description"></textarea>
       </div>
     </div>
   </div>
@@ -59,26 +73,55 @@ import { iShopItem } from "../models/shopitem.interface";
 export default class ItemPage extends Vue {
   error: string | boolean = false;
   shopItem: iShopItem | undefined;
+  price: number | string = "";
+  name: string = "";
+  description: string = "";
+  brand: string = "";
+  quantity: number | string = "";
+  image: string = "";
   loadedItem: boolean = false;
 
   created() {
     this.getItem();
   }
 
-  addToCart() {
-    if (this.shopItem) {
-      this.$store.commit("cart", this.shopItem);
+  changeItem() {
+    if (!this.shopItem) {
+      return;
     }
+    axios
+      .put(APIConfig.buildUrl("/shopitem/" + this.shopItem.id), {
+        name: this.name,
+        price: this.price,
+        brand: this.brand,
+        categories: "",
+        image: this.image,
+        quantity: this.quantity,
+        description: this.description
+      })
+      .then((response: AxiosResponse) => {
+        this.$emit("success");
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("catch");
+        this.error = "bad";
+      });
   }
 
   getItem() {
     this.error = false;
-    console.log("[ItemPage.vue] itemid: " + this.$route.params.itemid)
+    console.log("[ItemPage.vue] itemid: " + this.$route.params.itemid);
     axios
       .get(APIConfig.buildUrl("/shopitem/" + this.$route.params.itemid))
       .then((response: AxiosResponse) => {
         this.shopItem = response.data;
         this.loadedItem = true;
+        this.price = response.data.price;
+        this.name = response.data.name;
+        this.description = response.data.description;
+        this.brand = response.data.brand;
+        this.quantity = response.data.quantity;
+        this.image = response.data.image;
         console.log("[ItemPage.vue]" + response.data);
         this.$emit("[ItemPage.vue]" + "success");
       })
