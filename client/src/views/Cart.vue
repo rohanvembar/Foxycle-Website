@@ -81,7 +81,7 @@ export default class Cart extends Vue {
   total: number = 0;
 
   computeSubtotal() {
-    for (var i in this.cart) {
+    for (var i in this.items) {
       this.subtotal += this.items[i].price;
     }
   }
