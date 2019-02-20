@@ -19,7 +19,14 @@
 
     <div v-else>
       <!-- put page here -->
-      <button class="button is-info add is-rounded" v-on:click="showAddItemModal()"><i class="fas fa-plus space"></i>add item</button>
+      <div class="buttons">
+        <button class="button is-info add is-rounded" v-on:click="showAddItemModal()">
+          <i class="fas fa-plus space"></i>add item
+        </button>
+        <button class="button is-info add is-rounded" v-on:click="getAllItems()">
+          <i class="fas fa-sync space"></i>refresh
+        </button>
+      </div>
 
       <div>
         <link
@@ -142,7 +149,7 @@ export default class AdminEditProduct extends Vue {
 </script>
 
 <style scoped>
-.description-box{
+.description-box {
   max-width: 200px;
 }
 
@@ -327,7 +334,7 @@ export default class AdminEditProduct extends Vue {
   transform: scale(1);
 }
 #columns:hover figure:not(:hover) {
-  opacity: 0.6;
+  opacity: 1;
 }
 div#columns figure {
   display: inline-block;
@@ -378,7 +385,6 @@ div#columns figure figcaption {
   margin-bottom: 2%;
 }
 
-
 @media screen and (max-width: 960px) {
   #columns figure {
     width: 24%;
@@ -416,7 +422,6 @@ div#columns figure figcaption {
   margin: auto;
   margin-top: 15px;
   margin-bottom: 15px;
-
 }
 
 .space {

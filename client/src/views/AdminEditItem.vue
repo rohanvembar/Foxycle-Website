@@ -1,6 +1,12 @@
 <template>
   <div v-if="loadedItem" class="item-page-main-background">
-    <button class="button" v-on:click="changeItem">Save Item</button>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous"
+    >
+    <button class="button is-rounded is-info add" v-on:click="changeItem"><i class="fas fa-save space"></i>save item</button>
     <div class="itempage-main-content">Name
       <div class="itempage-title">
         <input type="text" v-model="name">
@@ -106,6 +112,7 @@ export default class ItemPage extends Vue {
         console.log("catch");
         this.error = "bad";
       });
+    this.$router.push("/editproduct");
   }
 
   getItem() {
@@ -242,20 +249,15 @@ export default class ItemPage extends Vue {
   padding-top: 20px;
 }
 
-.button {
-  background: #239cec;
-  margin: px;
+.add {
   display: block;
-  text-align: center;
-  color: #fff;
-  transition: 0.3s;
-  text-decoration: none;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  max-width: 300px;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
-.button:hover {
-  background: #40b883;
-  color: #f1f2f3;
+
+.space {
+  padding-right: 10px;
 }
 </style>

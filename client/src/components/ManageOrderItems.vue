@@ -11,7 +11,7 @@
       <div class="cell_s">
         <select v-model = "order.status" v-on:change="updateStatus($event, order)">
           <option value="1" :selected="order.status === 1 ? 'selected' : ''">Received</option>
-          <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Process</option>
+          <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
           <option value="3" :selected="order.status === 3 ? 'selected' : ''">Shipped</option>
           <option value="4" :selected="order.status === 4 ? 'selected' : ''">Delivered</option>
           <option value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
