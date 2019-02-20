@@ -201,10 +201,8 @@ export default class App extends Vue {
 .navbar-custom {
   border-radius:50px;
 }
-.navbar-item:hover {
-    border-radius:50px;
 
-}
+
 
 
 </style>

@@ -20,7 +20,7 @@
     <div v-else>
       <div class="maincolumns">
         <div class="tile is-parent is-vertical">
-          <article class="tile is-child notification is-primary">
+          <article class="tile is-child notification is-primary round">
             <p class="title">orders</p>
             <p class="subtitle">
               {{newOrders}} new orders today
@@ -33,7 +33,7 @@
               </span>
             </p>
           </article>
-          <article class="tile is-child notification is-warning">
+          <article class="tile is-child notification is-warning round">
             <p class="title">inventory</p>
             <p class="subtitle">
               {{outOfStock}} items out of stock
@@ -46,7 +46,7 @@
               </span>
             </p>
           </article>
-          <article class="tile is-child notification is-info">
+          <article class="tile is-child notification is-link round">
             <p class="title">foxycle info</p>
             <p class="subtitle">
               hours, services, announcements, etc.
@@ -59,7 +59,7 @@
               </span>
             </p>
           </article>
-          <article class="tile is-child notification is-link">
+          <article class="tile is-child notification is-info round">
             <p class="title">employees</p>
             <p class="subtitle">
               add, remove, change permissions
@@ -134,5 +134,9 @@ export default class AdminHome extends Vue {
   width: 300px;
   text-align: right;
   padding-right: 15px;
+}
+
+.round {
+  border-radius:25px;
 }
 </style>
