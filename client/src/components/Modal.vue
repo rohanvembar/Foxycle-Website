@@ -1,7 +1,7 @@
 <template>
   <div class="modal" v-bind:class="{'is-active': isShowing}" >
     <div class="modal-background"></div>
-    <div class="modal-card">
+    <div class="modal-card custom">
       <header class="modal-card-head">
         <p class="modal-card-title">{{title}}</p>
         <button class="delete" aria-label="close" v-on:click="cancelHandler()"></button>
@@ -36,3 +36,10 @@ export default class Modal extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+
+.custom {
+  border-radius: 30px;
+}
+</style>
