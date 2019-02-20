@@ -17,21 +17,9 @@
       </article>
     </div>
 
-    <div class="manage-item-page" v-else>
-      <div >
-        <div class="message add-item-form">
-          <h1 class="message-header">New Item</h1>
-          <input type="text" v-model="newItemTitle" placeholder="item name...">
-          <input type="number" min="0.01" step="0.01" v-model="newItemPrice" placeholder="price...">
-          <input type="text" v-model="newItemImage" placeholder="image url...">
-          <input type="number" min="1" step="1" v-model="newItemQuantity" placeholder="quantity...">
-          <input type="text" v-model="newItemBrand" placeholder="brand...">
-          <textarea class="description-box" v-model="newItemDescription" placeholder="description..."></textarea>
-          <span><input v-on:change="changeTransportation(true)" type="radio" name="tranport" value="delivery"> Home Delivery Available</span>
-          <span><input v-on:change="changeTransportation(false)" type="radio" name="tranport" value="pickup"> Pickup Only</span>
-          <button class="button add_button" v-on:click="addItem">submit</button>
-        </div>
-      </div>
+    <div v-else>
+      <!-- put page here -->
+      <button class="button is-info add" v-on:click="showAddItemModal()"><i class="fas fa-plus space"></i>add item</button>
 
       <div>
         <link
@@ -59,12 +47,13 @@
         </div>
         <div id="toast">
           <div id="img">
-            <font-awesome-icon icon="trash"/>
+            <i class="fas fa-trash"></i>
           </div>
-          <div id="desc">Successfully removed product</div>
+          <div id="desc">successfully removed product</div>
         </div>
       </div>
     </div>
+    <AddItem v-bind:is-showing="showAddItem" v-on:success="successAdd()" v-on:cancel="cancelAdd()"/>
   </div>
 </template>
 
@@ -73,54 +62,30 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import AddItem from "@/components/AddItem.vue";
 
-@Component
+@Component({
+  components: {
+    AddItem
+  }
+})
 export default class AdminEditProduct extends Vue {
-  newItemTitle: string = "";
-  newItemPrice: number | string = "";
-  newItemImage: string = "";
-  newItemQuantity: number | string = "";
-  newItemBrand: string = "";
-  newItemDescription: string = "";
-  newItemDelivery: boolean = false;
-  savedItem: iShopItem | string = "";
+  showAddItem: boolean = false;
   error: string | boolean = false;
   items: iShopItem[] = [];
 
+  successAdd() {
+    this.showAddItem = false;
+  }
+  cancelAdd() {
+    this.showAddItem = false;
+  }
   get isLoggedIn(): boolean {
     return !!this.$store.state.userId;
   }
 
-  changeTransportation(b : boolean) {
-    this.newItemDelivery = b;
-  }
-
-  addItem() {
-    axios
-      .post(APIConfig.buildUrl("/newitem"), {
-        name: this.newItemTitle,
-        price: this.newItemPrice,
-        brand: this.newItemBrand,
-        categories: "",
-        image: this.newItemImage,
-        delivery: this.newItemDelivery,
-        quantity: this.newItemQuantity,
-        description: this.newItemDescription
-      })
-      .then((response: AxiosResponse) => {
-        console.log(
-          "[AdminEditProduct.vue]" + JSON.stringify(response.data.length)
-        );
-        this.savedItem = response.data;
-        this.items.push(response.data);
-        this.$emit("success");
-        this.newItemTitle = "";
-        this.newItemPrice = "";
-        this.newItemImage = "";
-      })
-      .catch((response: AxiosError) => {
-        console.log("[AdminEditProduct.vue]" + "catch");
-      });
+  showAddItemModal() {
+    this.showAddItem = true;
   }
 
   toast(item: iShopItem) {
@@ -426,22 +391,6 @@ div#columns figure figcaption {
   margin-bottom: 2%;
 }
 
-.button {
-  background: #239cec;
-  margin: px;
-  display: block;
-  text-align: center;
-  color: #fff;
-  transition: 0.3s;
-  text-decoration: none;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-}
-.button:hover {
-  background: #40b883;
-  color: #f1f2f3;
-}
 @media screen and (max-width: 960px) {
   #columns figure {
     width: 24%;
@@ -464,7 +413,6 @@ div#columns figure figcaption {
 }
 
 .imagediv {
-  width: 200px;
   height: 150px;
 }
 
@@ -472,5 +420,18 @@ div#columns figure figcaption {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.add {
+  display: block;
+  max-width: 300px;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+
+.space {
+  padding-right: 10px;
 }
 </style>

@@ -20,10 +20,10 @@ export class ShopItem {
     @Column()
     public image!: string;
 
-    @Column()
+    @Column({default: 0})
     public delivery!: boolean;
 
-    @Column()
+    @Column({default: 1})
     public quantity!: number;
 
     @Column()
