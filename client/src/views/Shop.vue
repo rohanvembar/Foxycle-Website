@@ -8,7 +8,7 @@
       </select>
     </div>
     <div class="shop">
-      <ShopPageFilterBox />
+      <!-- <ShopPageFilterBox /> -->
       <ViewShopItems />
     </div>
 
@@ -30,14 +30,18 @@ import ShopPageFilterBox from "@/components/ShopPageFilterBox.vue";
   }
 })
 export default class Shop extends Vue {
+
 }
 </script>
 
 <style scoped>
   .shop {
+    padding-left:40px;
     display: flex;
-    align-items: top;
     justify-content: space-evenly;
+    width: 90%;
+    margin-left:auto;
+    margin-right:auto;
   }
 
   .sort-by{
