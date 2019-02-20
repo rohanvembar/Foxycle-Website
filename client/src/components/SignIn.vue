@@ -12,7 +12,7 @@
         <label class="label">Employee ID</label>
         <div class="control">
           <input
-            class="input"
+            class="input is-rounded"
             type="text"
             placeholder="employee ID"
             v-model="signup.emailAddress"
@@ -22,7 +22,7 @@
       <div class="field">
         <label class="label">Password</label>
         <div class="control">
-          <input class="input" type="password" placeholder="password" v-model="signup.password" v-on:keyup.enter="success">
+          <input class="input is-rounded" type="password" placeholder="password" v-model="signup.password" v-on:keyup.enter="success">
         </div>
       </div>
     </form>
