@@ -16,7 +16,7 @@
       <div class="field">
         <label class="label">Price</label>
         <div class="control">
-          <input class="input" type="text" placeholder="price" v-model="newItemPrice">
+          <input class="input" type="number" placeholder="price" v-model="newItemPrice">
         </div>
       </div>
       <div class="field">
@@ -28,7 +28,7 @@
       <div class="field">
         <label class="label">Quantity on Hand</label>
         <div class="control">
-          <input class="input" type="number" placeholder="quantity" v-model="newItemQuantity">
+          <input class="input" type="number" placeholder="quantity" required v-model="newItemQuantity">
         </div>
       </div>
       <div class="field">
@@ -43,11 +43,11 @@
             id="storePickupSwitch"
             type="checkbox"
             name="switchColorSuccess"
-            class="switch is-success is-thin"
+            class="switch is-success is-rounded"
             checked="checked"
             v-model="newItemShipping"
           >
-          <label for="storePickupSwitch">Store Pickup Available</label>
+          <label for="storePickupSwitch">Available to Ship</label>
         </div>
       </div>
     </form>

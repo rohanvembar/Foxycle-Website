@@ -23,7 +23,7 @@ export class ShopItem {
     @Column({default: 0})
     public delivery!: boolean;
 
-    @Column()
+    @Column({default: 1})
     public quantity!: number;
 
     @Column()
