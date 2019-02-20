@@ -33,12 +33,14 @@ export class OrderManagementController extends DefaultController {
             });
         router.route("/order/:id")
             .get((req: Request, res: Response) => {
-                orderRepo.findOneOrFail(req.params.id).then(
+                orderRepo.findOne(req.params.id).then(
                     (order: OrderManagement | undefined) => {
                         if (order) {
-                        res.send(order);
+                            res.send(order);
                         } else {
+                            console.log("could not find order")
                             res.status(404);
+                            res.sendStatus(404);
                         }
                     });
             });
