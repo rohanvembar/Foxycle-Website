@@ -20,25 +20,6 @@
     <div v-else>
       <!-- put page here -->
       <button class="button is-info" v-on:click="showAddItemModal()">add item</button>
-      <div class="manage-item-page">
-        
-        <figure v-if="savedItem">
-          <router-link to="/itempage">
-            <img :src="savedItem.image">
-          </router-link>
-          <figcaption>{{savedItem.name}}</figcaption>
-          <span class="price">${{savedItem.price}}</span>
-        </figure>
-        <div class="columns_4">
-          <figure v-if="savedItem">
-            <router-link to="/itempage">
-              <img :src="savedItem.image">
-            </router-link>
-            <figcaption>{{savedItem.name}}</figcaption>
-            <span class="price">${{savedItem.price}}</span>
-          </figure>
-        </div>
-      </div>
 
       <div>
         <link
@@ -50,7 +31,7 @@
         <div id="wrap">
           <div id="columns" class="columns_4">
             <figure v-for="(item, index) in items" v-bind:key="index">
-              <router-link :to="{ name: 'editpage', params: { itemid: item.id } }">
+              <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
                 <div class="imagediv">
                   <img :src="item.image" class="image">
                 </div>
@@ -89,12 +70,10 @@ import AddItem from "@/components/AddItem.vue";
   }
 })
 export default class AdminEditProduct extends Vue {
-  newItemTitle: string = "";
-  newItemPrice: number | string = "";
-  newItemImage: string = "";
-
-  savedItem: iShopItem | string = "";
   showAddItem: boolean = false;
+  error: string | boolean = false;
+  items: iShopItem[] = [];
+
   successAdd() {
     this.showAddItem = false;
   }
@@ -108,34 +87,6 @@ export default class AdminEditProduct extends Vue {
   showAddItemModal() {
     this.showAddItem = true;
   }
-
-  addItem() {
-    axios
-      .post(APIConfig.buildUrl("/newitem"), {
-        name: this.newItemTitle,
-        price: this.newItemPrice,
-        brand: "",
-        categories: "",
-        image: this.newItemImage,
-        delivery: true,
-        quantity: 1,
-        description: "blah"
-      })
-      .then((response: AxiosResponse) => {
-        console.log("[AdminEditProduct.vue]" + response.data);
-        this.savedItem = response.data;
-        this.$emit("success");
-        this.newItemTitle = "";
-        this.newItemPrice = "";
-        this.newItemImage = "";
-      })
-      .catch((response: AxiosResponse) => {
-        console.log("[AdminEditProduct.vue]" + "catch");
-      });
-  }
-
-  error: string | boolean = false;
-  items: iShopItem[] = [];
 
   toast(item: iShopItem) {
     const ele = document.getElementById("toast");
@@ -174,12 +125,14 @@ export default class AdminEditProduct extends Vue {
       .get(APIConfig.buildUrl("/shopitems"))
       .then((response: AxiosResponse) => {
         this.items = response.data;
-        console.log("[ViewShopItems.vue]" + response.data);
+        console.log(
+          "[AdminEditProduct.vue]" + JSON.stringify(response.data.length)
+        );
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
         this.error = res.response && res.response.data.error;
-        console.log("[ViewShopItems.vue]" + this.error);
+        console.log("[AdminEditProduct.vue]" + this.error);
       });
   }
 
@@ -188,6 +141,14 @@ export default class AdminEditProduct extends Vue {
 </script>
 
 <style scoped>
+.add-item-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
 #toast {
   visibility: hidden;
   max-width: 50px;
