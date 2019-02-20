@@ -60,11 +60,11 @@ export default class Home extends Vue {
       }
     }).then((response: AxiosResponse) => {
       this.announcements = response.data;
-      console.log(response.data)
-      this.$emit("success");
+      console.log("[Home.vue]" + response.data)
+      this.$emit("[Home.vue]" + "success");
     }).catch((res: AxiosError) => {
       this.error = res.response && res.response.data.error;
-      console.log(this.error);
+      console.log("[Home.vue]" + this.error);
     }); 
   }
 }

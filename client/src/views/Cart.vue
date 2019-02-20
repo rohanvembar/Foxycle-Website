@@ -1,6 +1,7 @@
 <template>
   <div class="main-background">
     <div class="container">
+      <div class="add-to-cart"><div v-if="!itemsInCart">Add to your cart!</div></div>
       <div class="cart-table">
         <table>
           <tr>
@@ -10,77 +11,111 @@
             <th>Quantity</th>
             <th>Total</th>
           </tr>
-          <tr>
-            <td> <img src="../assets/transparentlogo.png"></td>
-            <td>Foxycle Extreme Pro 5000</td>
-            <td>$3999.99</td>
-            <td>1</td>
-            <td>$3999.99</td>
+          <tr v-for="(cartitem, index) in cart" v-bind:key="index">
+            <td>
+              <img :src="cartitem.item.image">
+            </td>
+            <td>{{cartitem.item.name}}</td>
+            <td>${{cartitem.item.price}}</td>
+            <td>{{cartitem.quantity}}</td>
+            <td></td>
           </tr>
-          <tr>
-            <td> <img src="../assets/transparentlogo.png"></td>
-            <td>Foxycle Extreme Pro 1000</td>
-            <td>$5999.99</td>
-            <td>1</td>
-            <td>$5999.99</td>          
-          </tr>
-          <tr>
-            <td> <img src="../assets/transparentlogo.png"></td>
-            <td>Foxycle Extreme Pro 6000</td>
-            <td>$7999.99</td>
-            <td>1</td>
-            <td>$7999.99</td>          
-          </tr>      
           <tr class="bot-bord">
             <td>Subtotal</td>
             <td></td>
             <td></td>
             <td></td>
-            <td>$17999.97</td>          
-          </tr>    
+            <td v-if="itemsInCart">${{subtotal}}</td>
+            <td v-if="!itemsInCart">-</td>
+          </tr>
           <tr>
             <td>Shipping</td>
             <td></td>
             <td></td>
             <td></td>
-            <td>$300</td>          
-          </tr> 
+            <td v-if="itemsInCart">${{shipping}}</td>
+            <td v-if="!itemsInCart">-</td>
+          </tr>
           <tr class="tot-bord">
             <td>Total</td>
             <td></td>
             <td></td>
             <td></td>
-            <td>$18,299.97</td>          
-          </tr>  
-          <br>     
+            <td v-if="itemsInCart">${{total}}</td>
+            <td v-if="!itemsInCart">-</td>
+          </tr>
+          <br>
           <tr>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td><div class="checkout-btn">
-        <router-link class="button" to="/checkout" exact-active-class="is-active">
-          Checkout
-        </router-link></div></td>   
-          </tr>                  
+            <td>
+              <div class="checkout-btn">
+                <router-link v-if="itemsInCart" class="button" to="/checkout" exact-active-class="is-active">Checkout</router-link>
+                <div v-if="!itemsInCart" disabled class="button">Checkout</div>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
-      
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { iShopItem } from "../models/shopitem.interface";
+import { iCart } from "../models/cart.interface";
 
 @Component
 export default class Cart extends Vue {
+  error: string | boolean = false;
+  items: iShopItem[] = this.$store.state.items;
+  cart: iCart[] = [];
+  itemsInCart: boolean = (this.items.length != 0);
+  subtotal: number = 0;
+  shipping: number = 10;
+  total: number = 0;
+
+  computeSubtotal() {
+    for (var i in this.items) {
+      this.subtotal += this.items[i].price;
+    }
+  }
+
+  computeTotal() {
+    this.total = this.subtotal + this.shipping;
+  }
+
+  created() {
+    this.computeSubtotal();
+    this.computeTotal();
+    var flag = true;
+    for (var i in this.items) {
+      flag = true;
+      for (var j in this.cart) {
+        if (this.cart[j].item.id === this.items[i].id) {
+          this.cart[j] = {item: this.cart[j].item, quantity: this.cart[j].quantity + 1}
+          flag = false;
+        } 
+      }
+      if (flag) {
+        this.cart.push({item: this.items[i], quantity: 1})
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
+.add-to-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .container {
   width: 75%;
@@ -92,10 +127,11 @@ export default class Cart extends Vue {
 .cart-table {
   display: flex;
   align-items: center;
-  justify-content: center;    
+  justify-content: center;
 }
 
-th, td{
+th,
+td {
   padding: 10px 30px 10px 30px;
 }
 
@@ -114,7 +150,7 @@ th {
 .checkout-btn {
   display: flex;
   align-items: center;
-  justify-content: flex-end;     
+  justify-content: flex-end;
 }
 </style>
 

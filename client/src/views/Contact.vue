@@ -90,6 +90,7 @@ export default class Contact extends Vue {
       });
   }
 }
+
 </script>
 
 <style lang="scss" scoped>

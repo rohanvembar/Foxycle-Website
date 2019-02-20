@@ -25,7 +25,14 @@
       <div class="field">
         <label class="label">Password</label>
         <div class="control">
-          <input class="input" type="password" placeholder="password" v-model="signup.firstName"/>
+          <input class="input" type="password" placeholder="password" v-model="signup.password"/>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Role</label>
+        <div class="control">
+          <input v-on:change="changeRole(1)" type="radio" name="role" value="admin"> Admin
+          <input v-on:change="changeRole(0)" type="radio" name="role" value="employee"> Employee
         </div>
       </div>
     </form>
@@ -48,13 +55,19 @@ export default class Signup extends Vue {
     firstName: "",
     lastName: "",
     emailAddress: "",
-    password: ""
+    password: "",
+    role: 0
   };
   error: string | boolean = false;
 
+  changeRole(r : number) {
+    this.signup.role = r;
+    console.log("changing: " + this.signup.role);
+  }
+
   success() {
     this.error = false;
-    console.log('hello');
+    console.log(this.signup.role);
     axios
       .post(APIConfig.buildUrl("/users"), {
         ...this.signup
@@ -62,8 +75,8 @@ export default class Signup extends Vue {
       .then((response: AxiosResponse<iUser>) => {
         this.$emit("success");
       })
-      .catch((reason: any) => {
-        this.error = reason;
+      .catch((errorResponse: any) => {
+        this.error = errorResponse.response.data.reason;
       });
   }
 
@@ -77,5 +90,6 @@ export interface SignupForm {
   lastName: string;
   emailAddress: string;
   password: string;
+  role: number;
 }
 </script>

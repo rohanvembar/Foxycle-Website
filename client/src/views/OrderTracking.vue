@@ -1,9 +1,9 @@
 <template>
   <div class="main-background track">
     <h1>Track Your Order</h1>
-    <input class="input-bar" placeholder="Order Number" type="text">
-    <router-link to="/vieworder" exact-active-class="is-active">
-        <button class="button submit-button is-info">Track</button>
+    <input class="input-bar" placeholder="Order Number" type="text" v-model="ordernum">
+    <router-link  :to="{ name: 'vieworder', params: { ordernumber: Number(ordernum) } }" exact-active-class="is-active">
+        <button v-on:click="verifyNumber" class="button submit-button is-info">Track</button>
     </router-link>
 
   </div>
@@ -16,6 +16,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class OrderTracking extends Vue {
+  ordernum: string = "";
+  
+  verifyNumber() {
+
+  }
 }
 </script>
 

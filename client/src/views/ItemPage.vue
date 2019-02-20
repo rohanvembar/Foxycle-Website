@@ -1,13 +1,13 @@
 <template>
   <div v-if="loadedItem" class="item-page-main-background">
     <div class="itempage-main-content">
-      <div class="itempage-title">{{shopItem.item.name}}</div>
+      <div class="itempage-title">{{shopItem.name}}</div>
       <div class="itempage-subtitle">Built For Something
         <hr class="itempage-line">
       </div>
       <div class="itempage-row">
         <div class="itempage-image-column">
-          <img class="itempage-image" :src="shopItem.item.image">
+          <img class="itempage-image" :src="shopItem.image">
         </div>
         <div class="itempage-details-column">
           <table>
@@ -16,7 +16,7 @@
             </tr>
             <tr>
               <td class="itempage-price-box">
-                <center>${{shopItem.item.price}}</center>
+                <center>${{shopItem.price}}</center>
               </td>
             </tr>
             <tr>
@@ -27,7 +27,11 @@
             </tr>
             <tr>
               <td class="itempage-cart-button">
-                <router-link class="button" to="/cart" exact-active-class="is-active">Add to Cart</router-link>
+                <button class="button" v-on:click="addToCart" exact-active-class="is-active">
+                <router-link
+                  to="/cart"
+                >Add to Cart</router-link>
+                </button>
               </td>
             </tr>
           </table>
@@ -38,7 +42,7 @@
       </div>
       <div class="itempage-specifications">
         <div class="itempage-specs-title">Description</div>
-        {{shopItem.item.description}}
+        {{shopItem.description}}
       </div>
     </div>
   </div>
@@ -53,17 +57,6 @@ import { iShopItem } from "../models/shopitem.interface";
 @Component
 export default class ItemPage extends Vue {
   error: string | boolean = false;
-  // shopItem: iShopItem = {
-  //   id: 0,
-  //   name: "",
-  //   price: 0,
-  //   brand: "",
-  //   categories: [""],
-  //   image: "",
-  //   delivery: true,
-  //   quantity: 0,
-  //   description: ""
-  // };
   shopItem: iShopItem | undefined;
   loadedItem: boolean = false;
 
@@ -71,20 +64,26 @@ export default class ItemPage extends Vue {
     this.getItem();
   }
 
+  addToCart() {
+    if (this.shopItem) {
+      this.$store.commit("cart", this.shopItem);
+    }
+  }
+
   getItem() {
     this.error = false;
-    console.log("itemid: " + this.$route.params.itemid)
+    console.log("[ItemPage.vue] itemid: " + this.$route.params.itemid)
     axios
       .get(APIConfig.buildUrl("/shopitem/" + this.$route.params.itemid))
       .then((response: AxiosResponse) => {
         this.shopItem = response.data;
         this.loadedItem = true;
-        console.log(response.data);
-        this.$emit("success");
+        console.log("[ItemPage.vue]" + response.data);
+        this.$emit("[ItemPage.vue]" + "success");
       })
       .catch((res: AxiosError) => {
         this.error = res.response && res.response.data.error;
-        console.log(this.error);
+        console.log("[ItemPage.vue]" + this.error);
       });
   }
 }

@@ -140,8 +140,6 @@
             </div>
           </div>
         </div>
-
-        
       </div>
       <div class="column">
         <div class="center">
@@ -151,43 +149,34 @@
               <tr>
                 <th>Product</th>
                 <th></th>
+                <th>Quantity</th>
                 <th>Total</th>
               </tr>
-              <tr>
+              <tr v-for="(cartitem, index) in cart" v-bind:key="index">
                 <td>
-                  <img src="../assets/transparentlogo.png">
+                  <img :src="cartitem.item.image">
                 </td>
-                <td class="iName">Foxycle Extreme Pro 5000</td>
-                <td>$3999.99</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="../assets/transparentlogo.png">
-                </td>
-                <td class="iName">Foxycle Extreme Pro 1000</td>
-                <td>$5999.99</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="../assets/transparentlogo.png">
-                </td>
-                <td class="iName">Foxycle Extreme Pro 6000</td>
-                <td>$7999.99</td>
+                <td class="iName">{{cartitem.item.name}}</td>
+                <td class="iName">{{cartitem.quantity}}</td>
+                <td>${{cartitem.item.price}}</td>
               </tr>
               <tr class="bot-bord">
                 <td>Subtotal</td>
                 <td></td>
-                <td>$17999.97</td>
+                <td></td>
+                <td>${{subtotal}}</td>
               </tr>
               <tr>
                 <td>Shipping</td>
                 <td></td>
-                <td>$300</td>
+                <td></td>
+                <td>${{shipping}}</td>
               </tr>
               <tr class="tot-bord">
                 <td>Total</td>
                 <td></td>
-                <td>$18,299.97</td>
+                <td></td>
+                <td>${{total}}</td>
               </tr>
               <br>
               <tr>
@@ -195,7 +184,7 @@
                 <td></td>
                 <td>
                   <div class="checkout-btn">
-                    <div class="button is-success" v-on:click="loading()">
+                    <div class="button is-success" v-on:click="loading(), placeOrder()">
                       <i class="fas fa-check iconpadding"></i>place order
                     </div>
 
@@ -218,20 +207,111 @@
 
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { iShopItem } from "../models/shopitem.interface";
+import { iCart } from "../models/cart.interface";
 
 @Component
 export default class Checkout extends Vue {
+  items: iShopItem[] = this.$store.state.items;
+  cart: iCart[] = [];
+  subtotal: number = 0;
+  shipping: number = 10;
+  total: number = 0;
+  ordernumber: string = "";
+
+  computeSubtotal() {
+    for (var i in this.items) {
+      this.subtotal += this.items[i].price;
+    }
+  }
+
+  computeTotal() {
+    this.total = this.subtotal + this.shipping;
+  }
+
+  created() {
+    this.computeSubtotal();
+    this.computeTotal();
+    var flag = true;
+    for (var i in this.items) {
+      flag = true;
+      for (var j in this.cart) {
+        if (this.cart[j].item.id === this.items[i].id) {
+          this.cart[j] = {item: this.cart[j].item, quantity: this.cart[j].quantity + 1}
+          flag = false;
+        } 
+      }
+      if (flag) {
+        this.cart.push({item: this.items[i], quantity: 1})
+      }
+    }
+  }
+
   loading() {
     const ele = document.getElementById("pageloader");
-    ele.classList.toggle("is-active");
-    setTimeout(function() {
+    if (ele) {
       ele.classList.toggle("is-active");
-    }, 3000);
+      setTimeout(function() {
+        ele.classList.toggle("is-active");
+      }, 3000);
 
-    setTimeout(() => this.$router.push({ path: "/orderconfirmation" }), 3500);
+      setTimeout(
+        () =>
+          this.$router.push({
+            name: "orderconfirmation",
+            params: { ordernumber: this.ordernumber }
+          }),
+        3500
+      );
+    }
+  }
+
+  generate() {
+    var len;
+    var timestamp;
+    len = 8;
+    timestamp = +new Date();
+    var ts = timestamp.toString();
+    var parts = ts.split("").reverse();
+    var id = "";
+
+    for (var i = 0; i < len; ++i) {
+      var index = Math.floor(Math.random() * (parts.length - 1 - 0 + 1)) + 0;
+      id += parts[index];
+    }
+
+    return id;
+  }
+
+  parseDate() {
+    var date = new Date();
+    var mm = date.getMonth() + 1;
+    var dd = date.getDate();
+    var prettyDate = (mm > 9 ? "" : "0") + mm + "." + (dd > 9 ? "" : "0") + dd + "." + date.getFullYear();
+    console.log("[Checkout.vue] date ordered: " + prettyDate)
+    return prettyDate;
+  }
+
+  placeOrder() {
+    this.ordernumber = this.generate();
+    var orderdate = this.parseDate()
+    axios
+      .post(APIConfig.buildUrl("/neworder"), {
+        orderNumber: this.ordernumber,
+        status: 1,
+        date: orderdate,
+        address: ""
+      })
+      .then((response: AxiosResponse) => {
+        console.log("[Checkout.vue]" + response.data);
+      })
+      .catch((response: AxiosError) => {
+        console.log("[Checkout.vue]" + "catch");
+      });
+    this.$store.state.items = [];
   }
 }
 </script>

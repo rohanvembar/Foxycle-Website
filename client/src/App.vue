@@ -93,7 +93,7 @@
 
                 <router-link
                   class="navbar-item"
-                  to="/"
+                  to="/editinfo"
                   exact-active-class="is-active"
                   v-if="isLoggedIn"
                 >

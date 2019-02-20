@@ -64,7 +64,7 @@ export default new Router({
       component: () => import("./views/ItemPage.vue")
     },
     {
-      path: "/orderconfirmation",
+      path: "/orderconfirmation/:ordernumber",
       name: "orderconfirmation",
       component: () => import("./views/OrderConfirmation.vue")
     },
@@ -84,7 +84,7 @@ export default new Router({
       component: () => import("./views/Shop.vue")
     },
     {
-      path: "/vieworder",
+      path: "/vieworder/:ordernumber",
       name: "vieworder",
       component: () => import("./views/ViewOrder.vue")
     },
@@ -92,6 +92,11 @@ export default new Router({
       path: "/my-profile",
       name: "myProfile",
       component: MyProfile
+    },
+    {
+      path: "/editinfo",
+      name: "editinfo",
+      component: () => import("./views/AdminEditInfo.vue")
     }
   ]
 });

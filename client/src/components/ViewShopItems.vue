@@ -16,7 +16,7 @@
           </router-link>
           <figcaption>{{item.name}}</figcaption>
           <span class="price">${{item.price}}</span>
-          <div class="button" v-on:click="toast">add to cart</div>
+          <div class="button" v-on:click="toast(item)">add to cart</div>
         </figure>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default class ViewShopItems extends Vue {
   error: string | boolean = false;
   items: iShopItem[] = [];
 
-  toast() {
+  toast(item:iShopItem) {
     const ele = document.getElementById("toast");
     if (ele) {
       ele.className = "show";
@@ -48,6 +48,12 @@ export default class ViewShopItems extends Vue {
         ele.className = ele.className.replace("show", "");
       }, 3000);
     }
+    this.addToCart(item);
+  }
+
+  addToCart(item:iShopItem) {
+    this.$store.commit("cart", item);
+    console.log("[ViewShopItems.vue]" + JSON.stringify(this.$store.state.items))
   }
 
   created() {
@@ -60,12 +66,11 @@ export default class ViewShopItems extends Vue {
       .get(APIConfig.buildUrl("/shopitems"))
       .then((response: AxiosResponse) => {
         this.items = response.data;
-        console.log(response.data);
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
         this.error = res.response && res.response.data.error;
-        console.log(this.error);
+        console.log("[ViewShopItems.vue]" + this.error);
       });
   }
 
