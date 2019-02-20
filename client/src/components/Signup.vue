@@ -1,5 +1,5 @@
 <template>
-  <modal v-bind:is-showing="isShowing" title="add employee" success-button="Signup" v-on:success="success" v-on:cancel="cancel">
+  <modal v-bind:is-showing="isShowing" title="add employee" success-button="Add" v-on:success="success" v-on:cancel="cancel">
     <form v-on:submit.prevent="onSubmit">
       <p v-if="error" class="is-danger">
         {{ error }}

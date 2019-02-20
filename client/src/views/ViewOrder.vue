@@ -14,7 +14,7 @@
         </center>
         <div>
           <step-progress
-            :steps="['Received', 'Processed','Shipped', 'Delivered']"
+            :steps="['Received', 'Processed','Shipped']"
             :current-step="order.status"
             icon-class="fas fa-check"
           ></step-progress>
