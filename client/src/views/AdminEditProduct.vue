@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <div v-if="!isLoggedIn" class="error">
       <article class="message is-danger">
@@ -20,15 +19,16 @@
 
     <div v-else>
       <!-- put page here -->
-      yay you have access
+      <button class="button is-info" v-on:click="showAddItemModal()">add item</button>
       <div class="manage-item-page">
-        <div class="add-item-form">
-          <input type="text" v-model="newItemTitle" placeholder="new shop item name...">
-          <input type="number" min="0.01" step="0.01" v-model="newItemPrice" placeholder="price...">
-          <input type="text" v-model="newItemImage" placeholder="image url...">
-          etc.....
-          <button class="button add_button" v-on:click="addItem">submit</button>
-        </div>
+        
+        <figure v-if="savedItem">
+          <router-link to="/itempage">
+            <img :src="savedItem.image">
+          </router-link>
+          <figcaption>{{savedItem.name}}</figcaption>
+          <span class="price">${{savedItem.price}}</span>
+        </figure>
         <div class="columns_4">
           <figure v-if="savedItem">
             <router-link to="/itempage">
@@ -58,7 +58,7 @@
               <figcaption>{{item.name}}</figcaption>
               <span class="price">${{item.price}}</span>
               <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
-                <div class="editbutton" href="">Edit Item</div>
+                <div class="editbutton" href>Edit Item</div>
               </router-link>
               <div class="removebutton" v-on:click="toast(item)">Remove Item</div>
             </figure>
@@ -66,32 +66,47 @@
         </div>
         <div id="toast">
           <div id="img">
-            <font-awesome-icon icon="trash"/>
+            <i class="fas fa-trash"></i>
           </div>
-          <div id="desc">Successfully removed product</div>
+          <div id="desc">successfully removed product</div>
         </div>
       </div>
     </div>
+    <AddItem v-bind:is-showing="showAddItem" v-on:success="successAdd()" v-on:cancel="cancelAdd()"/>
   </div>
 </template>
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import AddItem from "@/components/AddItem.vue";
 
-
-@Component
+@Component({
+  components: {
+    AddItem
+  }
+})
 export default class AdminEditProduct extends Vue {
   newItemTitle: string = "";
   newItemPrice: number | string = "";
   newItemImage: string = "";
 
   savedItem: iShopItem | string = "";
-
+  showAddItem: boolean = false;
+  successAdd() {
+    this.showAddItem = false;
+  }
+  cancelAdd() {
+    this.showAddItem = false;
+  }
   get isLoggedIn(): boolean {
     return !!this.$store.state.userId;
+  }
+
+  showAddItemModal() {
+    this.showAddItem = true;
   }
 
   addItem() {
@@ -133,13 +148,13 @@ export default class AdminEditProduct extends Vue {
     this.removeItem(item);
   }
 
-  removeItem(item : iShopItem) {
+  removeItem(item: iShopItem) {
     this.error = false;
     axios
       .delete(APIConfig.buildUrl("/deleteitem/" + item.id))
       .then((response: AxiosResponse) => {
-        const deletedItem= response.data;
-        this.item = this.item.filter(item => {
+        const deletedItem = response.data;
+        this.items = this.items.filter(item => {
           return item.id != deletedItem.id;
         });
         this.$emit("success");
@@ -405,18 +420,6 @@ div#columns figure figcaption {
   margin-bottom: 2%;
 }
 
-.button {
-  background: #239cec;
-  margin: px;
-  display: block;
-  text-align: center;
-  color: #fff;
-  transition: 0.3s;
-  text-decoration: none;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-}
 .button:hover {
   background: #40b883;
   color: #f1f2f3;
@@ -443,7 +446,6 @@ div#columns figure figcaption {
 }
 
 .imagediv {
-  width: 200px;
   height: 150px;
 }
 
@@ -451,5 +453,8 @@ div#columns figure figcaption {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.add {
 }
 </style>

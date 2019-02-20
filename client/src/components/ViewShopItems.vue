@@ -21,6 +21,7 @@
           <span class="price">${{item.price}}</span>
           <div class="button" v-on:click="toast(item)">add to cart</div>
         </figure>
+        
       </div>
     </div>
     <div v-if="!hasItems()">

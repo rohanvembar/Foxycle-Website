@@ -20,7 +20,7 @@ export class ShopItem {
     @Column()
     public image!: string;
 
-    @Column()
+    @Column({default: 0})
     public delivery!: boolean;
 
     @Column()
