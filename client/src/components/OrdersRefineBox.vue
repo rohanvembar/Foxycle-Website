@@ -63,7 +63,7 @@ export default class OrdersRefineBox extends Vue {
     padding-bottom: 35px;
     margin-bottom: 32px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 20px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

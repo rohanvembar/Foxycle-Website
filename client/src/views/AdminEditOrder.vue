@@ -93,7 +93,7 @@ export default class AdminEditOrder extends Vue {
   }
   .orders{
     padding: 10px;
-    margin-right: 150px;
+    margin-right: 250px;
     margin-bottom: 20px;
     display: flex;
     align-items: top;

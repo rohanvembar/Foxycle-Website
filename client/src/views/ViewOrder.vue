@@ -13,11 +13,14 @@
           <h3>Order#: {{order.orderNumber}}</h3>
         </center>
         <div>
-          <step-progress
+          <step-progress v-if = "order.status < 5"
             :steps="['Received', 'Processed','Shipped', 'Delivered']"
             :current-step="order.status"
             icon-class="fas fa-check"
           ></step-progress>
+          <div v-else class = "canceled">
+            Your order has been canceled
+          </div>
         </div>
         <br>
         <br>
@@ -107,6 +110,13 @@ export default class ViewOrder extends Vue {
 .container {
   width: 600px;
   margin: 100px auto;
+}
+
+.canceled{
+  align-items: center;
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
 }
 </style>
 
