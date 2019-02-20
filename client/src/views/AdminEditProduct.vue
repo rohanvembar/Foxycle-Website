@@ -19,7 +19,7 @@
 
     <div v-else>
       <!-- put page here -->
-      <button class="button is-info" v-on:click="showAddItemModal()">add item</button>
+      <button class="button is-info add" v-on:click="showAddItemModal()"><i class="fas fa-plus space"></i>add item</button>
 
       <div>
         <link
@@ -381,10 +381,6 @@ div#columns figure figcaption {
   margin-bottom: 2%;
 }
 
-.button:hover {
-  background: #40b883;
-  color: #f1f2f3;
-}
 @media screen and (max-width: 960px) {
   #columns figure {
     width: 24%;
@@ -417,5 +413,15 @@ div#columns figure figcaption {
 }
 
 .add {
+  display: block;
+  max-width: 300px;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+
+.space {
+  padding-right: 10px;
 }
 </style>
