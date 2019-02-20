@@ -12,7 +12,14 @@
             <div class="card-body">
               <div class="servicesTuneUps">
                 <article v-for="(a, index) in servicesTuneUps" v-bind:key="index">
-                  <p class="section-title">{{a.title}} - ${{a.price}}</p>
+                  <p class="section-title">
+                    {{a.title}} - ${{a.price}}
+                    <button
+                      class="button"
+                      v-on:click="deleteService(a.id)"
+                    >delete</button>
+                  </p>
+
                   <p>{{a.description}}</p>
                 </article>
               </div>
@@ -46,7 +53,13 @@
             <div class="card-body">
               <div class="servicesAdjust">
                 <article v-for="(a, index) in servicesAdjust" v-bind:key="index">
-                  <p class="section-title">{{a.title}} - ${{a.price}}</p>
+                  <p class="section-title">
+                    {{a.title}} - ${{a.price}}
+                    <button
+                      class="button"
+                      v-on:click="deleteService(a.id)"
+                    >delete</button>
+                  </p>
                   <p>{{a.description}}</p>
                 </article>
               </div>
@@ -75,7 +88,13 @@
             <div class="card-body">
               <div class="servicesInst">
                 <article v-for="(a, index) in servicesInst" v-bind:key="index">
-                  <p class="section-title">{{a.title}} - ${{a.price}}</p>
+                  <p class="section-title">
+                    {{a.title}} - ${{a.price}}
+                    <button
+                      class="button"
+                      v-on:click="deleteService(a.id)"
+                    >delete</button>
+                  </p>
                   <p>{{a.description}}</p>
                 </article>
               </div>
@@ -129,6 +148,20 @@ export default class EditServices extends Vue {
   newInstallationTitle: string = "";
   newInstallationPrice: number | string = "";
   newInstallationBody: string = "";
+
+  deleteService(id: number) {
+    this.error = false;
+    axios
+      .delete(APIConfig.buildUrl("/services/" + id))
+      .then((response: AxiosResponse) => {
+        const deletedService = response.data;
+        this.getAllServices();
+        this.$emit("success");
+      })
+      .catch((response: AxiosResponse) => {
+        this.error = "bad";
+      });
+  }
 
   newTuneUp() {
     if (
@@ -185,7 +218,11 @@ export default class EditServices extends Vue {
       });
   }
   newInstallation() {
-    if (this.newInstallationBody == "" || this.newInstallationTitle == "" || this.newInstallationPrice == "") {
+    if (
+      this.newInstallationBody == "" ||
+      this.newInstallationTitle == "" ||
+      this.newInstallationPrice == ""
+    ) {
       return;
     }
     axios
