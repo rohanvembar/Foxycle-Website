@@ -57,7 +57,7 @@ export default class ViewShopItems extends Vue {
   @Prop() sortVal: String;
   error: string | boolean = false;
   items: iShopItem[] = [];
-  saleText: string = "50% Off"
+  saleText: string = "SALE"
   toast(item: iShopItem) {
     const ele = document.getElementById("toast");
     if (ele) {
