@@ -39,9 +39,9 @@
               <figcaption>{{item.name}}</figcaption>
               <span class="price">${{item.price}}</span>
               <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
-                <div class="editbutton" href>Edit Item</div>
+                <div class="editbutton" href>edit</div>
               </router-link>
-              <div class="removebutton" v-on:click="toast(item)">Remove Item</div>
+              <div class="removebutton" v-on:click="toast(item)">remove</div>
             </figure>
           </div>
         </div>
@@ -316,7 +316,7 @@ export default class AdminEditProduct extends Vue {
   transform: scale(1);
 }
 #columns:hover figure:not(:hover) {
-  opacity: 0.4;
+  opacity: 0.6;
 }
 div#columns figure {
   display: inline-block;
@@ -361,7 +361,6 @@ div#columns figure figcaption {
   color: #fff;
   transition: 0.3s;
   text-decoration: none;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -374,7 +373,6 @@ div#columns figure figcaption {
   color: #fff;
   transition: 0.3s;
   text-decoration: none;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   border-radius: 3px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   margin-top: 2%;
