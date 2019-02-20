@@ -4,7 +4,7 @@
       <div class="message-header">Filters</div>
     </article>
 
-    <div class="filters">
+    <div class="filters select">
       <p>Category</p>
       <select name="category">
         <option selected="true" value="all">All</option>
@@ -53,7 +53,7 @@ export default class ShopPageFilterBox extends Vue {
   position: absolute;
   margin-left: -10%;
   height: 350px;
-  width: 150px;
+  width: 170px;
   background-color: #fefefe;
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);

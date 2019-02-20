@@ -1,6 +1,6 @@
 <template>
   <div class="main-background">
-    <div class="sort-by">
+    <div class="sort-by select">
       <select name="Sort By" v-on:change="updateSort($event)">
         <option selected="true" disabled="disabled" value="sortby">Sort By</option>
         <option value="0">Price</option>
@@ -52,7 +52,7 @@ export default class Shop extends Vue {
   .sort-by{
     padding-top: 30px;
     padding-bottom: 30px;
-    width: 95%;
+    width: 90%;
     display: flex;
     align-items: center;
     justify-content: flex-end;   

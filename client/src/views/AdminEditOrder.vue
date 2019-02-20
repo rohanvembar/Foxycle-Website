@@ -21,7 +21,7 @@
     <div v-else>
       <div class="main-background">
         <div class = "header">Manage Orders</div>
-        <div class="sort-by">
+        <div class="sort-by select">
           <select name="Sort By" v-on:change="updateSort($event)">
             <option selected="true" disabled="disabled" value="sortby">Sort By</option>
             <option value="0">Order Number</option>
