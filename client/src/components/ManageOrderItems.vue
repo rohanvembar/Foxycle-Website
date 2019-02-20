@@ -29,7 +29,7 @@ import { APIConfig } from "../utils/api.utils";
 
 @Component
 export default class ManageOrderItems extends Vue {
-  @Prop()
+  @Prop({default: ["1", "2", "3", "4", "5"]})
   refinelist: String[]
 
   error: string | boolean = false;

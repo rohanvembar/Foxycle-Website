@@ -53,13 +53,17 @@ import ManageOrderItems from "@/components/ManageOrderItems.vue";
   }
 })
 export default class AdminEditOrder extends Vue {
-    refinement: String[] = [];
+    refinement: String[] = ["1", "2", "3", "4", "5"];
     get isLoggedIn(): boolean {
       return !!this.$store.state.userId;
     }
 
     onUpdateRefinelist(newRefinelist){
       this.refinement = newRefinelist;
+      if(this.refinement.length == 0){
+        console.log(newRefinelist.length);
+        this.refinement = ["1", "2", "3", "4", "5"];
+      }
     }
 }
 </script>
