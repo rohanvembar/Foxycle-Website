@@ -364,7 +364,7 @@ div#columns figure figcaption {
 }
 
 .removebutton {
-  background: rgb(236, 35, 35);
+  background: #fe385f;
   margin: px;
   display: block;
   text-align: center;
@@ -377,7 +377,7 @@ div#columns figure figcaption {
 }
 
 .editbutton {
-  background: rgb(134, 134, 134);
+  background:#239cec;
   margin: px;
   display: block;
   text-align: center;
