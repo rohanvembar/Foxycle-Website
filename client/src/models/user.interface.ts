@@ -3,5 +3,6 @@ export interface iUser {
   lastName: string,
   emailAddress: string,
   password: string,
-  id: number
+  id: number,
+  role: number
 }
