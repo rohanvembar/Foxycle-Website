@@ -1,6 +1,6 @@
 <template>
   <div class="main-background cards">
-    <div class="contacts">
+    <div class="contacts card">
       <article v-for="(a, index) in contacts" v-bind:key="index">
         <p class="title">Hours</p>
         <div class="content hours">
@@ -119,5 +119,9 @@ export default class Contact extends Vue {
 }
 .times {
   padding-left: 15px;
+}
+
+.card {
+  padding: 15px;
 }
 </style>
