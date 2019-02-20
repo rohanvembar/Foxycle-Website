@@ -122,21 +122,6 @@ export default class Services extends Vue {
       });
   }
 
-  // getTuneUps(){
-  //   this.error = false;
-  //   axios.get(APIConfig.buildUrl("/servicesTuneUps"), {
-  //     headers : {
-  //       "token" : this.$store.state.userToken
-  //     }
-  //   }).then((response: AxiosResponse) => {
-  //     this.services = response.data;
-  //     console.log(response.data)
-  //     this.$emit("success");
-  //   }).catch((res: AxiosError) => {
-  //     this.error = res.response && res.response.data.error;
-  //     console.log(this.error);
-  //   });
-  // }
 }
 </script>
 
