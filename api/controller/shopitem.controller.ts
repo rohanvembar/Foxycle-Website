@@ -45,6 +45,23 @@ export class ShopItemController extends DefaultController {
                         res.status(404);
                     }
                 );
+            })
+            .put((req: Request, res: Response) => {
+                shopItemRepo.findOne(req.params.id).then((foundItem: ShopItem | undefined) => {
+                    if (foundItem == undefined) {
+                        return;
+                    }
+                    foundItem.name = req.body.name;
+                    foundItem.price = req.body.price;
+                    foundItem.brand = req.body.brand;
+                    foundItem.categories = req.body.categories;
+                    foundItem.image = req.body.image;
+                    foundItem.quantity = req.body.quantity;
+                    foundItem.description = req.body.description;
+                    shopItemRepo.save(foundItem).then((updatedItem: ShopItem) => {
+                        res.status(200).send(updatedItem);
+                    });
+                });
             });
         router.route("/deleteitem/:id")
             .delete((req: Request, res: Response) => {

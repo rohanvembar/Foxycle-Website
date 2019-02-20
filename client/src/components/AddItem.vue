@@ -75,7 +75,7 @@ export default class AddItem extends Vue {
 
   newItemQuantity: number | string = "";
   savedItem: iShopItem | string = "";
-  newItemShipping: boolean;
+  newItemShipping: boolean = false;
 
   success() {
     axios
@@ -90,7 +90,7 @@ export default class AddItem extends Vue {
         description: this.newItemDescription
       })
       .then((response: AxiosResponse) => {
-        console.log("[AddItem.vue]" + response.data);
+        console.log("[AddItem.vue]" + JSON.stringify(response.data));
         this.savedItem = response.data;
         this.$emit("success");
       })

@@ -21,7 +21,6 @@
           <span class="price">${{item.price}}</span>
           <div class="buttonadd button is-rounded is-info" v-on:click="toast(item)">add to cart</div>
         </figure>
-        
       </div>
     </div>
     <div v-if="!hasItems()">

@@ -1,5 +1,5 @@
 <template>
-  <modal v-bind:is-showing="isShowing" title="add employee" success-button="Add" v-on:success="success" v-on:cancel="cancel">
+  <modal v-bind:is-showing="isShowing" title="Signup" success-button="Signup" v-on:success="success" v-on:cancel="cancel">
     <form v-on:submit.prevent="onSubmit">
       <p v-if="error" class="is-danger">
         {{ error }}
@@ -17,9 +17,9 @@
         </div>
       </div>
       <div class="field">
-        <label class="label">Employee ID</label>
+        <label class="label">Email Address</label>
         <div class="control">
-          <input class="input" type="text" placeholder="employee id" v-model="signup.emailAddress"/>
+          <input class="input" type="text" placeholder="email address" v-model="signup.emailAddress"/>
         </div>
       </div>
       <div class="field">

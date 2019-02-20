@@ -10,9 +10,9 @@
       <div class="cell">{{order.dateOrdered}}</div>
       <div class="cell_s">
         <select v-on:change="updateStatus($event, order)">
-          <option value="1" :selected="order.status === 1 ? 'selected' : ''">Received</option>
-          <option value="2" :selected="order.status === 2 ? 'selected' : ''">Processed</option>
-          <option value="3" :selected="order.status === 3 ? 'selected' : ''">Shipped</option>
+          <option value="1" :selected="order.status === 1 ? 'selected' : ''">Not Started</option>
+          <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
+          <option value="3" :selected="order.status === 3 ? 'selected' : ''">Complete</option>
           <option value="4" :selected="order.status === 4 ? 'selected' : ''">Canceled</option>
         </select>
       </div>

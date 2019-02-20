@@ -76,6 +76,7 @@ export default class AdminEditProduct extends Vue {
 
   successAdd() {
     this.showAddItem = false;
+    this.getAllItems();
   }
   cancelAdd() {
     this.showAddItem = false;
@@ -141,12 +142,22 @@ export default class AdminEditProduct extends Vue {
 </script>
 
 <style scoped>
+.description-box{
+  max-width: 200px;
+}
+
+.manage-item-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding: 30px;
+}
 .add-item-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
 }
 
 #toast {
