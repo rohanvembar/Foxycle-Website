@@ -43,7 +43,7 @@
             id="storePickupSwitch"
             type="checkbox"
             name="switchColorSuccess"
-            class="switch is-success is-rounded"
+            class="switch is-info is-rounded"
             checked="checked"
             v-model="newItemShipping"
           >
