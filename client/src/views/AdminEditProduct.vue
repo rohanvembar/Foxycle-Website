@@ -76,6 +76,7 @@ export default class AdminEditProduct extends Vue {
 
   successAdd() {
     this.showAddItem = false;
+    this.getAllItems();
   }
   cancelAdd() {
     this.showAddItem = false;
