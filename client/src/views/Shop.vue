@@ -1,15 +1,15 @@
 <template>
   <div class="main-background">
     <div class="sort-by">
-      <select name="Sort By">
+      <select name="Sort By" v-on:change="updateSort($event)">
         <option selected="true" disabled="disabled" value="sortby">Sort By</option>
-        <option value="price">Price</option>
-        <option value="name">Name</option>     
+        <option value="0">Price</option>
+        <option value="1">Name</option>     
       </select>
     </div>
     <div class="shop">
       <!-- <ShopPageFilterBox /> -->
-      <ViewShopItems />
+      <ViewShopItems :sortVal= "sortVal"/>
     </div>
 
   </div>
@@ -30,7 +30,12 @@ import ShopPageFilterBox from "@/components/ShopPageFilterBox.vue";
   }
 })
 export default class Shop extends Vue {
+  sortVal: String = "1";
 
+  updateSort(e){
+    console.log("Shop.vue: updating sort value: " + (e.target.value))
+    this.sortVal = e.target.value;
+  }
 }
 </script>
 

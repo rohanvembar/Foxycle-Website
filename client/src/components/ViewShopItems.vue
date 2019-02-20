@@ -11,7 +11,7 @@
     <div id="wrap" v-if="hasItems()">
 
       <div id="columns" class="columns_4">
-        <figure v-for="(item, index) in items" v-bind:key="index">
+        <figure v-for="(item, index) in sortedItems" v-bind:key="index">
           <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
             <div class="imagediv">
               <img :src="item.image" class="image">
@@ -54,6 +54,7 @@ import ShopPageFilterBox from "@/components/ShopPageFilterBox.vue";
   }
 })
 export default class ViewShopItems extends Vue {
+  @Prop() sortVal: String
   error: string | boolean = false;
   items: iShopItem[] = [];
 
@@ -95,6 +96,27 @@ export default class ViewShopItems extends Vue {
         this.error = res.response && res.response.data.error;
         console.log("[ViewShopItems.vue]" + this.error);
       });
+  }
+
+  get sortedItems(){
+    function compareName(a, b){
+      if(a.name < b.name)
+        return -1;
+      if((a.name > b.name))
+        return 1;
+      return 0;
+    }
+    function comparePrice(a, b){
+      if(a.price < b.price)
+        return -1;
+      if((a.price > b.price))
+        return 1;
+      return 0;
+    }
+
+    if(this.sortVal == "1")
+      return this.items.sort(compareName);
+    return this.items.sort(comparePrice);
   }
 
   goToItemPage() {}

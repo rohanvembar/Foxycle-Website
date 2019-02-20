@@ -68,7 +68,7 @@ export default class AdminEditOrder extends Vue {
     }
 
     updateSort(e) {
-      console.log("updating sort value: " + e.target.value)
+      console.log("AdminEditOrder.vue: updating sort value: " + e.target.value)
       this.sortVal = e.target.value;
     }
 }
