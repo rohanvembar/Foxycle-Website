@@ -9,9 +9,13 @@
     <ShopPageFilterBox v-if="hasItems()"/>
 
     <div id="wrap" v-if="hasItems()">
-
       <div id="columns" class="columns_4">
-        <figure v-for="(item, index) in sortedItems" v-bind:key="index">
+        <figure class="has-ribbon" v-for="(item, index) in sortedItems" v-bind:key="index">
+          <!-- change indexof to whatever category you want to show the ribbon on -->
+          <div
+            class="ribbon is-danger"
+            v-if="item.categories.indexOf('apparel') > -1 | item.categories.indexOf('roadbike') > -1"
+          >{{ saleText }}</div>
           <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
             <div class="imagediv">
               <img :src="item.image" class="image">
@@ -54,10 +58,10 @@ import ShopPageFilterBox from "@/components/ShopPageFilterBox.vue";
   }
 })
 export default class ViewShopItems extends Vue {
-  @Prop() sortVal: String
+  @Prop() sortVal: String;
   error: string | boolean = false;
   items: iShopItem[] = [];
-
+  saleText: string = "SALE";
   toast(item: iShopItem) {
     const ele = document.getElementById("toast");
     if (ele) {
@@ -98,24 +102,19 @@ export default class ViewShopItems extends Vue {
       });
   }
 
-  get sortedItems(){
-    function compareName(a, b){
-      if(a.name < b.name)
-        return -1;
-      if((a.name > b.name))
-        return 1;
+  get sortedItems() {
+    function compareName(a, b) {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
       return 0;
     }
-    function comparePrice(a, b){
-      if(a.price < b.price)
-        return -1;
-      if((a.price > b.price))
-        return 1;
+    function comparePrice(a, b) {
+      if (a.price < b.price) return -1;
+      if (a.price > b.price) return 1;
       return 0;
     }
 
-    if(this.sortVal == "1")
-      return this.items.sort(compareName);
+    if (this.sortVal == "1") return this.items.sort(compareName);
     return this.items.sort(comparePrice);
   }
 

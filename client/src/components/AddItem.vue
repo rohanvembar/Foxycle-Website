@@ -10,7 +10,12 @@
       <div class="field">
         <label class="label">Item Name</label>
         <div class="control">
-          <input class="input is-rounded" type="text" placeholder="item name" v-model="newItemTitle">
+          <input
+            class="input is-rounded"
+            type="text"
+            placeholder="item name"
+            v-model="newItemTitle"
+          >
         </div>
       </div>
       <div class="field">
@@ -28,13 +33,36 @@
       <div class="field">
         <label class="label">Quantity on Hand</label>
         <div class="control">
-          <input class="input is-rounded" type="number" placeholder="quantity" required v-model="newItemQuantity">
+          <input
+            class="input is-rounded"
+            type="number"
+            placeholder="quantity"
+            required
+            v-model="newItemQuantity"
+          >
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Categories</label>
+        <div class="control">
+          <div class="select is-multiple">
+            <select multiple v-model="newItemCategories">
+              <option value="apparel">Apparel</option>
+              <option value="roadbike">Road Bike</option>
+              <option value="mountainbike">Mountain Bike</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="field">
         <label class="label">Item Description</label>
         <div class="control">
-          <textarea class="textarea has-fixed-size is-rounded" placeholder="description" v-model="newItemDescription"></textarea>
+          <textarea
+            class="textarea has-fixed-size is-rounded"
+            placeholder="description"
+            v-model="newItemDescription"
+          ></textarea>
         </div>
       </div>
       <div class="field">
@@ -72,6 +100,7 @@ export default class AddItem extends Vue {
   newItemPrice: number | string = "";
   newItemImage: string = "";
   newItemDescription: string = "";
+  newItemCategories: string[] = [""];
 
   newItemQuantity: number | string = "";
   savedItem: iShopItem | string = "";
@@ -83,7 +112,7 @@ export default class AddItem extends Vue {
         name: this.newItemTitle,
         price: this.newItemPrice,
         brand: "",
-        categories: "",
+        categories: this.newItemCategories,
         image: this.newItemImage,
         delivery: this.newItemShipping,
         quantity: this.newItemQuantity,
