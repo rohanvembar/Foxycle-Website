@@ -23,7 +23,11 @@
           <input type="text" v-model="newItemTitle" placeholder="new shop item name...">
           <input type="number" min="0.01" step="0.01" v-model="newItemPrice" placeholder="price...">
           <input type="text" v-model="newItemImage" placeholder="image url...">
-          etc.....
+          <input type="number" min="1" step="1" v-model="newItemQuantity" placeholder="quantity...">
+          <input type="text" v-model="newItemBrand" placeholder="brand...">
+          <textarea v-model="newItemDescription" placeholder="description..."></textarea>
+          <input v-on:change="changeTransportation(true)" type="radio" name="tranport" value="delivery"> Home Delivery Available
+          <input v-on:change="changeTransportation(false)" type="radio" name="tranport" value="pickup"> Pickup Only
           <button class="button add_button" v-on:click="addItem">submit</button>
         </div>
       </div>
@@ -74,6 +78,10 @@ export default class AdminEditProduct extends Vue {
   newItemTitle: string = "";
   newItemPrice: number | string = "";
   newItemImage: string = "";
+  newItemQuantity: number | string = "";
+  newItemBrand: string = "";
+  newItemDescription: string = "";
+  newItemDelivery: boolean = false;
   savedItem: iShopItem | string = "";
   error: string | boolean = false;
   items: iShopItem[] = [];
@@ -82,17 +90,21 @@ export default class AdminEditProduct extends Vue {
     return !!this.$store.state.userId;
   }
 
+  changeTransportation(b : boolean) {
+    this.newItemDelivery = b;
+  }
+
   addItem() {
     axios
       .post(APIConfig.buildUrl("/newitem"), {
         name: this.newItemTitle,
         price: this.newItemPrice,
-        brand: "",
+        brand: this.newItemBrand,
         categories: "",
         image: this.newItemImage,
-        delivery: true,
-        quantity: 1,
-        description: "blah"
+        delivery: this.newItemDelivery,
+        quantity: this.newItemQuantity,
+        description: this.newItemDescription
       })
       .then((response: AxiosResponse) => {
         console.log(
