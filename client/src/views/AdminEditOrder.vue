@@ -22,15 +22,15 @@
       <div class="main-background">
         <div class = "header">Manage Orders</div>
         <div class="sort-by">
-          <select name="Sort By">
+          <select name="Sort By" v-on:change="updateSort($event)">
             <option selected="true" disabled="disabled" value="sortby">Sort By</option>
-            <option value="orderNumber">Order Number</option>
-            <option value="date">Date</option>     
+            <option value="0">Order Number</option>
+            <option value="1">Date</option>     
           </select>
         </div>
         <div class="orders">
           <OrdersRefineBox @change = "onUpdateRefinelist"/>
-          <ManageOrderItems :refinelist= "refinement"/>
+          <ManageOrderItems :refinelist= "refinement" :sortVal= "sortVal"/>
         </div>
       </div>
     </div>
@@ -54,6 +54,7 @@ import ManageOrderItems from "@/components/ManageOrderItems.vue";
 })
 export default class AdminEditOrder extends Vue {
     refinement: String[] = ["1", "2", "3", "4", "5"];
+    sortVal: String = "1";
     get isLoggedIn(): boolean {
       return !!this.$store.state.userId;
     }
@@ -65,6 +66,11 @@ export default class AdminEditOrder extends Vue {
         this.refinement = ["1", "2", "3", "4", "5"];
       }
     }
+
+    updateSort(e) {
+      console.log("updating sort value: " + e.target.value)
+      this.sortVal = e.target.value;
+    }
 }
 </script>
 
@@ -74,7 +80,7 @@ export default class AdminEditOrder extends Vue {
     padding-top: 30px;
     padding-left: 10px;
     margin-left: 200px;
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
   }
   .sort-by{

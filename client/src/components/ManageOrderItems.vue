@@ -29,8 +29,8 @@ import { APIConfig } from "../utils/api.utils";
 
 @Component
 export default class ManageOrderItems extends Vue {
-  @Prop({default: ["1", "2", "3", "4", "5"]})
-  refinelist: String[]
+  @Prop() refinelist: String[]
+  @Prop() sortVal: String
 
   error: string | boolean = false;
   orders: iOrder[] = [];
@@ -71,10 +71,31 @@ export default class ManageOrderItems extends Vue {
 
   get refinedOrders(){
     const l = this.refinelist;
-    return this.orders.filter(function(s){
+    return this.sortedOrders.filter(function(s){
       const stat = (s.status).toString();
       return l.includes(stat);
     })
+  }
+
+  get sortedOrders(){
+    function compareONum(a, b){
+      if(a.orderNumber < b.orderNumber)
+        return -1;
+      if((a.orderNumber > b.orderNumber))
+        return 1;
+      return 0;
+    }
+    function compareDate(a, b){
+      if(a.dateOrdered < b.dateOrdered)
+        return -1;
+      if((a.dateOrdered > b.dateOrdered))
+        return 1;
+      return 0;
+    }
+
+    if(this.sortVal == "1")
+      return this.orders.sort(compareDate);
+    return this.orders.sort(compareONum);
   }
 }
 </script>
