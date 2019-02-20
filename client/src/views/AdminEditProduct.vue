@@ -17,17 +17,18 @@
       </article>
     </div>
 
-    <div v-else>
-      <div class="manage-item-page">
-        <div class="add-item-form">
-          <input type="text" v-model="newItemTitle" placeholder="new shop item name...">
+    <div class="manage-item-page" v-else>
+      <div >
+        <div class="message add-item-form">
+          <h1 class="message-header">New Item</h1>
+          <input type="text" v-model="newItemTitle" placeholder="item name...">
           <input type="number" min="0.01" step="0.01" v-model="newItemPrice" placeholder="price...">
           <input type="text" v-model="newItemImage" placeholder="image url...">
           <input type="number" min="1" step="1" v-model="newItemQuantity" placeholder="quantity...">
           <input type="text" v-model="newItemBrand" placeholder="brand...">
-          <textarea v-model="newItemDescription" placeholder="description..."></textarea>
-          <input v-on:change="changeTransportation(true)" type="radio" name="tranport" value="delivery"> Home Delivery Available
-          <input v-on:change="changeTransportation(false)" type="radio" name="tranport" value="pickup"> Pickup Only
+          <textarea class="description-box" v-model="newItemDescription" placeholder="description..."></textarea>
+          <span><input v-on:change="changeTransportation(true)" type="radio" name="tranport" value="delivery"> Home Delivery Available</span>
+          <span><input v-on:change="changeTransportation(false)" type="radio" name="tranport" value="pickup"> Pickup Only</span>
           <button class="button add_button" v-on:click="addItem">submit</button>
         </div>
       </div>
@@ -175,12 +176,22 @@ export default class AdminEditProduct extends Vue {
 </script>
 
 <style scoped>
+.description-box{
+  max-width: 200px;
+}
+
+.manage-item-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding: 30px;
+}
 .add-item-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
 }
 
 #toast {
