@@ -95,14 +95,12 @@ export default class Cart extends Vue {
     this.computeTotal();
     var flag = true;
     for (var i in this.items) {
+      flag = true;
       for (var j in this.cart) {
-        flag = true;
         if (this.cart[j].item.id === this.items[i].id) {
           this.cart[j] = {item: this.cart[j].item, quantity: this.cart[j].quantity + 1}
           flag = false;
-        } else {
-          flag = true;
-        }
+        } 
       }
       if (flag) {
         this.cart.push({item: this.items[i], quantity: 1})

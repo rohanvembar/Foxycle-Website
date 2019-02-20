@@ -75,6 +75,7 @@ export default class ViewOrder extends Vue {
       })
       .catch((res: AxiosError) => {
         this.error = res.response && res.response.data.error;
+        console.log("[ViewOrder.vue] catch ");
         this.orderError = true;
       });
   }
