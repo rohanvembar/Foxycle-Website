@@ -327,7 +327,7 @@ export default class AdminEditProduct extends Vue {
   transform: scale(1);
 }
 #columns:hover figure:not(:hover) {
-  opacity: 0.6;
+  opacity: 1;
 }
 div#columns figure {
   display: inline-block;
