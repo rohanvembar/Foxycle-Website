@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <div v-if="!isLoggedIn" class="error">
       <article class="message is-danger">
@@ -19,8 +18,6 @@
     </div>
 
     <div v-else>
-      <!-- put page here -->
-      yay you have access
       <div class="manage-item-page">
         <div class="add-item-form">
           <input type="text" v-model="newItemTitle" placeholder="new shop item name...">
@@ -28,15 +25,6 @@
           <input type="text" v-model="newItemImage" placeholder="image url...">
           etc.....
           <button class="button add_button" v-on:click="addItem">submit</button>
-        </div>
-        <div class="columns_4">
-          <figure v-if="savedItem">
-            <router-link to="/itempage">
-              <img :src="savedItem.image">
-            </router-link>
-            <figcaption>{{savedItem.name}}</figcaption>
-            <span class="price">${{savedItem.price}}</span>
-          </figure>
         </div>
       </div>
 
@@ -50,7 +38,7 @@
         <div id="wrap">
           <div id="columns" class="columns_4">
             <figure v-for="(item, index) in items" v-bind:key="index">
-              <router-link :to="{ name: 'editpage', params: { itemid: item.id } }">
+              <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
                 <div class="imagediv">
                   <img :src="item.image" class="image">
                 </div>
@@ -58,7 +46,7 @@
               <figcaption>{{item.name}}</figcaption>
               <span class="price">${{item.price}}</span>
               <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
-                <div class="editbutton" href="">Edit Item</div>
+                <div class="editbutton" href>Edit Item</div>
               </router-link>
               <div class="removebutton" v-on:click="toast(item)">Remove Item</div>
             </figure>
@@ -76,19 +64,19 @@
 </template>
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
-
 
 @Component
 export default class AdminEditProduct extends Vue {
   newItemTitle: string = "";
   newItemPrice: number | string = "";
   newItemImage: string = "";
-
   savedItem: iShopItem | string = "";
+  error: string | boolean = false;
+  items: iShopItem[] = [];
 
   get isLoggedIn(): boolean {
     return !!this.$store.state.userId;
@@ -107,20 +95,20 @@ export default class AdminEditProduct extends Vue {
         description: "blah"
       })
       .then((response: AxiosResponse) => {
-        console.log("[AdminEditProduct.vue]" + response.data);
+        console.log(
+          "[AdminEditProduct.vue]" + JSON.stringify(response.data.length)
+        );
         this.savedItem = response.data;
+        this.items.push(response.data);
         this.$emit("success");
         this.newItemTitle = "";
         this.newItemPrice = "";
         this.newItemImage = "";
       })
-      .catch((response: AxiosResponse) => {
+      .catch((response: AxiosError) => {
         console.log("[AdminEditProduct.vue]" + "catch");
       });
   }
-
-  error: string | boolean = false;
-  items: iShopItem[] = [];
 
   toast(item: iShopItem) {
     const ele = document.getElementById("toast");
@@ -133,13 +121,13 @@ export default class AdminEditProduct extends Vue {
     this.removeItem(item);
   }
 
-  removeItem(item : iShopItem) {
+  removeItem(item: iShopItem) {
     this.error = false;
     axios
       .delete(APIConfig.buildUrl("/deleteitem/" + item.id))
       .then((response: AxiosResponse) => {
-        const deletedItem= response.data;
-        this.item = this.item.filter(item => {
+        const deletedItem = response.data;
+        this.items = this.items.filter(item => {
           return item.id != deletedItem.id;
         });
         this.$emit("success");
@@ -159,12 +147,14 @@ export default class AdminEditProduct extends Vue {
       .get(APIConfig.buildUrl("/shopitems"))
       .then((response: AxiosResponse) => {
         this.items = response.data;
-        console.log("[ViewShopItems.vue]" + response.data);
+        console.log(
+          "[AdminEditProduct.vue]" + JSON.stringify(response.data.length)
+        );
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
         this.error = res.response && res.response.data.error;
-        console.log("[ViewShopItems.vue]" + this.error);
+        console.log("[AdminEditProduct.vue]" + this.error);
       });
   }
 
@@ -173,6 +163,14 @@ export default class AdminEditProduct extends Vue {
 </script>
 
 <style scoped>
+.add-item-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
 #toast {
   visibility: hidden;
   max-width: 50px;
