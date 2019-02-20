@@ -172,7 +172,7 @@ export default class AdminEditProduct extends Vue {
   max-width: 50px;
   height: 55px;
   margin: auto;
-  background-color: rgb(236, 35, 35);
+  background-color:#fe2b55;
   color: #fff;
   text-align: center;
   border-radius: 5px;
@@ -197,7 +197,7 @@ export default class AdminEditProduct extends Vue {
   box-sizing: border-box;
   border-radius: 5px;
 
-  background-color: rgb(236, 35, 35);
+  background-color:#fe2b55;
   color: #fff;
 }
 #toast #desc {
