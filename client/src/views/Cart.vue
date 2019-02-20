@@ -1,7 +1,6 @@
 <template>
   <div class="main-background">
-    <div class="container">
-      <div class="add-to-cart"><div v-if="!itemsInCart">Add to your cart!</div></div>
+    <div class="container" v-if="itemsInCart">
       <div class="cart-table">
         <table>
           <tr>
@@ -52,12 +51,32 @@
             <td></td>
             <td>
               <div class="checkout-btn">
-                <router-link v-if="itemsInCart" class="button is-success is-rounded is-medium" to="/checkout" exact-active-class="is-active">Checkout</router-link>
-                <div v-if="!itemsInCart" disabled class="button is-sucess is-rounded is-medium">Checkout</div>
+                <router-link
+                  v-if="itemsInCart"
+                  class="button is-success is-rounded is-medium"
+                  to="/checkout"
+                  exact-active-class="is-active"
+                >Checkout</router-link>
+                <div
+                  v-if="!itemsInCart"
+                  disabled
+                  class="button is-sucess is-rounded is-medium"
+                >Checkout</div>
               </div>
             </td>
           </tr>
         </table>
+      </div>
+    </div>
+    <div v-else>
+      <div>
+        <center>
+          <h1>your cart is empty :(</h1>
+          <br>
+          <img
+            src="https://media1.tenor.com/images/077ec9cadfa41dc224276e4026175f4c/tenor.gif?itemid=5510092"
+          >
+        </center>
       </div>
     </div>
   </div>
@@ -75,7 +94,7 @@ export default class Cart extends Vue {
   error: string | boolean = false;
   items: iShopItem[] = this.$store.state.items;
   cart: iCart[] = [];
-  itemsInCart: boolean = (this.items.length != 0);
+  itemsInCart: boolean = this.items.length != 0;
   subtotal: number = 0;
   shipping: number = 10;
   total: number = 0;
@@ -98,12 +117,15 @@ export default class Cart extends Vue {
       flag = true;
       for (var j in this.cart) {
         if (this.cart[j].item.id === this.items[i].id) {
-          this.cart[j] = {item: this.cart[j].item, quantity: this.cart[j].quantity + 1}
+          this.cart[j] = {
+            item: this.cart[j].item,
+            quantity: this.cart[j].quantity + 1
+          };
           flag = false;
-        } 
+        }
       }
       if (flag) {
-        this.cart.push({item: this.items[i], quantity: 1})
+        this.cart.push({ item: this.items[i], quantity: 1 });
       }
     }
   }

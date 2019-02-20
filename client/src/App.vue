@@ -34,7 +34,7 @@
               v-if="isLoggedIn"
               to="/admin"
               exact-active-class="is-active"
-            >admin home</router-link>
+            >employee home</router-link>
           </div>
 
           <div class="navbar-end">
