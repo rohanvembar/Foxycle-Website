@@ -10,11 +10,11 @@ import express from "express";
  export class ServiceController extends DefaultController {
   protected initializeRoutes(): express.Router {
     const router = express.Router();
+    const serviceRepo = getRepository(Service);
 
      router.route("/servicesTuneUps")
     .get((req: Request, res: Response) => {
       console.log("retrieving all tuneups");
-      const serviceRepo = getRepository(Service);
       serviceRepo.find({where: [
                {category : "tune-ups"}
           ]}).then((servicesTuneUps: Service []) => {
@@ -32,7 +32,6 @@ import express from "express";
     router.route("/servicesAdjust")
     .get((req: Request, res: Response) => {
       console.log("retrieving adjustements");
-      const serviceRepo = getRepository(Service);
       serviceRepo.find({where: [
           {category : "adjustments"}
       ]})
@@ -44,7 +43,6 @@ import express from "express";
     router.route("/servicesInst")
     .get((req: Request, res: Response) => {
       console.log("retrieving installations");
-      const serviceRepo = getRepository(Service);
       serviceRepo.find({where: [
           {category : "installations"}
           
@@ -52,6 +50,18 @@ import express from "express";
       .then((servicesInst: Service []) => {
         res.status(200).send( servicesInst );
       })
+    });
+    router.route("/newservice")
+    .post((req: Request, res: Response) => {
+      const newService = new Service();
+      newService.title = req.body.title;
+      newService.description = req.body.body;
+      newService.price = req.body.price;
+      newService.category = req.body.category;
+      serviceRepo.save(newService).then((savedService: Service) => {
+        res.status(200).send(savedService);
+        console.log(savedService);
+      });
     });
     return router;
   }
