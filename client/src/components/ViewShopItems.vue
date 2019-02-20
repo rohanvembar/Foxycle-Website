@@ -11,7 +11,11 @@
     <div id="wrap" v-if="hasItems()">
       <div id="columns" class="columns_4">
         <figure class="has-ribbon" v-for="(item, index) in sortedItems" v-bind:key="index">
-          <div class="ribbon is-danger" v-if="item.price <= 100">{{ saleText }}</div>
+          <!-- change indexof to whatever category you want to show the ribbon on -->
+          <div
+            class="ribbon is-danger"
+            v-if="item.categories.indexOf('apparel') > -1 | item.categories.indexOf('roadbike') > -1"
+          >{{ saleText }}</div>
           <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
             <div class="imagediv">
               <img :src="item.image" class="image">
@@ -57,7 +61,7 @@ export default class ViewShopItems extends Vue {
   @Prop() sortVal: String;
   error: string | boolean = false;
   items: iShopItem[] = [];
-  saleText: string = "SALE"
+  saleText: string = "SALE";
   toast(item: iShopItem) {
     const ele = document.getElementById("toast");
     if (ele) {

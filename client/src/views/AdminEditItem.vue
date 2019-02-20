@@ -6,7 +6,9 @@
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
       crossorigin="anonymous"
     >
-    <button class="button is-rounded is-info add" v-on:click="changeItem"><i class="fas fa-save space"></i>save item</button>
+    <button class="button is-rounded is-info add" v-on:click="changeItem">
+      <i class="fas fa-save space"></i>save item
+    </button>
     <div class="itempage-main-content">Name
       <div class="itempage-title">
         <input type="text" v-model="name">
@@ -55,6 +57,26 @@
                 </center>
               </td>
             </tr>
+            <tr>
+              <td>Categories</td>
+            </tr>
+            <tr>
+              <td class="itempage-price-box">
+                <center>
+                  <div class="control">
+                    <div class="select is-multiple">
+                      <select multiple v-model="categories">
+                        <option value="apparel">Apparel</option>
+                        <option value="roadbike">Road Bike</option>
+                        <option value="mountainbike">Mountain Bike</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <span>Selected: {{ categories }}</span>
+                    </div>
+                  </div>
+                </center>
+              </td>
+            </tr>
           </table>
         </div>
       </div>
@@ -83,6 +105,7 @@ export default class ItemPage extends Vue {
   name: string = "";
   description: string = "";
   brand: string = "";
+  categories: string[] = [""];
   quantity: number | string = "";
   image: string = "";
   loadedItem: boolean = false;
@@ -100,7 +123,7 @@ export default class ItemPage extends Vue {
         name: this.name,
         price: this.price,
         brand: this.brand,
-        categories: "",
+        categories: this.categories,
         image: this.image,
         quantity: this.quantity,
         description: this.description
@@ -125,6 +148,7 @@ export default class ItemPage extends Vue {
         this.loadedItem = true;
         this.price = response.data.price;
         this.name = response.data.name;
+        this.categories = response.data.categories;
         this.description = response.data.description;
         this.brand = response.data.brand;
         this.quantity = response.data.quantity;
