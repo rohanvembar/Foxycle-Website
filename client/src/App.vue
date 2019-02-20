@@ -197,4 +197,12 @@ export default class App extends Vue {
 .navicon {
   padding-right: 10px;
 }
+
+.navbar-custom {
+  border-radius:50px;
+}
+
+
+
+
 </style>

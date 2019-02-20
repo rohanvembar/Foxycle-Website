@@ -1,43 +1,54 @@
 <template>
   <div class="main-background cards">
-    <div class="box">
-      <p class="title">Hours</p>
-      <div class="content hours">
-        <div>
-          <p>Monday to Friday:</p>
-          <p>Saturday:</p>
-          <p>Sunday:</p>
+    <div class="contacts">
+      <article v-for="(a, index) in contacts" v-bind:key="index">
+        <p class="title">Hours</p>
+        <div class="content hours">
+          <div>
+            <p>Monday:</p>
+            <p>Tuesday:</p>
+            <p>Wednesday:</p>
+            <p>Thursday:</p>
+            <p>Friday:</p>
+            <p>Saturday:</p>
+            <p>Sunday:</p>
+          </div>
+          <div class="times">
+            <p>{{a.monHours}}</p>
+            <p>{{a.tueHours}}</p>
+            <p>{{a.wedHours}}</p>
+            <p>{{a.thuHours}}</p>
+            <p>{{a.friHours}}</p>
+            <p>{{a.satHours}}</p>
+            <p>{{a.sunHours}}</p>
+          </div>
         </div>
-        <div class="times">
-          <p>10 AM - 6 PM</p>
-          <p>10 AM - 5 PM</p>
-          <p>12 PM - 5 PM</p>
+        <p class="title">Phone</p>
+        <div class="content">
+          <p>{{a.phoneNumber}}</p>
         </div>
-      </div>
-      <p class="title">Phone</p>
-      <div class="content">
-        <p>(805) 111-1111</p>
-      </div>
-      <p class="title">Address</p>
-      <div class="content">
-        <p>1 Grand Avenue</p>
-        <p>San Luis Obispo, CA 93407</p>
-      </div>
-      <p class="title">Email</p>
-      <div class="content">
-        <p>info@foxycle.com</p>
-      </div>
+        <p class="title">Address</p>
+        <div class="content">
+          <p>{{a.address}}</p>
+        </div>
+        <p class="title">Email</p>
+        <div class="content">
+          <p>{{a.email}}</p>
+        </div>
+      </article>
     </div>
     <div>
       <div class="mapouter">
         <div class="gmap_canvas">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3256.4995892881607!2d-120.67430488460542!3d35.29356598028646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80ecf051fa383c77%3A0x95e0baf262f65f3a!2sSloDoCo+Donuts!5e0!3m2!1sen!2sus!4v1550464765757"
             width="600"
             height="450"
+            id="gmap_canvas"
+            src= "https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed"
             frameborder="0"
-            style="border:0"
-            allowfullscreen
+            scrolling="no"
+            marginheight="0"
+            marginwidth="0"
           ></iframe>
         </div>
       </div>
@@ -46,12 +57,40 @@
 </template>
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
+import { iContact } from "../models/contact.interface";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component
-export default class Contact extends Vue {}
+@Component({})
+export default class Contact extends Vue {
+  error: string | boolean = false;
+  contacts: iContact[] = [];
+
+  created() {
+    this.getAllContacts();
+  }
+
+  getAllContacts() {
+    this.error = false;
+    axios
+      .get(APIConfig.buildUrl("/contacts"), {
+        headers: {
+          token: this.$store.state.userToken
+        }
+      })
+      .then((response: AxiosResponse) => {
+        this.contacts = response.data;
+        console.log(response.data);
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log(this.error);
+      });
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>

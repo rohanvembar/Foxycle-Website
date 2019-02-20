@@ -184,7 +184,7 @@
                 <td></td>
                 <td>
                   <div class="checkout-btn">
-                    <div class="button is-success" v-on:click="loading(), placeOrder()">
+                    <div class="button is-success is-rounded" v-on:click="loading(), placeOrder()">
                       <i class="fas fa-check iconpadding"></i>place order
                     </div>
 

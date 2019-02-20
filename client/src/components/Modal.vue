@@ -1,7 +1,7 @@
 <template>
   <div class="modal" v-bind:class="{'is-active': isShowing}" >
     <div class="modal-background"></div>
-    <div class="modal-card">
+    <div class="modal-card custom">
       <header class="modal-card-head">
         <p class="modal-card-title">{{title}}</p>
         <button class="delete" aria-label="close" v-on:click="cancelHandler()"></button>
@@ -10,8 +10,8 @@
         <slot/>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success" v-on:click="successHandler()">{{ successButton }}</button>
-        <button class="button" v-on:click="cancelHandler()">Cancel</button>
+        <button class="button is-info is-rounded" v-on:click="successHandler()">{{ successButton }}</button>
+        <button class="button is-rounded" v-on:click="cancelHandler()">Cancel</button>
       </footer>
     </div>
   </div>
@@ -36,3 +36,10 @@ export default class Modal extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+
+.custom {
+  border-radius: 30px;
+}
+</style>

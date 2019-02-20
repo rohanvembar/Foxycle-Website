@@ -8,7 +8,7 @@
     <p class="orderNum">your receipt will be emailed to you within 24 hours</p>
 
     <router-link
-      class="button is-medium is-info"
+      class="button is-medium is-info is-rounded"
       to="/shop"
       exact-active-class="is-active"
     >continue shopping</router-link>
