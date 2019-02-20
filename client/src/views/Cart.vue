@@ -52,8 +52,8 @@
             <td></td>
             <td>
               <div class="checkout-btn">
-                <router-link v-if="itemsInCart" class="button" to="/checkout" exact-active-class="is-active">Checkout</router-link>
-                <div v-if="!itemsInCart" disabled class="button">Checkout</div>
+                <router-link v-if="itemsInCart" class="button is-success is-rounded is-medium" to="/checkout" exact-active-class="is-active">Checkout</router-link>
+                <div v-if="!itemsInCart" disabled class="button is-sucess is-rounded is-medium">Checkout</div>
               </div>
             </td>
           </tr>
