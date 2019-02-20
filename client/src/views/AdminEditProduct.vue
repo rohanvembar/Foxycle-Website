@@ -19,7 +19,7 @@
 
     <div v-else>
       <!-- put page here -->
-      <button class="button is-info add" v-on:click="showAddItemModal()"><i class="fas fa-plus space"></i>add item</button>
+      <button class="button is-info add is-rounded" v-on:click="showAddItemModal()"><i class="fas fa-plus space"></i>add item</button>
 
       <div>
         <link
@@ -39,9 +39,9 @@
               <figcaption>{{item.name}}</figcaption>
               <span class="price">${{item.price}}</span>
               <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
-                <div class="editbutton" href>edit</div>
+                <div class="button editbutton is-rounded is-info" href>edit</div>
               </router-link>
-              <div class="removebutton" v-on:click="toast(item)">remove</div>
+              <div class="button removebutton is-rounded is-danger" v-on:click="toast(item)">remove</div>
             </figure>
           </div>
         </div>
@@ -354,30 +354,19 @@ div#columns figure figcaption {
 }
 
 .removebutton {
-  background: #fe385f;
   margin: px;
   display: block;
   text-align: center;
-  color: #fff;
-  transition: 0.3s;
-  text-decoration: none;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .editbutton {
-  background:#239cec;
   margin: px;
   display: block;
   text-align: center;
-  color: #fff;
-  transition: 0.3s;
-  text-decoration: none;
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   margin-top: 2%;
   margin-bottom: 2%;
 }
+
 
 @media screen and (max-width: 960px) {
   #columns figure {

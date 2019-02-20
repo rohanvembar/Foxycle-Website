@@ -19,7 +19,7 @@
           </router-link>
           <figcaption>{{item.name}}</figcaption>
           <span class="price">${{item.price}}</span>
-          <div class="button" v-on:click="toast(item)">add to cart</div>
+          <div class="buttonadd button is-rounded is-info" v-on:click="toast(item)">add to cart</div>
         </figure>
         
       </div>
@@ -308,17 +308,15 @@ div#columns figure figcaption {
   text-overflow: ellipsis;
 }
 
-.button {
-  background: #239cec;
+.buttonadd {
+  // background: #239cec;
   margin: px;
   display: block;
   text-align: center;
-  color: #fff;
+  margin-top: 5px;
   transition: 0.3s;
-  text-decoration: none;
-  border-radius: 5px;
 }
-.button:hover {
+.buttonadd:hover {
   background: #40b883;
   color: #f1f2f3;
 }
