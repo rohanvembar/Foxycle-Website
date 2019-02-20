@@ -1,9 +1,9 @@
 <template>
   <div class="main-background track">
     <h1>Track Your Order</h1>
-    <input class="input-bar" placeholder="Order Number" type="text" v-model="ordernum">
+    <input class="input is-rounded input-bar" placeholder="Order Number" type="text" v-model="ordernum">
     <router-link  :to="{ name: 'vieworder', params: { ordernumber: Number(ordernum) } }" exact-active-class="is-active">
-        <button v-on:click="verifyNumber" class="button submit-button is-info">Track</button>
+        <button v-on:click="verifyNumber" class="button submit-button is-info is-rounded">Track</button>
     </router-link>
 
   </div>
@@ -42,8 +42,8 @@ export default class OrderTracking extends Vue {
   .input-bar {
     padding:5px;
     font-size: 15px;
-    width: 20%;
-    height: 50px;
+    width: 15%;
+    height: 40px;
   }
 
   .submit-button {
