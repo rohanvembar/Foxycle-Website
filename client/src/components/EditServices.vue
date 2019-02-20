@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main-background">
-      <div class="message is-info manage-services ">
+      <div class="message is-info manage-services">
         <h1 class="message-header">Manage Services</h1>
         <div class="row-sections">
           <div class="indivisual-card">
@@ -12,10 +12,29 @@
             <div class="card-body">
               <div class="servicesTuneUps">
                 <article v-for="(a, index) in servicesTuneUps" v-bind:key="index">
-                <p class="section-title"><input :placeholder="a.title"/></p>
-                  <p class="section-title">$<input class="price-box" :placeholder="a.price"/></p>
-                  <p><textarea class="description-box" :placeholder="a.description"></textarea></p>
+                  <p class="section-title">{{a.title}} - ${{a.price}}</p>
+                  <p>{{a.description}}</p>
                 </article>
+              </div>
+              <div class="message is-info section">
+                <h1 class="message-header">New Tune Up</h1>
+                <div>
+                  <input type="text" v-model="newTuneUpTitle" placeholder="title">
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    v-model="newTuneUpPrice"
+                    placeholder="price"
+                  >
+                  <textarea
+                    class="input-field"
+                    type="text"
+                    v-model="newTuneUpBody"
+                    placeholder="body"
+                  ></textarea>
+                  <button class="button input-field" v-on:click="newTuneUp()">Save</button>
+                </div>
               </div>
             </div>
           </div>
@@ -27,9 +46,24 @@
             <div class="card-body">
               <div class="servicesAdjust">
                 <article v-for="(a, index) in servicesAdjust" v-bind:key="index">
-                <p class="section-title"><input :placeholder="a.title"/></p>
-                <p class="section-title">$<input class="price-box" :placeholder="a.price"/></p>                  <p><textarea class="description-box" :placeholder="a.description"></textarea></p>
+                  <p class="section-title">{{a.title}} - ${{a.price}}</p>
+                  <p>{{a.description}}</p>
                 </article>
+              </div>
+            </div>
+            <div class="message is-info section">
+              <h1 class="message-header">New Adjustment & Repair</h1>
+              <div>
+                <input type="text" v-model="newAandRTitle" placeholder="title">
+                <input
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  v-model="newAandRPrice"
+                  placeholder="price"
+                >
+                <textarea class="input-field" type="text" v-model="newAandRBody" placeholder="body"></textarea>
+                <button class="button input-field" v-on:click="newAandR()">Save</button>
               </div>
             </div>
           </div>
@@ -41,10 +75,29 @@
             <div class="card-body">
               <div class="servicesInst">
                 <article v-for="(a, index) in servicesInst" v-bind:key="index">
-                  <p class="section-title"><input :placeholder="a.title"/></p>
-                  <p class="section-title">$<input class="price-box" :placeholder="a.price"/></p>
-                  <p><textarea class="description-box" :placeholder="a.description"></textarea></p>
+                  <p class="section-title">{{a.title}} - ${{a.price}}</p>
+                  <p>{{a.description}}</p>
                 </article>
+              </div>
+              <div class="message is-info section">
+                <h1 class="message-header">New Installation</h1>
+                <div>
+                  <input type="text" v-model="newInstallationTitle" placeholder="title">
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    v-model="newInstallationPrice"
+                    placeholder="price"
+                  >
+                  <textarea
+                    class="input-field"
+                    type="text"
+                    v-model="newInstallationBody"
+                    placeholder="body"
+                  ></textarea>
+                  <button class="button input-field" v-on:click="newInstallation()">Save</button>
+                </div>
               </div>
             </div>
           </div>
@@ -67,6 +120,93 @@ export default class EditServices extends Vue {
   servicesTuneUps: iService[] = [];
   servicesAdjust: iService[] = [];
   servicesInst: iService[] = [];
+  newTuneUpBody: string = "";
+  newTuneUpTitle: string = "";
+  newTuneUpPrice: number | string = "";
+  newAandRTitle: string = "";
+  newAandRPrice: number | string = "";
+  newAandRBody: string = "";
+  newInstallationTitle: string = "";
+  newInstallationPrice: number | string = "";
+  newInstallationBody: string = "";
+
+  newTuneUp() {
+    if (
+      this.newTuneUpBody == "" ||
+      this.newTuneUpTitle == "" ||
+      this.newTuneUpPrice == ""
+    ) {
+      return;
+    }
+    axios
+      .post(APIConfig.buildUrl("/newservice"), {
+        title: this.newTuneUpTitle,
+        body: this.newTuneUpBody,
+        price: this.newTuneUpPrice,
+        category: "tune-ups"
+      })
+      .then((response: AxiosResponse) => {
+        console.log("[EditServices.vue]" + JSON.stringify(response.data));
+        this.servicesTuneUps.push(response.data);
+        this.$emit("success");
+        this.newTuneUpBody = "";
+        this.newTuneUpTitle = "";
+        this.newTuneUpPrice = "";
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("[EditServices.vue]" + "catch");
+      });
+  }
+  newAandR() {
+    if (
+      this.newAandRTitle == "" ||
+      this.newAandRBody == "" ||
+      this.newAandRPrice == ""
+    ) {
+      return;
+    }
+    axios
+      .post(APIConfig.buildUrl("/newservice"), {
+        title: this.newAandRTitle,
+        body: this.newAandRBody,
+        price: this.newAandRPrice,
+        category: "adjustments"
+      })
+      .then((response: AxiosResponse) => {
+        console.log("[EditServices.vue]" + JSON.stringify(response.data));
+        this.servicesAdjust.push(response.data);
+        this.$emit("success");
+        this.newAandRBody = "";
+        this.newAandRTitle = "";
+        this.newAandRPrice = "";
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("[EditServices.vue]" + "catch");
+      });
+  }
+  newInstallation() {
+    if (this.newInstallationBody == "" || this.newInstallationTitle == "" || this.newInstallationPrice == "") {
+      return;
+    }
+    axios
+      .post(APIConfig.buildUrl("/newservice"), {
+        title: this.newInstallationTitle,
+        body: this.newInstallationBody,
+        price: this.newInstallationPrice,
+        category: "installations"
+      })
+      .then((response: AxiosResponse) => {
+        console.log("[EditServices.vue]" + JSON.stringify(response.data));
+        this.servicesInst.push(response.data);
+        this.$emit("success");
+        this.newInstallationBody = "";
+        this.newInstallationTitle = "";
+        this.newInstallationPrice = "";
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("[EditServices.vue]" + "catch");
+      });
+  }
 
   created() {
     this.getAllServices();
@@ -122,20 +262,10 @@ export default class EditServices extends Vue {
         console.log(this.error);
       });
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-.manage-services {
-    width: 130%;
-}
-.description-box {
-    max-width: 200px;
-    min-width: 200px;
-    max-height: 150px;
-    min-height: 150px;
-}
 .cards {
   padding: 30px;
   display: flex;
@@ -144,7 +274,6 @@ export default class EditServices extends Vue {
 }
 
 .indivisual-card {
-
   background-color: white;
   min-width: 30%;
   width: 30%;
