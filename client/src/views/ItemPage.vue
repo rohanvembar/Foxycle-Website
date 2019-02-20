@@ -23,7 +23,7 @@
               <td>Quantity</td>
             </tr>
             <tr>
-              <input type="number" min="1" max="100" value="1">
+              <input v-model="quantity" type="number" min="1" max="100" value="1">
             </tr>
             <tr>
               <td class="itempage-cart-button">
@@ -59,6 +59,7 @@ export default class ItemPage extends Vue {
   error: string | boolean = false;
   shopItem: iShopItem | undefined;
   loadedItem: boolean = false;
+  quantity:number =1;
 
   created() {
     this.getItem();
@@ -66,7 +67,9 @@ export default class ItemPage extends Vue {
 
   addToCart() {
     if (this.shopItem) {
-      this.$store.commit("cart", this.shopItem);
+      for (var i = 0; i < this.quantity; i++) {
+        this.$store.commit("cart", this.shopItem);
+      }
     }
   }
 
@@ -78,7 +81,7 @@ export default class ItemPage extends Vue {
       .then((response: AxiosResponse) => {
         this.shopItem = response.data;
         this.loadedItem = true;
-        console.log("[ItemPage.vue]" + response.data);
+        console.log("[ItemPage.vue]" + JSON.stringify(response.data));
         this.$emit("[ItemPage.vue]" + "success");
       })
       .catch((res: AxiosError) => {
