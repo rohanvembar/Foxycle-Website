@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <div v-if="!isLoggedIn" class="error">
       <article class="message is-danger">
@@ -29,13 +30,45 @@
           <button class="button add_button" v-on:click="addItem">submit</button>
         </div>
         <div class="columns_4">
-        <figure v-if="savedItem">
-          <router-link to="/itempage">
-            <img :src="savedItem.image">
-          </router-link>
-          <figcaption>{{savedItem.name}}</figcaption>
-          <span class="price">${{savedItem.price}}</span>
-        </figure>
+          <figure v-if="savedItem">
+            <router-link to="/itempage">
+              <img :src="savedItem.image">
+            </router-link>
+            <figcaption>{{savedItem.name}}</figcaption>
+            <span class="price">${{savedItem.price}}</span>
+          </figure>
+        </div>
+      </div>
+
+      <div>
+        <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+          crossorigin="anonymous"
+        >
+        <div id="wrap">
+          <div id="columns" class="columns_4">
+            <figure v-for="(item, index) in items" v-bind:key="index">
+              <router-link :to="{ name: 'editpage', params: { itemid: item.id } }">
+                <div class="imagediv">
+                  <img :src="item.image" class="image">
+                </div>
+              </router-link>
+              <figcaption>{{item.name}}</figcaption>
+              <span class="price">${{item.price}}</span>
+              <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
+                <div class="editbutton" href="">Edit Item</div>
+              </router-link>
+              <div class="removebutton" v-on:click="toast(item)">Remove Item</div>
+            </figure>
+          </div>
+        </div>
+        <div id="toast">
+          <div id="img">
+            <font-awesome-icon icon="trash"/>
+          </div>
+          <div id="desc">Successfully removed product</div>
         </div>
       </div>
     </div>
@@ -47,6 +80,7 @@ import axios, { AxiosResponse } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+
 
 @Component
 export default class AdminEditProduct extends Vue {
@@ -84,123 +118,338 @@ export default class AdminEditProduct extends Vue {
         console.log("[AdminEditProduct.vue]" + "catch");
       });
   }
+
+  error: string | boolean = false;
+  items: iShopItem[] = [];
+
+  toast(item: iShopItem) {
+    const ele = document.getElementById("toast");
+    if (ele) {
+      ele.className = "show";
+      setTimeout(function() {
+        ele.className = ele.className.replace("show", "");
+      }, 3000);
+    }
+    this.removeItem(item);
+  }
+
+  removeItem(item : iShopItem) {
+    this.error = false;
+    axios
+      .delete(APIConfig.buildUrl("/deleteitem/" + item.id))
+      .then((response: AxiosResponse) => {
+        const deletedItem= response.data;
+        this.item = this.item.filter(item => {
+          return item.id != deletedItem.id;
+        });
+        this.$emit("success");
+      })
+      .catch((response: AxiosResponse) => {
+        this.error = "bad";
+      });
+  }
+
+  created() {
+    this.getAllItems();
+  }
+
+  getAllItems() {
+    this.error = false;
+    axios
+      .get(APIConfig.buildUrl("/shopitems"))
+      .then((response: AxiosResponse) => {
+        this.items = response.data;
+        console.log("[ViewShopItems.vue]" + response.data);
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log("[ViewShopItems.vue]" + this.error);
+      });
+  }
+
+  goToItemPage() {}
 }
 </script>
 
 <style scoped>
+#toast {
+  visibility: hidden;
+  max-width: 50px;
+  height: 55px;
+  margin: auto;
+  background-color: rgb(236, 35, 35);
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
 
-.manage-item-page{
-  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  font-size: 17px;
+  white-space: nowrap;
 }
-.add-item-form {
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-  justify-content: center;
-  padding: 50px;
-}
-#wrap{
-	width: 90%;
-	max-width: 1100px;
-	margin: auto;
-}
-.columns_2 figure{
-   width:49%;
-   margin-right:1%;
-}
-.columns_2 figure:nth-child(2){
-	margin-right: 0;
-}
-.columns_3 figure{
-   width:32%;
-   margin-right:1%;
-}
-.columns_3 figure:nth-child(3){
-	margin-right: 0;
-}
-.columns_4 figure{
-   width:24%;
-   margin-right:1%;
-}
-.columns_4 figure:nth-child(4){
-	margin-right: 0;
-}
-.columns_5 figure{
-   width:19%;
-   margin-right:1%;
-}
-.columns_5 figure:nth-child(5){
-	margin-right: 0;
-}
-#columns figure:hover{
-	-webkit-transform: scale(1);
-	-moz-transform:scale(1);
-	transform: scale(1);
+#toast #img {
+  width: 55px;
+  height: 55px;
 
+  float: left;
+
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  box-sizing: border-box;
+  border-radius: 5px;
+
+  background-color: rgb(236, 35, 35);
+  color: #fff;
+}
+#toast #desc {
+  color: #fff;
+
+  padding: 16px;
+
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#toast.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,
+    fadeout 0.5s 2s;
+  animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s,
+    fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes expand {
+  from {
+    min-width: 50px;
+  }
+  to {
+    min-width: 350px;
+  }
+}
+
+@keyframes expand {
+  from {
+    min-width: 50px;
+  }
+  to {
+    min-width: 350px;
+  }
+}
+@-webkit-keyframes stay {
+  from {
+    min-width: 350px;
+  }
+  to {
+    min-width: 350px;
+  }
+}
+
+@keyframes stay {
+  from {
+    min-width: 350px;
+  }
+  to {
+    min-width: 350px;
+  }
+}
+@-webkit-keyframes shrink {
+  from {
+    min-width: 350px;
+  }
+  to {
+    min-width: 50px;
+  }
+}
+
+@keyframes shrink {
+  from {
+    min-width: 350px;
+  }
+  to {
+    min-width: 50px;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 60px;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 60px;
+    opacity: 0;
+  }
+}
+
+#wrap {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.columns_4 figure {
+  width: 24%;
+  margin-right: 1%;
+  object-fit: cover;
+}
+.columns_4 figure:nth-child(4) {
+  margin-right: 0;
+}
+
+#columns figure:hover {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  transform: scale(1);
 }
 #columns:hover figure:not(:hover) {
-	opacity: 0.4;
+  opacity: 0.4;
 }
 div#columns figure {
-	display: inline-block;
-	background: #FEFEFE;
-	border: 2px solid #FAFAFA;
-	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-	margin: 0 0px 15px;
-	-webkit-column-break-inside: avoid;
-	-moz-column-break-inside: avoid;
-	padding: 15px;
-	padding-bottom: 5px;
-	background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
-	opacity: 1;
-	-webkit-transition: all .2s ease;
-	-moz-transition: all .2s ease;
-	-o-transition: all .2s ease;
-	transition: all .2s ease;
+  display: inline-block;
+  background: #fefefe;
+  border-radius: 5px;
+  border: 0px solid #fafafa;
+  box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+  margin-bottom: 10px;
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  padding: 15px;
+  padding-bottom: 15px;
+  background: -webkit-linear-gradient(45deg, #fff, #f9f9f9);
+  opacity: 1;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 div#columns figure img {
-	width: 100%;
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 15px;
-	margin-bottom: 5px;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 div#columns figure figcaption {
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: #444;
   line-height: 1.5;
-  height:60px;
-  font-weight:600;
-  text-overflow:ellipsis;
+  height: 40px;
+  font-weight: 600;
+  text-overflow: ellipsis;
 }
 
-.button{
-  background: #239CEC;
-  margin:px;
-  display:block;
-  text-align:center;
-  color:#fff;
+.removebutton {
+  background: rgb(236, 35, 35);
+  margin: px;
+  display: block;
+  text-align: center;
+  color: #fff;
   transition: 0.3s;
-  text-decoration:none;
-  text-shadow:1px 1px 3px rgba(0,0,0,0.3);
-  border-radius:3px;
-  box-shadow:1px 1px 3px rgba(0,0,0,0.3);
+  text-decoration: none;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
-.button:hover{
-  background:#40B883;
-  color:#f1f2f3;
+
+.editbutton {
+  background: rgb(134, 134, 134);
+  margin: px;
+  display: block;
+  text-align: center;
+  color: #fff;
+  transition: 0.3s;
+  text-decoration: none;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
-@media screen and (max-width: 960px) { 
-  #columns figure { width: 24%; }
+
+.button {
+  background: #239cec;
+  margin: px;
+  display: block;
+  text-align: center;
+  color: #fff;
+  transition: 0.3s;
+  text-decoration: none;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+.button:hover {
+  background: #40b883;
+  color: #f1f2f3;
+}
+@media screen and (max-width: 960px) {
+  #columns figure {
+    width: 24%;
+  }
 }
 @media screen and (max-width: 767px) {
-  #columns figure { width:32%;}
+  #columns figure {
+    width: 32%;
+  }
 }
 @media screen and (max-width: 600px) {
-  #columns figure { width: 49%;}
+  #columns figure {
+    width: 49%;
+  }
 }
 @media screen and (max-width: 500px) {
-  #columns figure { width: 100%;}
+  #columns figure {
+    width: 100%;
+  }
+}
+
+.imagediv {
+  width: 200px;
+  height: 150px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 </style>

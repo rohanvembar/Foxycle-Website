@@ -64,6 +64,11 @@ export default new Router({
       component: () => import("./views/ItemPage.vue")
     },
     {
+      path: "/edititem/:itemid",
+      name: "edititem",
+      component: () => import("./views/AdminEditItem.vue")
+    },
+    {
       path: "/orderconfirmation/:ordernumber",
       name: "orderconfirmation",
       component: () => import("./views/OrderConfirmation.vue")
