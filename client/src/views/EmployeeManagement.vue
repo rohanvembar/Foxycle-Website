@@ -19,17 +19,17 @@
 
     <div v-else>
       <button class="button" v-on:click="addEmployee">add employee</button>
-      <table>
+      <table class="center">
         <th>First Name</th>
         <th>Last Name</th>
-        <th>ID</th>
+        <th>Employee ID</th>
         <th>Role</th>
         <th></th>
         <th></th>
         <tr v-for="(empl, index) in employees" v-bind:key="index">
           <td>{{empl.firstName}}</td>
           <td>{{empl.lastName}}</td>
-          <td>{{empl.id}}</td>
+          <td>{{empl.emailAddress}}</td>
           <td>{{empl.role == 1 ? "Admin" : "Employee"}}</td>
           <td><button class="button" v-on:click="changeRole(empl)">change role</button></td>
           <td><button v-if="empl.role == 0" class="button" v-on:click="deleteEmployee(empl)">delete</button></td>
@@ -131,3 +131,13 @@ export default class EmployeeManagement extends Vue {
   }
 }
 </script>
+<style scoped>
+table, th, td {
+  border: 1px solid black;
+}
+.center {
+  margin-left: auto;
+    margin-right: auto;
+
+}
+</style>
