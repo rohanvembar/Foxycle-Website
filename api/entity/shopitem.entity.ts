@@ -11,6 +11,9 @@ export class ShopItem {
     public price!: number;
 
     @Column()
+    public saleprice!: number;
+
+    @Column()
     public brand!: string;
 
     // add many to many

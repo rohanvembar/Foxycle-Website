@@ -15,7 +15,8 @@
               <img :src="cartitem.item.image">
             </td>
             <td>{{cartitem.item.name}}</td>
-            <td>${{cartitem.item.price}}</td>
+            <td v-if="!cartitem.item.saleprice">${{cartitem.item.price}}</td>
+            <td v-if="cartitem.item.saleprice">${{cartitem.item.saleprice}}</td>
             <td>{{cartitem.quantity}}</td>
             <td></td>
           </tr>
@@ -101,7 +102,13 @@ export default class Cart extends Vue {
 
   computeSubtotal() {
     for (var i in this.items) {
-      this.subtotal += this.items[i].price;
+      
+      if (this.items[i].saleprice) {
+        this.subtotal += this.items[i].saleprice;
+      }
+      else {
+        this.subtotal += this.items[i].price;
+      }
     }
   }
 

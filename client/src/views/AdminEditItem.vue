@@ -1,5 +1,21 @@
 <template>
-  <div v-if="loadedItem" class="item-page-main-background">
+  <div v-if="!isLoggedIn" class="error">
+    <article class="message is-danger">
+      <div class="message-header">
+        <p>
+          <font-awesome-icon icon="exclamation-circle"/>Oops
+        </p>
+      </div>
+      <div class="message-body">
+        You must be a Foxycle employee to view this page
+        <img
+          src="https://media.giphy.com/media/jUJgP8Fdvsgta/giphy.gif"
+          style="padding:50px;"
+        >
+      </div>
+    </article>
+  </div>
+  <div v-else class="item-page-main-background">
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -33,6 +49,25 @@
                     step="0.01"
                     v-model="price"
                     placeholder="price..."
+                  >
+                </center>
+              </td>
+            </tr>
+            <tr v-if="this.saleprice == 0">
+              <td>Sale Price (not active)</td>
+            </tr>
+            <tr v-else>
+              <td>Sale Price</td>
+            </tr>
+            <tr>
+              <td class="itempage-price-box">
+                <center>
+                  <input
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    v-model="saleprice"
+                    placeholder="sale price..."
                   >
                 </center>
               </td>
@@ -102,6 +137,7 @@ export default class ItemPage extends Vue {
   error: string | boolean = false;
   shopItem: iShopItem | undefined;
   price: number | string = "";
+  saleprice: number | string = "";
   name: string = "";
   description: string = "";
   brand: string = "";
@@ -118,10 +154,14 @@ export default class ItemPage extends Vue {
     if (!this.shopItem) {
       return;
     }
+    if (!this.saleprice) {
+      this.saleprice = 0;
+    }
     axios
       .put(APIConfig.buildUrl("/shopitem/" + this.shopItem.id), {
         name: this.name,
         price: this.price,
+        saleprice: this.saleprice,
         brand: this.brand,
         categories: this.categories,
         image: this.image,
@@ -138,6 +178,10 @@ export default class ItemPage extends Vue {
     this.$router.push("/editproduct");
   }
 
+  get isLoggedIn(): boolean {
+    return !!this.$store.state.userId;
+  }
+
   getItem() {
     this.error = false;
     console.log("[ItemPage.vue] itemid: " + this.$route.params.itemid);
@@ -147,6 +191,7 @@ export default class ItemPage extends Vue {
         this.shopItem = response.data;
         this.loadedItem = true;
         this.price = response.data.price;
+        this.saleprice = response.data.saleprice;
         this.name = response.data.name;
         this.categories = response.data.categories;
         this.description = response.data.description;
