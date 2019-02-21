@@ -14,7 +14,7 @@
           <!-- change indexof to whatever category you want to show the ribbon on -->
           <div
             class="ribbon is-danger"
-            v-if="item.categories.indexOf('apparel') > -1 | item.categories.indexOf('roadbike') > -1"
+            v-if="item.saleprice"
           >{{ saleText }}</div>
           <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
             <div class="imagediv">
@@ -22,7 +22,10 @@
             </div>
           </router-link>
           <figcaption>{{item.name}}</figcaption>
-          <span class="price">${{item.price}}</span>
+          <span class="price" v-if="item.saleprice">Original price: <del>${{item.price}}</del></span>
+          <br>
+          <span class="price" v-if="!item.saleprice">${{item.price}}</span>
+          <span class="price" v-if="item.saleprice"><b>Sale: ${{item.saleprice}}</b></span>
           <div class="buttonadd button is-rounded is-info" v-on:click="toast(item)">add to cart</div>
         </figure>
       </div>
@@ -291,7 +294,7 @@ export default class ViewShopItems extends Vue {
   transform: scale(1);
 }
 #columns:hover figure:not(:hover) {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 div#columns figure {
   display: inline-block;
