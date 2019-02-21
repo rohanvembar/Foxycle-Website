@@ -24,6 +24,7 @@ export class ShopItemController extends DefaultController {
                 const newItem = new ShopItem();
                 newItem.name = req.body.name;
                 newItem.price = req.body.price;
+                newItem.saleprice = req.body.saleprice;
                 newItem.brand = req.body.brand;
                 newItem.categories = req.body.categories;
                 newItem.image = req.body.image;
@@ -53,6 +54,7 @@ export class ShopItemController extends DefaultController {
                     }
                     foundItem.name = req.body.name;
                     foundItem.price = req.body.price;
+                    foundItem.saleprice = req.body.saleprice;
                     foundItem.brand = req.body.brand;
                     foundItem.categories = req.body.categories;
                     foundItem.image = req.body.image;

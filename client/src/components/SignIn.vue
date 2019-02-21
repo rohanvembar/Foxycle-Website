@@ -48,7 +48,6 @@ export default class Signup extends Vue {
   @Prop(Boolean) isShowing: boolean = false;
   success() {
     this.error = false;
-    debugger;
     axios
       .post(APIConfig.buildUrl("/login"), {
         emailAddress: this.signup.emailAddress,
@@ -59,6 +58,9 @@ export default class Signup extends Vue {
           token: response.data.token,
           userid: response.data.userId
         });
+        this.$store.commit("changeRole", {
+          userRole: response.data.role
+        })
         this.$emit("success");
       })
       .catch((response: AxiosResponse) => {
@@ -72,6 +74,7 @@ export default class Signup extends Vue {
 interface LoginResponse {
   token: string;
   userId: number;
+  role: number;
 }
 export interface LoginForm {
   emailAddress: string;

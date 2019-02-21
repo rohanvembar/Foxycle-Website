@@ -10,6 +10,7 @@ interface iRootState {
   userToken: string | null;
   userId: number | null;
   items: iShopItem[];
+  userRole: number;
 }
 
 interface iLoginPayload {
@@ -20,7 +21,8 @@ interface iLoginPayload {
 const state: iRootState = {
   userToken: null,
   userId: null,
-  items: []
+  items: [],
+  userRole: 0
 };
 
 const mutations: MutationTree<iRootState> = {
@@ -34,6 +36,9 @@ const mutations: MutationTree<iRootState> = {
   },
   cart(state, id) {
     state.items.push(id);
+  },
+  changeRole(state, newRole) {
+    state.userRole = newRole;
   }
 };
 
