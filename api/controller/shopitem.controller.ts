@@ -54,6 +54,7 @@ export class ShopItemController extends DefaultController {
                     }
                     foundItem.name = req.body.name;
                     foundItem.price = req.body.price;
+                    foundItem.saleprice = req.body.saleprice;
                     foundItem.brand = req.body.brand;
                     foundItem.categories = req.body.categories;
                     foundItem.image = req.body.image;
