@@ -4,36 +4,47 @@
       <div class="message-header">Filters</div>
     </article>
 
-    <div class="filters select">
+    <div class="filters">
       <p>Category</p>
-      <select name="category">
-        <option selected="true" value="all">All</option>
-        <option value="bikes">Bikes</option>
-        <option value="apparel">Apparel</option>
-        <option value="parts">Parts</option>
-      </select>
+      <div class = "select">
+        <select name="category">
+          <option selected="true" value="all">All</option>
+          <option value="bikes">Bikes</option>
+          <option value="apparel">Apparel</option>
+          <option value="parts">Parts</option>
+        </select>
+      </div>
+      
       <p>Brand</p>
-      <select name="brand">
-        <option selected="true" value="all">All</option>
-        <option value="trek">Trek</option>
-        <option value="foxycle">Foxycle</option>
-      </select>
+      <div class = "select">
+        <select name="brand">
+          <option selected="true" value="all">All</option>
+          <option value="trek">Trek</option>
+          <option value="foxycle">Foxycle</option>
+        </select>
+      </div>
+    
       <p>Price</p>
-      <select name="price">
-        <option selected="true" value="all">All</option>
-        <option value="0-25">$0 - $25</option>
-        <option value="25-50">$25 - $50</option>
-        <option value="50-75">$50 - $75</option>
-        <option value="75-100">$75 - $100</option>
-        <option value="100+">$100 +</option>
-      </select>
+      <div class = "select"> 
+        <select name="price">
+          <option selected="true" value="all">All</option>
+          <option value="0-25">$0 - $25</option>
+          <option value="25-50">$25 - $50</option>
+          <option value="50-75">$50 - $75</option>
+          <option value="75-100">$75 - $100</option>
+          <option value="100+">$100 +</option>
+        </select>
+      </div>
+    
 
       <p>Store Pickup</p>
-      <select name="pickup">
-        <option selected="true" value="all">Either</option>
-        <option value="trek">Store Pickup</option>
-        <option value="foxycle">Ship to Me</option>
-      </select>
+      <div class = "select">
+        <select name="pickup">
+          <option selected="true" value="all">Either</option>
+          <option value="trek">Store Pickup</option>
+          <option value="foxycle">Ship to Me</option>
+        </select>
+      </div>
     </div>
   </div>
 </template>
