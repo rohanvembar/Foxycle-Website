@@ -1,5 +1,21 @@
 <template>
-  <div v-if="loadedItem" class="item-page-main-background">
+  <div v-if="!isLoggedIn" class="error">
+    <article class="message is-danger">
+      <div class="message-header">
+        <p>
+          <font-awesome-icon icon="exclamation-circle"/>Oops
+        </p>
+      </div>
+      <div class="message-body">
+        You must be a Foxycle employee to view this page
+        <img
+          src="https://media.giphy.com/media/jUJgP8Fdvsgta/giphy.gif"
+          style="padding:50px;"
+        >
+      </div>
+    </article>
+  </div>
+  <div v-else class="item-page-main-background">
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -37,7 +53,10 @@
                 </center>
               </td>
             </tr>
-            <tr>
+            <tr v-if="this.saleprice == 0">
+              <td>Sale Price (not active)</td>
+            </tr>
+            <tr v-else>
               <td>Sale Price</td>
             </tr>
             <tr>
@@ -135,6 +154,9 @@ export default class ItemPage extends Vue {
     if (!this.shopItem) {
       return;
     }
+    if (!this.saleprice) {
+      this.saleprice = 0;
+    }
     axios
       .put(APIConfig.buildUrl("/shopitem/" + this.shopItem.id), {
         name: this.name,
@@ -154,6 +176,10 @@ export default class ItemPage extends Vue {
         this.error = "bad";
       });
     this.$router.push("/editproduct");
+  }
+
+  get isLoggedIn(): boolean {
+    return !!this.$store.state.userId;
   }
 
   getItem() {

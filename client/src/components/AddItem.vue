@@ -114,6 +114,9 @@ export default class AddItem extends Vue {
   newItemShipping: boolean = false;
 
   success() {
+    if (!this.newItemSalePrice) {
+      this.newItemSalePrice = 0;
+    }
     axios
       .post(APIConfig.buildUrl("/newitem"), {
         name: this.newItemTitle,
