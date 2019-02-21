@@ -25,6 +25,12 @@
         </div>
       </div>
       <div class="field">
+        <label class="label">Sale Price (optional)</label>
+        <div class="control">
+          <input class="input is-rounded" type="number" placeholder="sale price" v-model="newItemSalePrice">
+        </div>
+      </div>
+      <div class="field">
         <label class="label">Image URL</label>
         <div class="control">
           <input class="input is-rounded" type="text" placeholder="url" v-model="newItemImage">
@@ -98,6 +104,7 @@ export default class AddItem extends Vue {
   @Prop(Boolean) isShowing: boolean = false;
   newItemTitle: string = "";
   newItemPrice: number | string = "";
+  newItemSalePrice: number | string = "";
   newItemImage: string = "";
   newItemDescription: string = "";
   newItemCategories: string[] = [""];
@@ -111,6 +118,7 @@ export default class AddItem extends Vue {
       .post(APIConfig.buildUrl("/newitem"), {
         name: this.newItemTitle,
         price: this.newItemPrice,
+        saleprice: this.newItemSalePrice,
         brand: "",
         categories: this.newItemCategories,
         image: this.newItemImage,
