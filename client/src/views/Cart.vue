@@ -8,7 +8,8 @@
     >
     <div class="container" v-if="itemsInCart">
       <div class="cart-table">
-        <table class="table">
+        <table class="table is-hoverable">
+          <thead>
           <tr>
             <th>Product</th>
             <th></th>
@@ -16,9 +17,11 @@
             <th>Quantity</th>
             <th>Total</th>
           </tr>
+          </thead>
+          <tbody>
           <tr v-for="(cartitem, index) in cart" v-bind:key="index">
             <td>
-              <img :src="cartitem.item.image" width="100px">
+              <img :src="cartitem.item.image" style="height:50px; align-text:center">
             </td>
             <td>{{cartitem.item.name}}</td>
             <td v-if="!cartitem.item.saleprice">${{cartitem.item.price}}</td>
@@ -27,6 +30,7 @@
             <td v-if="!cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.price}}</td>
             <td v-if="cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.saleprice}}</td>
           </tr>
+          </tbody>
           <tr class="bot-bord">
             <td>Subtotal</td>
             <td></td>
