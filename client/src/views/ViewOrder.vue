@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="orderError">This order number does not have an order :(</div>
+    <div class="ordererror" v-if="orderError">
+      That order number does not have an order :(
+    </div>
     <div v-else>
       <div v-if="orderloaded">
         <link
@@ -117,6 +119,12 @@ export default class ViewOrder extends Vue {
   text-align: center;
   font-size: 35px;
   font-weight: bold;
+}
+
+.ordererror {
+  font-size: 20px;
+  text-align: center;
+  padding-top: 50px;
 }
 </style>
 

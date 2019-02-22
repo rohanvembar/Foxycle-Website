@@ -120,7 +120,7 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong style="padding-right:2em">&copy; Foxycle</strong> <i class="fas fa-map-marker-alt"></i> 1 Grand Avenue, San Luis Obispo, CA 93407 <i class="fas fa-clock" style="padding-left: 2em"></i> M-F: 10AM to 6PM • Sat & Sun: 11AM-5PM 
+          <strong style="padding-right:2em">&copy; Foxycle</strong> <i class="fas fa-map-marker-alt"></i> 1 Grand Avenue, San Luis Obispo, CA 93407 <i class="fas fa-clock" style="padding-left: 2em"></i> Mon-Fri: 10AM to 6PM • Sat & Sun: 11AM-5PM 
 
 
         </p>
