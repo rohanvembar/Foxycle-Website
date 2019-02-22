@@ -1,8 +1,14 @@
 <template>
   <div class="main-background">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous"
+    >
     <div class="container" v-if="itemsInCart">
       <div class="cart-table">
-        <table>
+        <table class="table">
           <tr>
             <th>Product</th>
             <th></th>
@@ -12,13 +18,14 @@
           </tr>
           <tr v-for="(cartitem, index) in cart" v-bind:key="index">
             <td>
-              <img :src="cartitem.item.image">
+              <img :src="cartitem.item.image" width="100px">
             </td>
             <td>{{cartitem.item.name}}</td>
             <td v-if="!cartitem.item.saleprice">${{cartitem.item.price}}</td>
             <td v-if="cartitem.item.saleprice">${{cartitem.item.saleprice}}</td>
             <td>{{cartitem.quantity}}</td>
-            <td></td>
+            <td v-if="!cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.price}}</td>
+            <td v-if="cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.saleprice}}</td>
           </tr>
           <tr class="bot-bord">
             <td>Subtotal</td>
@@ -44,30 +51,20 @@
             <td v-if="itemsInCart">${{total}}</td>
             <td v-if="!itemsInCart">-</td>
           </tr>
-          <br>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-              <div class="checkout-btn">
-                <router-link
-                  v-if="itemsInCart"
-                  class="button is-success is-rounded is-medium"
-                  to="/checkout"
-                  exact-active-class="is-active"
-                >Checkout</router-link>
-                <div
-                  v-if="!itemsInCart"
-                  disabled
-                  class="button is-sucess is-rounded is-medium"
-                >Checkout</div>
-              </div>
-            </td>
-          </tr>
         </table>
       </div>
+      <router-link
+        v-if="itemsInCart"
+        class="button is-primary is-rounded"
+        to="/checkout"
+        exact-active-class="is-active"
+        style="float: right"
+      >
+        <span class="icon">
+          <i class="fas fa-credit-card"></i>
+        </span>
+        <span>proceed to checkout</span>
+      </router-link>
     </div>
     <div v-else>
       <div>
@@ -102,11 +99,9 @@ export default class Cart extends Vue {
 
   computeSubtotal() {
     for (var i in this.items) {
-      
       if (this.items[i].saleprice) {
         this.subtotal += this.items[i].saleprice;
-      }
-      else {
+      } else {
         this.subtotal += this.items[i].price;
       }
     }
@@ -147,13 +142,11 @@ export default class Cart extends Vue {
 }
 
 .container {
-  width: 75%;
-  background-color: white;
-  padding: 30px 300px 30px 300px;
-  margin-top: 50px;
+  width: 60%;
 }
 
 .cart-table {
+  padding-top: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -174,6 +167,11 @@ th {
 
 .tot-bord {
   border-top: grey 1px solid;
+  font-weight: bold;
+}
+.table {
+  border-radius: 5px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
 }
 
 .checkout-btn {
