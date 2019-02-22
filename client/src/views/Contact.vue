@@ -44,7 +44,7 @@
             width="600"
             height="450"
             id="gmap_canvas"
-            src= "https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed"
             frameborder="0"
             scrolling="no"
             marginheight="0"
@@ -90,7 +90,6 @@ export default class Contact extends Vue {
       });
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -123,5 +122,7 @@ export default class Contact extends Vue {
 
 .card {
   padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
 }
 </style>
