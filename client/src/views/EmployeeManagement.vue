@@ -17,27 +17,44 @@
       </article>
     </div>
 
-    <div v-else>
-      <button class="button" v-on:click="addEmployee">add employee</button>
-      <table class="center">
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Employee ID</th>
-        <th>Role</th>
-        <th></th>
-        <th></th>
-        <tr v-for="(empl, index) in employees" v-bind:key="index">
-          <td>{{empl.firstName}}</td>
-          <td>{{empl.lastName}}</td>
-          <td>{{empl.emailAddress}}</td>
-          <td>{{empl.role == 1 ? "Admin" : "Employee"}}</td>
-          <td>
-            <button class="button" v-on:click="changeRole(empl)">change role</button>
-          </td>
-          <td>
-            <button v-if="empl.role == 0" class="button" v-on:click="deleteEmployee(empl)">delete</button>
-          </td>
-        </tr>
+    <div v-else class="main">
+      <table class="center table is-striped">
+        <thead>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Employee ID</th>
+          <th>Role</th>
+          <th>Change Role</th>
+          <th>Delete</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+            <button class="button is-primary" v-on:click="addEmployee">add employee</button>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr v-for="(empl, index) in employees" v-bind:key="index">
+            <td>{{empl.firstName}}</td>
+            <td>{{empl.lastName}}</td>
+            <td>{{empl.emailAddress}}</td>
+            <td>{{empl.role == 1 ? "Admin" : "Employee"}}</td>
+            <td>
+              <button class="button is-primary" v-on:click="changeRole(empl)">change role</button>
+            </td>
+            <td>
+              <button
+                v-if="empl.role == 0"
+                class="button is-danger"
+                v-on:click="deleteEmployee(empl)"
+              >delete</button>
+            </td>
+          </tr>
+        </tbody>
       </table>
       <Signup
         v-bind:is-showing="showSignup"
@@ -142,13 +159,15 @@ export default class EmployeeManagement extends Vue {
 }
 </script>
 <style scoped>
-table,
-th,
-td {
-  border: 1px solid black;
+.table {
+  border-radius: 5px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
 }
 .center {
   margin-left: auto;
   margin-right: auto;
+}
+.main {
+  padding-top: 50px;
 }
 </style>
