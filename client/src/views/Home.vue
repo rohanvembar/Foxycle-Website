@@ -99,10 +99,9 @@ export default class Home extends Vue {
 
 .announcements{
   overflow-y: scroll;
-  height: 450px;
   margin-top:  30px;
   margin-left: 30px;
-  margin-bottom: 300px;
+  margin-bottom: 200px;
   width: 50%
 
 }
