@@ -10,26 +10,26 @@
       <div class="cart-table">
         <table class="table is-hoverable">
           <thead>
-          <tr>
-            <th>Product</th>
-            <th></th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-          </tr>
+            <tr>
+              <th>Product</th>
+              <th></th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
           </thead>
           <tbody>
-          <tr v-for="(cartitem, index) in cart" v-bind:key="index">
-            <td>
-              <img :src="cartitem.item.image" style="height:50px; align-text:center">
-            </td>
-            <td>{{cartitem.item.name}}</td>
-            <td v-if="!cartitem.item.saleprice">${{cartitem.item.price}}</td>
-            <td v-if="cartitem.item.saleprice">${{cartitem.item.saleprice}}</td>
-            <td>{{cartitem.quantity}}</td>
-            <td v-if="!cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.price}}</td>
-            <td v-if="cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.saleprice}}</td>
-          </tr>
+            <tr v-for="(cartitem, index) in cart" v-bind:key="index">
+              <td>
+                <img :src="cartitem.item.image" style="height:50px; align-text:center">
+              </td>
+              <td>{{cartitem.item.name}}</td>
+              <td v-if="!cartitem.item.saleprice">${{cartitem.item.price}}</td>
+              <td v-if="cartitem.item.saleprice">${{cartitem.item.saleprice}}</td>
+              <td>{{cartitem.quantity}}</td>
+              <td v-if="!cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.price}}</td>
+              <td v-if="cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.saleprice}}</td>
+            </tr>
           </tbody>
           <tr class="bot-bord">
             <td>Subtotal</td>
@@ -57,16 +57,15 @@
           </tr>
         </table>
         <router-link
-        v-if="itemsInCart"
-        class="button is-primary is-rounded checkout-btn"
-        to="/checkout"
-        exact-active-class="is-active"
-        style="position: absolute; bottom:0"
-      >
-        <span>proceed to checkout</span>
-      </router-link>
+          v-if="itemsInCart"
+          class="button is-primary is-rounded checkout-btn"
+          to="/checkout"
+          exact-active-class="is-active"
+          style="position: absolute; bottom:0"
+        >
+          <span>proceed to checkout</span>
+        </router-link>
       </div>
-      
     </div>
     <div v-else>
       <div>
@@ -160,26 +159,22 @@ td {
   padding: 10px 30px 10px 30px;
 }
 
-th {
-  border-bottom: black 2px solid;
-}
-
 .bot-bord {
-  border-top: black 2px solid;
+  border-top: lightgray 2px solid;
 }
 
 .tot-bord {
-  border-top: grey 1px solid;
   font-weight: bold;
+  background-color: #00d0b2;
+  color: white;
 }
 .table {
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
 }
 
 .checkout-btn {
   width: 40%;
 }
-
 </style>
 
