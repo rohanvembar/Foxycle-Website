@@ -56,19 +56,17 @@
             <td v-if="!itemsInCart">-</td>
           </tr>
         </table>
-      </div>
-      <router-link
+        <router-link
         v-if="itemsInCart"
-        class="button is-primary is-rounded"
+        class="button is-primary is-rounded checkout-btn"
         to="/checkout"
         exact-active-class="is-active"
-        style="float: right"
+        style="position: absolute; bottom:0"
       >
-        <span class="icon">
-          <i class="fas fa-credit-card"></i>
-        </span>
         <span>proceed to checkout</span>
       </router-link>
+      </div>
+      
     </div>
     <div v-else>
       <div>
@@ -154,6 +152,7 @@ export default class Cart extends Vue {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 50px;
 }
 
 th,
@@ -179,9 +178,8 @@ th {
 }
 
 .checkout-btn {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  width: 40%;
 }
+
 </style>
 
