@@ -1,5 +1,5 @@
 <template>
-  <div class="main" v-if="this.$store.state.items.length > 0">
+  <div class="main">
     <div class="columns is-centered">
       <div class="column">
         <div class="title">Shipping Address</div>
@@ -201,7 +201,7 @@
               
             </table>
             <div class="checkout-btn">
-              <div class="button is-primary is-rounded"  style="width:100%" v-on:click="loading(), placeOrder()">
+              <div class="button is-primary is-rounded is-focused"  style="width:100%" v-on:click="loading(), placeOrder()">
                 <i class="fas fa-check iconpadding"></i>place order
               </div>
 
@@ -440,7 +440,7 @@ th {
 .title {
   font-size: 25px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #239cec;
+  border-bottom: 1px solid #239cec;
   text-align: center;
 }
 .bot-bord {

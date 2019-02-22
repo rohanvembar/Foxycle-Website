@@ -58,7 +58,7 @@
         </table>
         <router-link
           v-if="itemsInCart"
-          class="button is-primary is-rounded checkout-btn"
+          class="button is-primary is-rounded checkout-btn is-focused"
           to="/checkout"
           exact-active-class="is-active"
           style="position: absolute; bottom:0"

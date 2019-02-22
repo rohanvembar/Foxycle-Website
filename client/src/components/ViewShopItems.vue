@@ -26,7 +26,7 @@
           <br>
           <span class="price" v-if="!item.saleprice">${{item.price}}</span>
           <span class="price" v-if="item.saleprice"><b>Sale: ${{item.saleprice}}</b></span>
-          <div class="buttonadd button is-rounded is-info" v-on:click="toast(item)">add to cart</div>
+          <div class="buttonadd button is-rounded is-info is-focused" v-on:click="toast(item)">add to cart</div>
         </figure>
       </div>
     </div>
@@ -133,7 +133,7 @@ export default class ViewShopItems extends Vue {
   max-width: 50px;
   height: 55px;
   margin: auto;
-  background-color: #40b883;
+  background-color: #00D0B2;
   color: #fff;
   text-align: center;
   border-radius: 5px;
@@ -158,7 +158,7 @@ export default class ViewShopItems extends Vue {
   box-sizing: border-box;
   border-radius: 5px;
 
-  background-color: rgb(54, 153, 110);
+  background-color: rgb(0, 194, 165);
   color: #fff;
 }
 #toast #desc {

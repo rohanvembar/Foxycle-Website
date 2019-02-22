@@ -8,7 +8,7 @@
     <p class="orderNum">your receipt will be emailed to you within 24 hours</p>
 
     <router-link
-      class="button is-medium is-info is-rounded"
+      class="button is-info is-rounded is-focused"
       to="/shop"
       exact-active-class="is-active"
     >continue shopping</router-link>
@@ -48,7 +48,6 @@ export default class OrderConfirmation extends Vue {
 
 .orderNum {
   font-size: 18px;
-  padding-top: 10px;
   margin-bottom: 10px;
 }
 </style>
