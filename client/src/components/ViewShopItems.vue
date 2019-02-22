@@ -341,7 +341,7 @@ div#columns figure figcaption {
   transition: 0.3s;
 }
 .buttonadd:hover {
-  background: #40b883;
+  background: #00D0B2;
   color: #f1f2f3;
 }
 @media screen and (max-width: 960px) {

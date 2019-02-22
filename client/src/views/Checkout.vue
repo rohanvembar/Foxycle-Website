@@ -161,21 +161,25 @@
         <div class="center">
           <div>
             <div class="title">Order Summary</div>
-            <table class="center">
+            <table class="center table is-hoverable">
+              <thead>
               <tr>
                 <th>Product</th>
                 <th></th>
                 <th>Quantity</th>
                 <th>Total</th>
               </tr>
+              </thead>
+              <tbody>
               <tr v-for="(cartitem, index) in cart" v-bind:key="index">
                 <td>
-                  <img :src="cartitem.item.image">
+                  <img :src="cartitem.item.image" width="100px">
                 </td>
                 <td class="iName">{{cartitem.item.name}}</td>
                 <td class="iName">{{cartitem.quantity}}</td>
                 <td>${{cartitem.item.price}}</td>
               </tr>
+              </tbody>
               <tr class="bot-bord">
                 <td>Subtotal</td>
                 <td></td>
@@ -194,15 +198,10 @@
                 <td></td>
                 <td>${{total}}</td>
               </tr>
-              <br>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
+              
             </table>
             <div class="checkout-btn">
-              <div class="button is-success is-rounded" v-on:click="loading(), placeOrder()">
+              <div class="button is-primary is-rounded" v-on:click="loading(), placeOrder()">
                 <i class="fas fa-check iconpadding"></i>place order
               </div>
 
@@ -435,6 +434,7 @@ export default class Checkout extends Vue {
 
 th {
   border-bottom: black 2px solid;
+  padding-bottom: 10px;
 }
 
 .title {
@@ -449,6 +449,7 @@ th {
 
 .tot-bord {
   border-top: grey 1px solid;
+  font-weight: bold;
 }
 
 .iName {
@@ -477,5 +478,10 @@ th {
   padding-top: 25px;
 }
 
+.table {
+  border-radius: 5px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+
+}
 </style>
 

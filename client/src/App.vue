@@ -51,7 +51,7 @@
               v-if="!isLoggedIn"
               exact-active-class="is-active"
             >
-              <div class="badge is-badge-success is-badge-small" data-badge="">
+              <div class="badge" :data-badge="this.$store.state.items.length">
                 <font-awesome-icon icon="shopping-cart"/>
               </div>
             </router-link>
@@ -204,10 +204,6 @@ export default class App extends Vue {
 }
 
 .navbar-custom {
-  border-radius:50px;
+  border-radius: 50px;
 }
-
-
-
-
 </style>
