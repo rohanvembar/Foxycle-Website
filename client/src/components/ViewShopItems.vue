@@ -170,6 +170,11 @@ export default class ViewShopItems extends Vue {
   white-space: nowrap;
 }
 
+.ribbon {
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+    border-radius: 2px
+
+}
 #toast.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,
