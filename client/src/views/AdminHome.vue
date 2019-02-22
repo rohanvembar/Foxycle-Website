@@ -59,7 +59,7 @@
               </span>
             </p>
           </article>
-          <article class="tile is-child notification is-info round">
+          <article class="tile is-child notification is-info round" v-if="isOwner">
             <p class="title">employees</p>
             <p class="subtitle">
               add, remove, change permissions
@@ -89,7 +89,13 @@ export default class AdminHome extends Vue {
   newOrders: number = 5;
   outOfStock: number = 14;
   userId: number = 0;
+  role: number = 0;
 
+  get isOwner(): boolean {
+    this.role = this.$store.state.userRole.userRole;
+    return this.role == 1;
+  }
+  
   get isLoggedIn(): boolean {
     this.userId = this.$store.state.userId;
     return !!this.$store.state.userId;
@@ -137,6 +143,6 @@ export default class AdminHome extends Vue {
 }
 
 .round {
-  border-radius:25px;
+  border-radius:10px;
 }
 </style>

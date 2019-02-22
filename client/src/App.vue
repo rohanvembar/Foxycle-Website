@@ -63,7 +63,7 @@
                   class="navbar-item"
                   to="/employeemanagement"
                   exact-active-class="is-active"
-                  v-if="isLoggedIn"
+                  v-if="isLoggedIn && isOwner"
                 >
                   <span class="navicon">
                     <font-awesome-icon icon="users" fixed-width/>
@@ -151,7 +151,12 @@ export default class App extends Vue {
   public showSignup: boolean = false;
   public showLogin: boolean = false;
   public showEmployee: boolean = false;
+  role: number = 0;
 
+  get isOwner(): boolean {
+    this.role = this.$store.state.userRole.userRole;
+    return this.role == 1;
+  }
   showSignupModal() {
     this.showSignup = true;
   }

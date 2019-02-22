@@ -221,6 +221,7 @@ export default class Checkout extends Vue {
   shipping: number = 10;
   total: number = 0;
   ordernumber: string = "";
+  
 
   computeSubtotal() {
     for (var i in this.items) {

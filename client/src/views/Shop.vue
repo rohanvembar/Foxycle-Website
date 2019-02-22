@@ -1,6 +1,6 @@
 <template>
   <div class="main-background">
-    <div class="sort-by select is-rounded">
+    <div class="sort-by select">
       <select name="Sort By" v-on:change="updateSort($event)">
         <option selected="true" disabled="disabled" value="sortby">Sort By</option>
         <option value="0">Price</option>
