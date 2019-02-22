@@ -23,6 +23,7 @@
     "vue-property-decorator": "^7.3.0",
     "vue-carousel": "^0.17.0",
     "vue-step-progress": "^0.2.2",
+    "vue-credit-card": "^0.0.11",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
