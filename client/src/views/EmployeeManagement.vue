@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!isLoggedIn" class="error">
+    <div v-if="!isLoggedIn | !isOwner" class="error">
       <article class="message is-danger">
         <div class="message-header">
           <p>
