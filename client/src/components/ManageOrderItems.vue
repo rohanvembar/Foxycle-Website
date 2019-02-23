@@ -9,8 +9,8 @@
       <th>Order Status</th>
     </thead>
     <tbody>
-      <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row" v-bind:class="{ 'tablegreen': order.status == 4, 'tablered': order.status == 5 }">
-        <td>{{order.orderNumber}}</td>
+      <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
+        <td class="tdorder" v-bind:class="{ 'tablegreen': order.status == 4, 'tablered': order.status == 5 }">{{order.orderNumber}}</td>
         <td>{{order.dateOrdered}}</td>
         <td>{{order.name}}</td>
         <td>{{order.email}}</td>
@@ -134,7 +134,7 @@ export default class ManageOrderItems extends Vue {
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   min-width: 1000px;
 }
-tr {
+.tdorder {
     background-color: hsl(48, 100%, 67%);
 
 }
