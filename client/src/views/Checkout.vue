@@ -200,9 +200,13 @@
               
             </table>
             <div class="checkout-btn">
-              <div class="button is-primary is-rounded is-focused"  style="width:100%" v-on:click="loading(), placeOrder()">
+              <div v-if="isFilled" class="button is-primary is-rounded is-focused"  style="width:100%" v-on:click="loading(), placeOrder()">
                 <i class="fas fa-check iconpadding"></i>place order
               </div>
+              <div v-if="!isFilled" class="button is-rounded is-focused" disabled style="width:100%">
+                <i class="fas fa-check iconpadding"></i>place order
+              </div>
+
 
               <div id="pageloader" class="pageloader is-info">
                 <span class="title">just a sec, your order is being submitted</span>
@@ -298,6 +302,12 @@ export default class Checkout extends Vue {
     }
   }
 
+  get isFilled(): boolean {
+    if(this.address && this.city && this.state && this.zip && this.email && this.firstName && this.lastName){
+      return true;
+    }
+    return false;
+  }
   loading() {
     const ele = document.getElementById("pageloader");
     if (ele) {
@@ -360,7 +370,7 @@ export default class Checkout extends Vue {
         date: orderdate,
         name: this.firstName + " " + this.lastName,
         email: this.email,
-        address: this.address + " " + this.city + ", " + this.state + " " + this.zip
+        address: this.address + ", " + this.city + ", " + this.state + " " + this.zip
       })
       .then((response: AxiosResponse) => {
         console.log("[Checkout.vue]" + response.data);
