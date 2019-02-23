@@ -7,7 +7,7 @@
           <div class="field inputbox">
             <label>First Name</label>
             <p class="control is-expanded has-icons-left">
-              <input class="input" type="text" placeholder="first name">
+              <input v-model="firstName" class="input" type="text" placeholder="first name">
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
@@ -16,7 +16,7 @@
           <div class="field inputbox">
             <label>Last Name</label>
             <p class="control is-expanded has-icons-left">
-              <input class="input" type="text" placeholder="last name">
+              <input  v-model="lastName" class="input" type="text" placeholder="last name">
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
@@ -25,7 +25,7 @@
           <div class="field inputbox">
             <label>Email</label>
             <p class="control is-expanded has-icons-left">
-              <input class="input" type="text" placeholder="email">
+              <input  v-model="email" class="input" type="text" placeholder="email">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
@@ -250,6 +250,10 @@ export default class Checkout extends Vue {
   city: string = "";
   state: string = "";
   zip: string = "";
+  email: string = "";
+  firstName: string = "";
+  lastName: string = "";
+
   name: "Card";
   components: {
     card;
@@ -354,6 +358,8 @@ export default class Checkout extends Vue {
         orderNumber: this.ordernumber,
         status: 1,
         date: orderdate,
+        name: this.firstName + " " + this.lastName,
+        email: this.email,
         address: this.address + " " + this.city + ", " + this.state + " " + this.zip
       })
       .then((response: AxiosResponse) => {

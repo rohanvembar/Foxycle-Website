@@ -12,5 +12,11 @@ export class OrderManagement {
 
     @Column()
     public mailingAddress!: string;
+    
+    @Column()
+    public name!: string;
+    
+    @Column()
+    public email!: string;
 
 }

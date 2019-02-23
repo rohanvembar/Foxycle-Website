@@ -3,14 +3,17 @@
     <thead>
       <th>Order #</th>
       <th>Date</th>
+      <th>Name</th>
+      <th>Email</th>
       <th>Mailing Address</th>
       <th>Order Status</th>
-      <th>Delete</th>
     </thead>
     <tbody>
       <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
         <td>{{order.orderNumber}}</td>
         <td>{{order.dateOrdered}}</td>
+        <td>{{order.name}}</td>
+        <td>{{order.email}}</td>
         <td>{{order.mailingAddress}}</td>
         <td>
           <div class="select">
@@ -22,9 +25,6 @@
               <option value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
             </select>
           </div>
-        </td>
-        <td>
-          <button class="button is-danger" v-on:click="deleteOrder(order)">delete</button>
         </td>
       </tr>
     </tbody>

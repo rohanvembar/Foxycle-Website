@@ -26,6 +26,8 @@ export class OrderManagementController extends DefaultController {
                 newOrder.status = req.body.status;
                 newOrder.dateOrdered = req.body.date;
                 newOrder.mailingAddress = req.body.address;
+                newOrder.name = req.body.name;
+                newOrder.email = req.body.email;
                 orderRepo.save(newOrder).then((savedOrder: OrderManagement) => {
                     res.status(200).send(savedOrder);
                     console.log(savedOrder);
