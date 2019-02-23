@@ -34,19 +34,18 @@
           <div class="field inputbox">
             <label>Street Address</label>
             <p class="control is-expanded has-icons-left">
-              <input class="input" type="text" placeholder="street address">
+              <input v-model="address" class="input" type="text" placeholder="street address">
               <span class="icon is-small is-left">
                 <i class="fas fa-map-marker-alt"></i>
               </span>
             </p>
           </div>
           <div class="field inputbox">
-            <label>City</label>
-            <label class="right">State</label>
+            <label>City, State</label>
             <p class="control is-expanded">
-              <input class="input city" type="text" placeholder="city">
+              <input v-model="city" class="input city" type="text" placeholder="city">
               <span class="select state">
-                <select name="state">
+                <select v-model="state" name="state">
                   <option value="AL">AL</option>
                   <option value="AK">AK</option>
                   <option value="AR">AR</option>
@@ -105,7 +104,7 @@
           <div class="field inputbox">
             <label>Zip Code</label>
             <p class="control is-expanded has-icons-left">
-              <input class="input" type="text" placeholder="zip code">
+              <input v-model="zip" class="input" type="text" placeholder="zip code">
               <span class="icon is-small is-left">
                 <i class="fas fa-globe"></i>
               </span>
@@ -247,6 +246,10 @@ export default class Checkout extends Vue {
   shipping: number = 10;
   total: number = 0;
   ordernumber: string = "";
+  address: string = "";
+  city: string = "";
+  state: string = "";
+  zip: string = "";
   name: "Card";
   components: {
     card;
@@ -351,7 +354,7 @@ export default class Checkout extends Vue {
         orderNumber: this.ordernumber,
         status: 1,
         date: orderdate,
-        address: "1 Grand Ave, San Luis Obispo, CA 93407"
+        address: this.address + " " + this.city + ", " + this.state + " " + this.zip
       })
       .then((response: AxiosResponse) => {
         console.log("[Checkout.vue]" + response.data);
