@@ -1,5 +1,5 @@
 <template>
-  <table class="table is-striped is-hoverable">
+  <table class="table">
     <thead>
       <th>Order #</th>
       <th>Date</th>
@@ -9,7 +9,7 @@
       <th>Order Status</th>
     </thead>
     <tbody>
-      <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
+      <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row" v-bind:class="{ 'tablegreen': order.status == 4, 'tablered': order.status == 5 }">
         <td>{{order.orderNumber}}</td>
         <td>{{order.dateOrdered}}</td>
         <td>{{order.name}}</td>
@@ -134,59 +134,16 @@ export default class ManageOrderItems extends Vue {
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   min-width: 1000px;
 }
-// #table {
-//   display: table;
-//   border-top: 2px solid;
-//   border-bottom: 2px solid;
-// }
-// .row {
-//   display: table-row;
-//   background: white;
-// }
-// .row1 {
-//   display: table-row;
-//   background: white;
-//   font-weight: bold;
-// }
-// .cell1 {
-//   display: table-cell;
-//   border-top: 2px solid;
-//   border-bottom: 2px solid;
-//   text-align: center;
-//   vertical-align: middle;
-//   margin-left: 40px;
-//   padding-left: 80px;
-//   padding-right: 80px;
-//   font-size: 40px;
-//   align-items: center;
-//   align-content: center;
-// }
-// .cell {
-//   display: table-cell;
-//   border-top: 2px solid;
-//   border-bottom: 2px solid;
-//   text-align: center;
-//   vertical-align: middle;
-//   margin-left: 40px;
-//   padding-left: 80px;
-//   padding-right: 80px;
-//   font-size: 20px;
-//   align-items: center;
-//   align-content: center;
-// }
-// .cell_s {
-//   display: table-cell;
-//   border-top: 2px solid;
-//   border-bottom: 2px solid;
-//   text-align: center;
-//   vertical-align: middle;
-//   margin-left: 40px;
-//   padding-left: 80px;
-//   padding-right: 80px;
-//   padding-top: 12px;
-//   padding-bottom: 12px;
-//   font-size: 20px;
-//   align-items: center;
-//   align-content: center;
-// }
+tr {
+    background-color: hsl(48, 100%, 67%);
+
+}
+.tablegreen {
+  background-color: hsl(171, 100%, 41%);
+  color: white;
+}
+.tablered {
+  background-color: hsl(348, 100%, 61%);
+  color: white;
+}
 </style>
