@@ -1,24 +1,34 @@
 <template>
-  <div id="table">
-    <div class="row1">
-      <div class="cell1">Order #</div>
-      <div class="cell1">Date</div>
-      <div class="cell1">Order Status</div>
-    </div>
-    <div v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
-      <div class="cell">{{order.orderNumber}}</div>
-      <div class="cell">{{order.dateOrdered}}</div>
-      <div class="cell_s">
-        <select v-model = "order.status" v-on:change="updateStatus($event, order)">
-          <option value="1" :selected="order.status === 1 ? 'selected' : ''">Received</option>
-          <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
-          <option value="3" :selected="order.status === 3 ? 'selected' : ''">Shipped</option>
-          <option value="4" :selected="order.status === 4 ? 'selected' : ''">Delivered</option>
-          <option value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
-        </select>
-      </div>
-    </div>
-  </div>
+  <table class="table is-striped is-hoverable">
+    <thead>
+      <th>Order #</th>
+      <th>Date</th>
+      <th>Mailing Address</th>
+      <th>Order Status</th>
+      <th>Delete</th>
+    </thead>
+    <tbody>
+      <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
+        <td>{{order.orderNumber}}</td>
+        <td>{{order.dateOrdered}}</td>
+        <td>{{order.mailingAddress}}</td>
+        <td>
+          <div class="select">
+            <select v-model="order.status" v-on:change="updateStatus($event, order)">
+              <option value="1" :selected="order.status === 1 ? 'selected' : ''">Received</option>
+              <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
+              <option value="3" :selected="order.status === 3 ? 'selected' : ''">Shipped</option>
+              <option value="4" :selected="order.status === 4 ? 'selected' : ''">Delivered</option>
+              <option value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
+            </select>
+          </div>
+        </td>
+        <td>
+          <button class="button is-danger" v-on:click="deleteOrder(order)">delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script lang="ts">
@@ -29,8 +39,8 @@ import { APIConfig } from "../utils/api.utils";
 
 @Component
 export default class ManageOrderItems extends Vue {
-  @Prop() refinelist: String[]
-  @Prop() sortVal: String
+  @Prop() refinelist: String[];
+  @Prop() sortVal: String;
 
   error: string | boolean = false;
   orders: iOrder[] = [];
@@ -39,10 +49,16 @@ export default class ManageOrderItems extends Vue {
     console.log("[ManageOrderItems.vue] updating to status " + e.target.value);
     axios
       .put(
-        APIConfig.buildUrl("/updatestatus/" + order.orderNumber + "/" + e.target.value), order
+        APIConfig.buildUrl(
+          "/updatestatus/" + order.orderNumber + "/" + e.target.value
+        ),
+        order
       )
       .then((response: AxiosResponse) => {
-        console.log("[ManageOrderItems.vue] updated order: " + JSON.stringify(response.data));
+        console.log(
+          "[ManageOrderItems.vue] updated order: " +
+            JSON.stringify(response.data)
+        );
         this.$emit("success");
       })
       .catch((response: AxiosResponse) => {
@@ -69,32 +85,43 @@ export default class ManageOrderItems extends Vue {
       });
   }
 
-  get refinedOrders(){
-    const l = this.refinelist;
-    return this.sortedOrders.filter(function(s){
-      const stat = (s.status).toString();
-      return l.includes(stat);
-    })
+  deleteOrder(order: iOrder) {
+    this.error = false;
+    axios
+      .delete(APIConfig.buildUrl("/order/" + order.orderNumber))
+      .then((response: AxiosResponse) => {
+        const deletedOrder = response.data;
+        this.orders = this.orders.filter(order => {
+          return order.orderNumber != deletedOrder.orderNumber;
+        });
+        this.$emit("success");
+      })
+      .catch((response: AxiosResponse) => {
+        this.error = "bad";
+      });
   }
 
-  get sortedOrders(){
-    function compareONum(a, b){
-      if(a.orderNumber < b.orderNumber)
-        return -1;
-      if((a.orderNumber > b.orderNumber))
-        return 1;
+  get refinedOrders() {
+    const l = this.refinelist;
+    return this.sortedOrders.filter(function(s) {
+      const stat = s.status.toString();
+      return l.includes(stat);
+    });
+  }
+
+  get sortedOrders() {
+    function compareONum(a, b) {
+      if (a.orderNumber < b.orderNumber) return -1;
+      if (a.orderNumber > b.orderNumber) return 1;
       return 0;
     }
-    function compareDate(a, b){
-      if(a.dateOrdered < b.dateOrdered)
-        return -1;
-      if((a.dateOrdered > b.dateOrdered))
-        return 1;
+    function compareDate(a, b) {
+      if (a.dateOrdered < b.dateOrdered) return -1;
+      if (a.dateOrdered > b.dateOrdered) return 1;
       return 0;
     }
 
-    if(this.sortVal == "1")
-      return this.orders.sort(compareDate);
+    if (this.sortVal == "1") return this.orders.sort(compareDate);
     return this.orders.sort(compareONum);
   }
 }
@@ -102,59 +129,64 @@ export default class ManageOrderItems extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#table {
-  display: table;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
+.table {
+  border-radius: 5px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+  min-width: 1000px;
 }
-.row {
-  display: table-row;
-  background: white;
-}
-.row1 {
-  display: table-row;
-  background: white;
-  font-weight: bold;
-}
-.cell1 {
-  display: table-cell;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  text-align: center;
-  vertical-align: middle;
-  margin-left: 40px;
-  padding-left: 80px;
-  padding-right: 80px;
-  font-size: 40px;
-  align-items: center;
-  align-content: center;
-}
-.cell {
-  display: table-cell;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  text-align: center;
-  vertical-align: middle;
-  margin-left: 40px;
-  padding-left: 80px;
-  padding-right: 80px;
-  font-size: 20px;
-  align-items: center;
-  align-content: center;
-}
-.cell_s {
-  display: table-cell;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  text-align: center;
-  vertical-align: middle;
-  margin-left: 40px;
-  padding-left: 80px;
-  padding-right: 80px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  font-size: 20px;
-  align-items: center;
-  align-content: center;
-}
+// #table {
+//   display: table;
+//   border-top: 2px solid;
+//   border-bottom: 2px solid;
+// }
+// .row {
+//   display: table-row;
+//   background: white;
+// }
+// .row1 {
+//   display: table-row;
+//   background: white;
+//   font-weight: bold;
+// }
+// .cell1 {
+//   display: table-cell;
+//   border-top: 2px solid;
+//   border-bottom: 2px solid;
+//   text-align: center;
+//   vertical-align: middle;
+//   margin-left: 40px;
+//   padding-left: 80px;
+//   padding-right: 80px;
+//   font-size: 40px;
+//   align-items: center;
+//   align-content: center;
+// }
+// .cell {
+//   display: table-cell;
+//   border-top: 2px solid;
+//   border-bottom: 2px solid;
+//   text-align: center;
+//   vertical-align: middle;
+//   margin-left: 40px;
+//   padding-left: 80px;
+//   padding-right: 80px;
+//   font-size: 20px;
+//   align-items: center;
+//   align-content: center;
+// }
+// .cell_s {
+//   display: table-cell;
+//   border-top: 2px solid;
+//   border-bottom: 2px solid;
+//   text-align: center;
+//   vertical-align: middle;
+//   margin-left: 40px;
+//   padding-left: 80px;
+//   padding-right: 80px;
+//   padding-top: 12px;
+//   padding-bottom: 12px;
+//   font-size: 20px;
+//   align-items: center;
+//   align-content: center;
+// }
 </style>

@@ -351,7 +351,7 @@ export default class Checkout extends Vue {
         orderNumber: this.ordernumber,
         status: 1,
         date: orderdate,
-        address: ""
+        address: "1 Grand Ave, San Luis Obispo, CA 93407"
       })
       .then((response: AxiosResponse) => {
         console.log("[Checkout.vue]" + response.data);

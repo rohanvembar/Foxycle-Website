@@ -19,15 +19,7 @@
 
 
     <div v-else>
-      <div class="main-background">
-        <div class = "header">Manage Orders</div>
-        <div class="sort-by select">
-          <select name="Sort By" v-on:change="updateSort($event)">
-            <option selected="true" disabled="disabled" value="sortby">Sort By</option>
-            <option value="0">Order Number</option>
-            <option value="1">Date</option>     
-          </select>
-        </div>
+      <div class="main-background">        
         <div class="orders">
           <OrdersRefineBox @change = "onUpdateRefinelist"/>
           <ManageOrderItems :refinelist= "refinement" :sortVal= "sortVal"/>
