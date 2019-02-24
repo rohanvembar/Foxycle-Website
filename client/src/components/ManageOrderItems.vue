@@ -10,19 +10,28 @@
     </thead>
     <tbody>
       <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
-        <td class="tdorder" v-bind:class="{ 'tablegreen': order.status == 4, 'tablered': order.status == 5 }">{{order.orderNumber}}</td>
+        <td
+          class="tdorder"
+          v-bind:class="{ 'tablegreen': order.status == 4, 'tablered': order.status == 5 }"
+        >{{order.orderNumber}}</td>
         <td>{{order.dateOrdered}}</td>
         <td>{{order.name}}</td>
         <td>{{order.email}}</td>
         <td>{{order.mailingAddress}}</td>
         <td>
-          <div class="select">
+          <div v-if="order.status != 5 | isOwner" class="select">
             <select v-model="order.status" v-on:change="updateStatus($event, order)">
               <option value="1" :selected="order.status === 1 ? 'selected' : ''">Received</option>
               <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
               <option value="3" :selected="order.status === 3 ? 'selected' : ''">Shipped</option>
               <option value="4" :selected="order.status === 4 ? 'selected' : ''">Delivered</option>
               <option value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
+            </select>
+          </div>
+          <div v-else class="select">
+            <select disabled>
+              <option :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
+              <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
             </select>
           </div>
         </td>
@@ -44,6 +53,12 @@ export default class ManageOrderItems extends Vue {
 
   error: string | boolean = false;
   orders: iOrder[] = [];
+  role: number = 0;
+
+  get isOwner(): boolean {
+    this.role = this.$store.state.userRole.userRole;
+    return this.role == 1;
+  }
 
   updateStatus(e, order: iOrder) {
     console.log("[ManageOrderItems.vue] updating to status " + e.target.value);
@@ -135,8 +150,7 @@ export default class ManageOrderItems extends Vue {
   min-width: 1000px;
 }
 .tdorder {
-    background-color: hsl(48, 100%, 67%);
-
+  background-color: hsl(48, 100%, 67%);
 }
 .tablegreen {
   background-color: hsl(171, 100%, 41%);
