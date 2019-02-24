@@ -283,6 +283,7 @@ export default class ViewShopItems extends Vue {
   width: 90%;
   margin: auto;
   max-width: 1100px;
+  padding-bottom:50px;
 }
 
 .columns_4 figure {

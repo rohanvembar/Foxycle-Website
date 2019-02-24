@@ -120,8 +120,8 @@
       v-on:success="successLogin()"
       v-on:cancel="cancelLogin()"
     />
-    <footer class="footer">
-      <div class="content has-text-centered">
+    <div class="footer2">
+      <div class="content has-text-centered v-align">
         <p>
           <strong style="padding-right:2em">&copy; Foxycle</strong>
           <i class="fas fa-map-marker-alt"></i> 1 Grand Avenue, San Luis Obispo, CA 93407
@@ -142,7 +142,7 @@
           info@foxycle.com
         </p>
       </div>
-    </footer>
+    </div>
   </div>
 </template>
 
@@ -233,8 +233,16 @@ export default class App extends Vue {
   border-radius: 50px;
 }
 
-.footer {
-  margin-top: 5%;
+.footer2 {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 50px;
   background-color: #f8f8f8;
+  width: 100%;
+}
+
+.v-align{
+  padding-top:10px;
 }
 </style>
