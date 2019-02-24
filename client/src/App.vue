@@ -51,7 +51,10 @@
               v-if="!isLoggedIn"
               exact-active-class="is-active"
             >
-              <div v-bind:class="{ 'badge': this.$store.state.items.length > 0 }" :data-badge="this.$store.state.items.length">
+              <div
+                v-bind:class="{ 'badge': this.$store.state.items.length > 0 }"
+                :data-badge="this.$store.state.items.length"
+              >
                 <font-awesome-icon icon="shopping-cart"/>
               </div>
             </router-link>
@@ -120,9 +123,23 @@
     <footer class="footer">
       <div class="content has-text-centered">
         <p>
-          <strong style="padding-right:2em">&copy; Foxycle</strong> <i class="fas fa-map-marker-alt"></i> 1 Grand Avenue, San Luis Obispo, CA 93407 <i class="fas fa-clock" style="padding-left: 2em"></i> Mon-Fri: 10AM to 6PM • Sat & Sun: 11AM-5PM 
-
-
+          <strong style="padding-right:2em">&copy; Foxycle</strong>
+          <i class="fas fa-map-marker-alt"></i> 1 Grand Avenue, San Luis Obispo, CA 93407
+          <i
+            class="fas fa-clock"
+            style="padding-left: 2em"
+          ></i>
+          Mon-Fri: 10AM to 6PM • Sat & Sun: 11AM-5PM
+          <i
+            class="fas fa-phone"
+            style="padding-left: 2em"
+          ></i>
+          (805) 111-1111
+                    <i
+            class="fas fa-envelope"
+            style="padding-left: 2em"
+          ></i>
+          info@foxycle.com
         </p>
       </div>
     </footer>
