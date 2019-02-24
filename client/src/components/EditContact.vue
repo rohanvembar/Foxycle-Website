@@ -63,7 +63,7 @@
               </div>
             </div>
           </article>
-          <button v-on:click="saveContact">save</button>
+          <button class="button is-primary" style="float:right" v-on:click="saveContact">save</button>
         </div>
       </div>
     </div>
