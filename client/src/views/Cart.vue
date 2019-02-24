@@ -133,7 +133,6 @@ export default class Cart extends Vue {
     }
     if (itemsIndex !== -1) {
       this.items.splice(itemsIndex, 1);
-      
     }
     this.subtotal = 0;
     this.computeSubtotal();
@@ -180,13 +179,13 @@ export default class Cart extends Vue {
   justify-content: center;
   padding-bottom: 50px;
   width: 100%;
+  margin-bottom: 100px;
 }
 
 th,
 td {
   padding: 10px 30px 10px 30px;
   vertical-align: middle;
-
 }
 
 .bot-bord {
@@ -201,6 +200,7 @@ td {
 .table {
   border-radius: 2px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+  margin-bottom: 50px;
 }
 
 .checkout-btn {
