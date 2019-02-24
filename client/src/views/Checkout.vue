@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="columns is-centered">
-      <div class="column">
+      <div class="column" v-if="isShippable()">
         <div class="title">Shipping Address</div>
         <div class="space">
           <div class="field inputbox">
@@ -16,7 +16,7 @@
           <div class="field inputbox">
             <label>Last Name</label>
             <p class="control is-expanded has-icons-left">
-              <input  v-model="lastName" class="input" type="text" placeholder="last name">
+              <input v-model="lastName" class="input" type="text" placeholder="last name">
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
@@ -25,7 +25,7 @@
           <div class="field inputbox">
             <label>Email</label>
             <p class="control is-expanded has-icons-left">
-              <input  v-model="email" class="input" type="text" placeholder="email">
+              <input v-model="email" class="input" type="text" placeholder="email">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
@@ -112,6 +112,44 @@
           </div>
         </div>
       </div>
+      <div class="column" v-else>
+        <div class="title">Pickup Info</div>Your order is only available for free store pickup:
+        <div class="pickupText">
+          <i class="fas fa-map-marker-alt fa-fw"></i>
+          1 Grand Avenue, San Luis Obispo, CA 93407
+        </div>
+        <div class="pickupText">
+          <i class="fas fa-clock fa-fw"></i>
+          Your order will be ready within 2 business days
+        </div>
+        <div class="field inputbox">
+          <label>First Name</label>
+          <p class="control is-expanded has-icons-left">
+            <input v-model="firstName" class="input" type="text" placeholder="first name">
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field inputbox">
+          <label>Last Name</label>
+          <p class="control is-expanded has-icons-left">
+            <input v-model="lastName" class="input" type="text" placeholder="last name">
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field inputbox">
+          <label>Email</label>
+          <p class="control is-expanded has-icons-left">
+            <input v-model="email" class="input" type="text" placeholder="email">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+      </div>
 
       <div class="column">
         <div class="title">Billing Info</div>
@@ -162,22 +200,22 @@
             <div class="title">Order Summary</div>
             <table class="center table is-hoverable">
               <thead>
-              <tr>
-                <th>Product</th>
-                <th></th>
-                <th>Quantity</th>
-                <th>Total</th>
-              </tr>
+                <tr>
+                  <th>Product</th>
+                  <th></th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
               </thead>
               <tbody>
-              <tr v-for="(cartitem, index) in cart" v-bind:key="index">
-                <td>
-                  <img :src="cartitem.item.image" width="100px">
-                </td>
-                <td class="iName">{{cartitem.item.name}}</td>
-                <td class="iName">{{cartitem.quantity}}</td>
-                <td>${{cartitem.item.price}}</td>
-              </tr>
+                <tr v-for="(cartitem, index) in cart" v-bind:key="index">
+                  <td>
+                    <img :src="cartitem.item.image" width="100px">
+                  </td>
+                  <td class="iName">{{cartitem.item.name}}</td>
+                  <td class="iName">{{cartitem.quantity}}</td>
+                  <td>${{cartitem.item.price}}</td>
+                </tr>
               </tbody>
               <tr class="bot-bord">
                 <td>Subtotal</td>
@@ -197,16 +235,24 @@
                 <td></td>
                 <td>${{total}}</td>
               </tr>
-              
             </table>
             <div class="checkout-btn">
-              <div v-if="isFilled" class="button is-primary is-rounded is-focused"  style="width:100%" v-on:click="loading(), placeOrder()">
+              <div
+                v-if="isFilled"
+                class="button is-primary is-rounded is-focused"
+                style="width:100%"
+                v-on:click="loading(), placeOrder()"
+              >
                 <i class="fas fa-check iconpadding"></i>place order
               </div>
-              <div v-if="!isFilled" class="button is-rounded is-focused" disabled style="width:100%">
+              <div
+                v-if="!isFilled"
+                class="button is-rounded is-focused"
+                disabled
+                style="width:100%"
+              >
                 <i class="fas fa-check iconpadding"></i>place order
               </div>
-
 
               <div id="pageloader" class="pageloader is-info">
                 <span class="title">just a sec, your order is being submitted</span>
@@ -277,6 +323,16 @@ export default class Checkout extends Vue {
     }
   }
 
+  isShippable() {
+    for (var i in this.items) {
+      console.log(this.items[i].delivery);
+      if (!this.items[i].delivery) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   computeTotal() {
     this.total = this.subtotal + this.shipping;
   }
@@ -303,10 +359,25 @@ export default class Checkout extends Vue {
   }
 
   get isFilled(): boolean {
-    if(this.address && this.city && this.state && this.zip && this.email && this.firstName && this.lastName){
-      return true;
+    if (this.isShippable()) {
+      if (
+        this.address &&
+        this.city &&
+        this.state &&
+        this.zip &&
+        this.email &&
+        this.firstName &&
+        this.lastName
+      ) {
+        return true;
+      }
+      return false;
+    } else {
+      if (this.firstName && this.lastName && this.email) {
+        return true;
+      }
+      return false;
     }
-    return false;
   }
   loading() {
     const ele = document.getElementById("pageloader");
@@ -370,7 +441,8 @@ export default class Checkout extends Vue {
         date: orderdate,
         name: this.firstName + " " + this.lastName,
         email: this.email,
-        address: this.address + ", " + this.city + ", " + this.state + " " + this.zip
+        address:
+          this.address + ", " + this.city + ", " + this.state + " " + this.zip
       })
       .then((response: AxiosResponse) => {
         console.log("[Checkout.vue]" + response.data);
@@ -407,7 +479,11 @@ export default class Checkout extends Vue {
 .sameAsShipping {
   font-size: 10px;
 }
-
+.pickupText {
+  font-size: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .sameAsButton {
   background-color: rgb(20, 157, 248);
   border: none;
@@ -500,7 +576,6 @@ th {
 .table {
   border-radius: 5px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
-
 }
 </style>
 
