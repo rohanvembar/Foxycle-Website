@@ -300,9 +300,7 @@ export default class ViewShopItems extends Vue {
   -moz-transform: scale(1);
   transform: scale(1);
 }
-#columns:hover figure:not(:hover) {
-  opacity: 0.8;
-}
+
 div#columns figure {
   display: inline-block;
   background: #fefefe;
