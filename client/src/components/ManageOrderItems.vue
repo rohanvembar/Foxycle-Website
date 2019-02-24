@@ -25,7 +25,7 @@
               <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
               <option value="3" :selected="order.status === 3 ? 'selected' : ''">Shipped</option>
               <option value="4" :selected="order.status === 4 ? 'selected' : ''">Delivered</option>
-              <option value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
+              <option v-if="isOwner" value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
             </select>
           </div>
           <div v-else class="select">
