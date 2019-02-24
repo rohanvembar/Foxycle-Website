@@ -27,8 +27,20 @@
               <td v-if="!cartitem.item.saleprice">${{cartitem.item.price}}</td>
               <td v-if="cartitem.item.saleprice">${{cartitem.item.saleprice}}</td>
               <td>{{cartitem.quantity}}</td>
-              <td v-if="!cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.price}}</td>
-              <td v-if="cartitem.item.saleprice">${{cartitem.quantity * cartitem.item.saleprice}}</td>
+              <td v-if="!cartitem.item.saleprice">
+                ${{cartitem.quantity * cartitem.item.price}}
+                <button
+                  class="delete right"
+                  v-on:click="removeItem(cartitem)"
+                ></button>
+              </td>
+              <td v-if="cartitem.item.saleprice">
+                ${{cartitem.quantity * cartitem.item.saleprice}}
+                <button
+                  class="delete right"
+                  v-on:click="removeItem(cartitem)"
+                ></button>
+              </td>
             </tr>
           </tbody>
           <tr class="bot-bord">
@@ -112,6 +124,21 @@ export default class Cart extends Vue {
     this.total = this.subtotal + this.shipping;
   }
 
+  removeItem(item) {
+    const cartIndex = this.cart.indexOf(item);
+    const itemsIndex = this.items.indexOf(item.item);
+
+    if (cartIndex !== -1) {
+      this.cart.splice(cartIndex, 1);
+    }
+    if (itemsIndex !== -1) {
+      this.items.splice(itemsIndex, 1);
+      
+    }
+    this.subtotal = 0;
+    this.computeSubtotal();
+    this.computeTotal();
+  }
   created() {
     this.computeSubtotal();
     this.computeTotal();
@@ -143,7 +170,7 @@ export default class Cart extends Vue {
 }
 
 .container {
-  width: 60%;
+  min-width: 60%;
 }
 
 .cart-table {
@@ -152,6 +179,7 @@ export default class Cart extends Vue {
   align-items: center;
   justify-content: center;
   padding-bottom: 50px;
+  width: 100%;
 }
 
 th,
@@ -175,6 +203,11 @@ td {
 
 .checkout-btn {
   width: 40%;
+}
+
+.right {
+  margin-left: 10px;
+  float: right;
 }
 </style>
 
