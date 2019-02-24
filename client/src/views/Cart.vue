@@ -73,7 +73,7 @@
           class="button is-primary is-rounded checkout-btn is-focused"
           to="/checkout"
           exact-active-class="is-active"
-          style="position: absolute; bottom:0"
+          style="position: absolute; bottom:0;  transition: 0.3s"
         >
           <span>proceed to checkout</span>
         </router-link>

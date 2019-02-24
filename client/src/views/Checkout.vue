@@ -240,7 +240,7 @@
               <div
                 v-if="isFilled"
                 class="button is-primary is-rounded is-focused"
-                style="width:100%"
+                style="width:100%;  transition: 0.3s"
                 v-on:click="loading(), placeOrder()"
               >
                 <i class="fas fa-check iconpadding"></i>place order
