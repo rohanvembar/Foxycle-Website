@@ -51,7 +51,7 @@
               v-if="!isLoggedIn"
               exact-active-class="is-active"
             >
-              <div class="badge" :data-badge="this.$store.state.items.length">
+              <div v-bind:class="{ 'badge': this.$store.state.items.length > 0 }" :data-badge="this.$store.state.items.length">
                 <font-awesome-icon icon="shopping-cart"/>
               </div>
             </router-link>

@@ -27,13 +27,13 @@
     </button>
     <div class="itempage-main-content">Name
       <div class="itempage-title">
-        <input type="text" v-model="name">
+        <input type="text" v-model="name" class="input">
       </div>
       <hr class="itempage-line">
       <div class="itempage-row">
         <div class="itempage-image-column">
           <img class="itempage-image" :src="shopItem.image">
-          <input type="text" v-model="image" placeholder="image url...">
+          <input class="input" type="text" v-model="image" placeholder="image url...">
         </div>
         <div class="itempage-details-column">
           <table>
@@ -44,6 +44,7 @@
               <td class="itempage-price-box">
                 <center>
                   <input
+                    class="input"
                     type="number"
                     min="0.01"
                     step="0.01"
@@ -54,7 +55,7 @@
               </td>
             </tr>
             <tr v-if="this.saleprice == 0">
-              <td>Sale Price (not active)</td>
+              <td>Sale Price (optional)</td>
             </tr>
             <tr v-else>
               <td>Sale Price</td>
@@ -63,6 +64,7 @@
               <td class="itempage-price-box">
                 <center>
                   <input
+                    class="input"
                     type="number"
                     min="0.01"
                     step="0.01"
@@ -78,7 +80,7 @@
             <tr>
               <td class="itempage-price-box">
                 <center>
-                  <input type="text" v-model="brand">
+                  <input class="input" type="text" v-model="brand">
                 </center>
               </td>
             </tr>
@@ -88,7 +90,7 @@
             <tr>
               <td class="itempage-price-box">
                 <center>
-                  <input type="number" min="1" step="1" v-model="quantity">
+                  <input class="input" type="number" min="1" step="1" v-model="quantity">
                 </center>
               </td>
             </tr>
@@ -120,7 +122,7 @@
       </div>
       <div class="itempage-specifications">
         <div class="itempage-specs-title">Description</div>
-        <textarea class="description-box" v-model="description"></textarea>
+        <textarea class="description-box textarea" v-model="description"></textarea>
       </div>
     </div>
   </div>
@@ -289,7 +291,7 @@ export default class ItemPage extends Vue {
   margin-top: 3%;
   width: 100%;
   height: 5px;
-  background-color: #3c8cff;
+  background-color: #239cec;
 }
 
 .itempage-specs-dividing-line {
@@ -300,19 +302,19 @@ export default class ItemPage extends Vue {
   background-color: #0000002c;
 }
 
-.itempage-price-box {
-  border: 1px solid rgb(167, 167, 167);
-  background-color: #ffffff;
-  padding: 5px;
-  margin: 5px;
-}
+// .itempage-price-box {
+//   border: 1px solid rgb(167, 167, 167);
+//   background-color: #ffffff;
+//   padding: 5px;
+//   margin: 5px;
+// }
 
-.itempage-category-box {
-  border: 1px solid rgb(167, 167, 167);
-  background-color: #ffffff;
-  padding: 5px;
-  margin: 5px;
-}
+// .itempage-category-box {
+//   border: 1px solid rgb(167, 167, 167);
+//   background-color: #ffffff;
+//   padding: 5px;
+//   margin: 5px;
+// }
 
 .itempage-cart-button {
   padding-top: 20px;
