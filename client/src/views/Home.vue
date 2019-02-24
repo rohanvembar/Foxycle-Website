@@ -101,7 +101,6 @@ export default class Home extends Vue {
   overflow-y: scroll;
   margin-top:  30px;
   margin-left: 30px;
-  margin-bottom: 200px;
   width: 50%
 
 }
