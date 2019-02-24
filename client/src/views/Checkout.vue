@@ -432,6 +432,12 @@ export default class Checkout extends Vue {
   }
 
   placeOrder() {
+    if (this.isShippable()){
+      var where = this.address + ", " + this.city + ", " + this.state + " " + this.zip;
+    }
+    else {
+      var where = "Store Pickup"
+    }
     this.ordernumber = this.generate();
     var orderdate = this.parseDate();
     axios
@@ -441,8 +447,8 @@ export default class Checkout extends Vue {
         date: orderdate,
         name: this.firstName + " " + this.lastName,
         email: this.email,
-        address:
-          this.address + ", " + this.city + ", " + this.state + " " + this.zip
+        address: where
+          
       })
       .then((response: AxiosResponse) => {
         console.log("[Checkout.vue]" + response.data);

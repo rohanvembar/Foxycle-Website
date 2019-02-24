@@ -148,6 +148,7 @@ export default class ManageOrderItems extends Vue {
   border-radius: 5px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   min-width: 1000px;
+  margin-bottom: 50px;
 }
 td,
 th {
