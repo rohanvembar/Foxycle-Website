@@ -163,6 +163,12 @@ export default class EmployeeManagement extends Vue {
   border-radius: 5px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
 }
+th,
+td {
+  padding: 10px 30px 10px 30px;
+  vertical-align: middle;
+
+}
 .center {
   margin-left: auto;
   margin-right: auto;

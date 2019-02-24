@@ -149,6 +149,10 @@ export default class ManageOrderItems extends Vue {
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   min-width: 1000px;
 }
+td,
+th {
+  vertical-align: middle;
+}
 .tdorder {
   background-color: hsl(48, 100%, 67%);
 }

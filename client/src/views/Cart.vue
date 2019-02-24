@@ -185,6 +185,8 @@ export default class Cart extends Vue {
 th,
 td {
   padding: 10px 30px 10px 30px;
+  vertical-align: middle;
+
 }
 
 .bot-bord {
