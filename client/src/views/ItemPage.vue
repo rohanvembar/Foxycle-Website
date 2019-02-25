@@ -14,7 +14,9 @@
         <div class="column">
           <p class="title is-2">{{shopItem.name}}</p>
           <div class="is-divider"></div>
-          <p class="subtitle is-3">${{shopItem.price}}</p>
+          <p v-if="!shopItem.saleprice" class="subtitle is-3">${{shopItem.Price}}</p>
+          <p v-if="shopItem.saleprice" class="subtitle is-3">${{shopItem.saleprice}}</p>
+
           <div class="addquant">
             <input
               type="number"
@@ -31,7 +33,10 @@
                 exact-active-class="is-active"
               >add to cart</button>
             </router-link>
-            <div v-if="!shopItem.delivery" style="text-align:center;padding-top:25px;">This item is available for pickup only</div>
+            <div
+              v-if="!shopItem.delivery"
+              style="text-align:center;padding-top:25px;"
+            >This item is available for pickup only</div>
           </div>
         </div>
       </div>
