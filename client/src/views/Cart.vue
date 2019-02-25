@@ -30,14 +30,14 @@
               <td v-if="!cartitem.item.saleprice">
                 ${{cartitem.quantity * cartitem.item.price}}
                 <button
-                  class="delete right"
+                  class="delete"
                   v-on:click="removeItem(cartitem)"
                 ></button>
               </td>
               <td v-if="cartitem.item.saleprice">
                 ${{cartitem.quantity * cartitem.item.saleprice}}
                 <button
-                  class="delete right"
+                  class="delete"
                   v-on:click="removeItem(cartitem)"
                 ></button>
               </td>
@@ -206,10 +206,10 @@ td {
 .checkout-btn {
   width: 40%;
 }
-
-.right {
-  margin-left: 10px;
-  float: right;
+.delete {
+  float:right;
+  margin-left: 20px;
 }
+
 </style>
 
