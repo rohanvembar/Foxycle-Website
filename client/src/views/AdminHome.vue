@@ -108,7 +108,7 @@ export default class AdminHome extends Vue {
   margin: 0 auto;
   width: 50%;
   padding-top: 15px;
-
+  margin-bottom: 55px;
   display: flex;
   justify-content: center;
   align-items: center;

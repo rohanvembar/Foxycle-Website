@@ -112,5 +112,6 @@ export default class AdminEditInfo extends Vue {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 55px;
 }
 </style>

@@ -41,11 +41,11 @@
       <div class="mapouter">
         <div class="gmap_canvas">
           <iframe
-            width="600"
-            height="450"
+            width="800"
+            height="474"
             id="gmap_canvas"
             src="https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed"
-            frameborder="0"
+            frameborder
             scrolling="no"
             marginheight="0"
             marginwidth="0"

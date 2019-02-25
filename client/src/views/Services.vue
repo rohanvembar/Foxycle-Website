@@ -121,7 +121,6 @@ export default class Services extends Vue {
         console.log(this.error);
       });
   }
-
 }
 </script>
 
@@ -131,6 +130,7 @@ export default class Services extends Vue {
   display: flex;
   align-items: top;
   justify-content: space-around;
+  margin-bottom: 50px;
 }
 
 .indivisual-card {
