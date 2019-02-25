@@ -20,14 +20,14 @@
     <div v-else>
       <!-- put page here -->
       <div class="buttons">
-        <button class="button is-info add is-rounded" v-on:click="showAddItemModal()">
+        <button
+          class="button is-info add is-rounded is-focused"
+          style="width:200px"
+          v-on:click="showAddItemModal()"
+        >
           <i class="fas fa-plus space"></i>add item
         </button>
-        <button class="button is-info add is-rounded" v-on:click="getAllItems()">
-          <i class="fas fa-sync space"></i>refresh
-        </button>
       </div>
-
       <div>
         <link
           rel="stylesheet"
@@ -38,29 +38,98 @@
         <div id="wrap">
           <div id="columns" class="columns_4">
             <figure v-for="(item, index) in items" v-bind:key="index">
-              <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
-                <div class="imagediv">
-                  <img :src="item.image" class="image">
-                </div>
-              </router-link>
+              <div class="imagediv">
+                <img :src="item.image" class="image">
+              </div>
               <figcaption>{{item.name}}</figcaption>
               <span class="price">${{item.price}}</span>
-              <router-link :to="{ name: 'edititem', params: { itemid: item.id } }">
-                <div class="button editbutton is-rounded is-info" href>edit</div>
-              </router-link>
-              <div class="button removebutton is-rounded is-danger" v-on:click="toast(item)">remove</div>
+              
+              <button
+                v-on:click="showEditItemModal(index)"
+                class="button editbutton is-rounded is-info"
+                href
+              >edit</button>
+              <div
+                class="button removebutton is-rounded is-danger"
+                v-on:click="removeItem(item)"
+              >remove</div>
             </figure>
           </div>
-        </div>
-        <div id="toast">
-          <div id="img">
-            <i class="fas fa-trash"></i>
-          </div>
-          <div id="desc">successfully removed product</div>
         </div>
       </div>
     </div>
     <AddItem v-bind:is-showing="showAddItem" v-on:success="successAdd()" v-on:cancel="cancelAdd()"/>
+
+    <modal
+      v-bind:is-showing="showEditItem"
+      title="edit an item"
+      success-button="Save Changes"
+      v-on:success="successEdit"
+      v-on:cancel="cancelEdit"
+    >
+      <form v-on:submit.prevent="onSubmit">
+        <b-field label="Item Name">
+          <b-input type="text" minlength="5" placeholder="item name" v-model="ItemTitle" rounded></b-input>
+        </b-field>
+        <b-field label="Item Brand">
+          <b-input type="text" minlength="5" placeholder="item brand" v-model="ItemBrand" rounded></b-input>
+        </b-field>
+        <b-field label="Price">
+          <b-input
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="price"
+            maxlength="50"
+            v-model="ItemPrice"
+            rounded
+          ></b-input>
+        </b-field>
+        <b-field label="Sale Price (optional)">
+          <b-input
+            type="number"
+            min="0.01"
+            :max="ItemPrice - 0.1"
+            step="0.01"
+            placeholder="sale price"
+            v-model="ItemSalePrice"
+            rounded
+          ></b-input>
+        </b-field>
+        <b-field label="Image URL">
+          <b-input type="url" placeholder="image url" v-model="ItemImage" rounded></b-input>
+        </b-field>
+        <img v-if="ItemImage" width="150px" :src="ItemImage">
+        <b-field label="Quantity Available">
+          <b-input type="number" min="1" placeholder="quantity" v-model="ItemQuantity" rounded></b-input>
+        </b-field>
+        <div class="field">
+          <b-switch v-model="ItemShipping">Available to Ship</b-switch>
+        </div>
+        <div class="field">
+          <label class="label">Categories</label>
+          <div class="control">
+            <div class="select is-multiple">
+              <select multiple v-model="ItemCategories">
+                <option value="apparel">Apparel</option>
+                <option value="roadbike">Road Bike</option>
+                <option value="mountainbike">Mountain Bike</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <b-field label="Item Description">
+          <b-input
+            type="textarea"
+            minlength="10"
+            maxlength="10000"
+            placeholder="enter item description here"
+            v-model="ItemDescription"
+          ></b-input>
+        </b-field>
+      </form>
+    </modal>
   </div>
 </template>
 
@@ -70,17 +139,58 @@ import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
 import AddItem from "@/components/AddItem.vue";
+import Modal from "@/components/Modal.vue";
 
 @Component({
   components: {
-    AddItem
+    AddItem,
+    Modal
   }
 })
 export default class AdminEditProduct extends Vue {
   showAddItem: boolean = false;
+  showEditItem: boolean = false;
   error: string | boolean = false;
   items: iShopItem[] = [];
+  itemToEdit: number = 0;
+  ItemTitle: string = "";
+  ItemPrice: number | string = "";
+  ItemSalePrice: number | string = "";
+  ItemImage: string = "";
+  ItemDescription: string = "";
+  ItemCategories: string[] = [""];
+  ItemBrand: string = "";
+  ItemQuantity: number | string = "";
+  ItemShipping: boolean = false;
 
+  successEdit() {
+    this.showEditItem = false;
+    if (!this.ItemSalePrice) {
+      this.ItemSalePrice = "";
+    }
+    axios
+      .put(APIConfig.buildUrl("/shopitem/" + this.items[this.itemToEdit].id), {
+        name: this.ItemTitle,
+        price: this.ItemPrice,
+        saleprice: this.ItemSalePrice,
+        brand: this.ItemCategories,
+        categories: this.ItemCategories,
+        image: this.ItemImage,
+        quantity: this.ItemQuantity,
+        description: this.ItemDescription
+      })
+      .then((response: AxiosResponse) => {
+        this.$emit("success");
+        this.getAllItems();
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("catch");
+        this.error = "bad";
+      });
+  }
+  cancelEdit() {
+    this.showEditItem = false;
+  }
   successAdd() {
     this.showAddItem = false;
     this.getAllItems();
@@ -91,20 +201,26 @@ export default class AdminEditProduct extends Vue {
   get isLoggedIn(): boolean {
     return !!this.$store.state.userId;
   }
+  showEditItemModal(item: number) {
+    if (!this.items[item].saleprice) {
+      this.ItemSalePrice = "";
+    }
+    this.showEditItem = true;
+    this.itemToEdit = item;
+    this.ItemTitle = this.items[item].name;
+    this.ItemPrice = this.items[item].price;
+    this.ItemImage = this.items[item].image;
+    this.ItemDescription = this.items[item].description;
+    this.ItemBrand = this.items[item].brand;
+    this.ItemCategories = this.items[item].categories;
+    this.ItemQuantity = this.items[item].quantity;
+    this.ItemShipping = this.items[item].delivery;
+
+    console.log(this.itemToEdit);
+  }
 
   showAddItemModal() {
     this.showAddItem = true;
-  }
-
-  toast(item: iShopItem) {
-    const ele = document.getElementById("toast");
-    if (ele) {
-      ele.className = "show";
-      setTimeout(function() {
-        ele.className = ele.className.replace("show", "");
-      }, 3000);
-    }
-    this.removeItem(item);
   }
 
   removeItem(item: iShopItem) {
@@ -172,7 +288,7 @@ export default class AdminEditProduct extends Vue {
   max-width: 50px;
   height: 55px;
   margin: auto;
-  background-color:#fe2b55;
+  background-color: #fe2b55;
   color: #fff;
   text-align: center;
   border-radius: 5px;
@@ -197,7 +313,7 @@ export default class AdminEditProduct extends Vue {
   box-sizing: border-box;
   border-radius: 5px;
 
-  background-color:#fe2b55;
+  background-color: #fe2b55;
   color: #fff;
 }
 #toast #desc {
@@ -376,6 +492,7 @@ div#columns figure figcaption {
   margin: px;
   display: block;
   text-align: center;
+  width: 100%;
 }
 
 .editbutton {
@@ -384,6 +501,7 @@ div#columns figure figcaption {
   text-align: center;
   margin-top: 2%;
   margin-bottom: 2%;
+  width: 100%;
 }
 
 @media screen and (max-width: 960px) {
