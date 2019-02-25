@@ -139,10 +139,10 @@ export default class ViewShopItems extends Vue {
   border-radius: 5px;
 
   position: fixed;
-  z-index: 1;
+  z-index: 5;
   left: 0;
   right: 0;
-  bottom: 30px;
+  bottom: 50px;
   font-size: 17px;
   white-space: nowrap;
 }
@@ -188,7 +188,7 @@ export default class ViewShopItems extends Vue {
     opacity: 0;
   }
   to {
-    bottom: 30px;
+    bottom: 50px;
     opacity: 1;
   }
 }
@@ -199,7 +199,7 @@ export default class ViewShopItems extends Vue {
     opacity: 0;
   }
   to {
-    bottom: 30px;
+    bottom: 50px;
     opacity: 1;
   }
 }
@@ -258,7 +258,7 @@ export default class ViewShopItems extends Vue {
 
 @-webkit-keyframes fadeout {
   from {
-    bottom: 30px;
+    bottom: 50px;
     opacity: 1;
   }
   to {
@@ -269,7 +269,7 @@ export default class ViewShopItems extends Vue {
 
 @keyframes fadeout {
   from {
-    bottom: 30px;
+    bottom: 50px;
     opacity: 1;
   }
   to {
