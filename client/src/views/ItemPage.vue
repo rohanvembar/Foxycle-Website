@@ -1,49 +1,43 @@
 <template>
-  <div v-if="loadedItem" class="item-page-main-background">
-    <div class="itempage-main-content">
-      <div class="itempage-title">{{shopItem.name}}</div>
-      <div class="itempage-subtitle">Built For Something
-        <hr class="itempage-line">
-      </div>
-      <div class="itempage-row">
-        <div class="itempage-image-column">
-          <img class="itempage-image" :src="shopItem.image">
+  <div v-if="loadedItem" class="item-page-main-background main">
+    <div class="box">
+      <div class="columns">
+        <div class="column">
+          <img
+            class="itempage-image"
+            style="max-height:300px"
+            :src="shopItem.image"
+            :data-badge="hello"
+          >
         </div>
-        <div class="itempage-details-column">
-          <table>
-            <tr>
-              <td>Price</td>
-            </tr>
-            <tr>
-              <td class="itempage-price-box">
-                <center>${{shopItem.price}}</center>
-              </td>
-            </tr>
-            <tr>
-              <td>Quantity</td>
-            </tr>
-            <tr>
-              <input v-model="quantity" type="number" min="1" max="100" value="1">
-            </tr>
-            <tr>
-              <td class="itempage-cart-button">
-                <button class="button" v-on:click="addToCart" exact-active-class="is-active">
-                <router-link
-                  to="/cart"
-                >Add to Cart</router-link>
-                </button>
-              </td>
-            </tr>
-          </table>
+        <div class="column is-one-fifth"></div>
+        <div class="column">
+          <p class="title is-2">{{shopItem.name}}</p>
+          <div class="is-divider"></div>
+          <p class="subtitle is-3">${{shopItem.price}}</p>
+          <div class="addquant">
+            <input
+              type="number"
+              v-model="quantity"
+              value="1"
+              class="input is-rounded"
+              style="width:60px"
+            >
+            <span class="space"></span>
+            <router-link to="/cart">
+              <button
+                class="button is-info is-rounded is-focused"
+                v-on:click="addToCart"
+                exact-active-class="is-active"
+              >add to cart</button>
+            </router-link>
+            <div v-if="!shopItem.delivery" style="text-align:center;padding-top:25px;">This item is available for pickup only</div>
+          </div>
         </div>
       </div>
-      <div class="itempage-dividing-line">
-        <hr>
-      </div>
-      <div class="itempage-specifications">
-        <div class="itempage-specs-title">Description</div>
-        {{shopItem.description}}
-      </div>
+      <div class="is-divider"></div>
+      <p class="title is-4">Description</p>
+      <div class="description">{{shopItem.description}}</div>
     </div>
   </div>
 </template>
@@ -59,7 +53,7 @@ export default class ItemPage extends Vue {
   error: string | boolean = false;
   shopItem: iShopItem | undefined;
   loadedItem: boolean = false;
-  quantity:number =1;
+  quantity: number = 1;
 
   created() {
     this.getItem();
@@ -75,7 +69,7 @@ export default class ItemPage extends Vue {
 
   getItem() {
     this.error = false;
-    console.log("[ItemPage.vue] itemid: " + this.$route.params.itemid)
+    console.log("[ItemPage.vue] itemid: " + this.$route.params.itemid);
     axios
       .get(APIConfig.buildUrl("/shopitem/" + this.$route.params.itemid))
       .then((response: AxiosResponse) => {
@@ -96,125 +90,39 @@ export default class ItemPage extends Vue {
 
 
 <style lang="scss" scoped>
-.itempage-main-content {
-  padding-left: 20%;
-  padding-right: 20%;
-  padding-top: 3%;
-  //justify-content: center;
+.main {
+  width: 70%;
+  margin: auto;
+  text-align: center;
+  padding-top: 80px;
+  margin-bottom: 55px;
 }
 
-.item-page-main-background {
-  padding-bottom: 5%;
+.description {
+  white-space: pre-wrap;
+  text-align: left;
+  width: 80%;
+  margin: auto;
 }
 
-.itempage-title {
-  font-size: 22pt;
-  font-weight: bold;
+.space {
+  padding: 10px;
 }
 
-.itempage-subtitle {
-  padding-top: 0.5%;
-}
-
-.itempage-specs-title {
-  font-size: 18pt;
-  padding-bottom: 2%;
-}
-
-.itempage-specifications {
-  padding-top: 2%;
-}
-
-.itempage-specs-table {
-  background-color: #ffffff;
-  box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.16);
-  padding: 1%;
-}
-
-.itempage-specs-categories {
-  font-weight: bold;
-  font-size: 14pt;
-}
-
-.itempage-specs-subcategories {
-  font-size: 12pt;
-}
-
-.itempage-row {
-  padding-top: 2%;
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.itempage-image-column {
-  float: left;
-  //width: 75%;
-}
-
-.itempage-image {
-  max-height: 250px;
-}
-
-.itempage-details-column {
-  float: right;
-  padding-left: 100px;
-  //width: 25%;
-}
-
-.itempage-line {
-  width: 5%;
-  height: 1px;
-  background-color: #0000004f;
-}
-
-.itempage-dividing-line {
-  margin-top: 3%;
+.addquant {
   width: 100%;
-  height: 5px;
-  background-color: #3c8cff;
-}
-
-.itempage-specs-dividing-line {
-  margin-top: 10%;
-  margin-bottom: 10%;
-  width: 100%;
-  height: 2px;
-  background-color: #0000002c;
-}
-
-.itempage-price-box {
-  border: 1px solid rgb(167, 167, 167);
-  background-color: #ffffff;
-  padding: 5px;
-  margin: 5px;
-}
-
-.itempage-category-box {
-  border: 1px solid rgb(167, 167, 167);
-  background-color: #ffffff;
-  padding: 5px;
-  margin: 5px;
-}
-
-.itempage-cart-button {
-  padding-top: 20px;
+  max-width: 300px;
+  margin: auto;
 }
 
 .button {
-  background: #239cec;
-  margin: px;
-  display: block;
-  text-align: center;
-  color: #fff;
+  width: 60%;
+}
+
+.button {
   transition: 0.3s;
-  text-decoration: none;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 .button:hover {
-  background: #40b883;
-  color: #f1f2f3;
+  background: hsl(171, 100%, 41%);
 }
 </style>

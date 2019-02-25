@@ -29,6 +29,6 @@ export class ShopItem {
     @Column({default: 1})
     public quantity!: number;
 
-    @Column()
+    @Column({ type: "mediumtext" })
     public description!: string;
 }

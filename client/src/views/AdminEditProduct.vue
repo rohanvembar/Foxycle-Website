@@ -317,6 +317,7 @@ export default class AdminEditProduct extends Vue {
   width: 90%;
   max-width: 1100px;
   margin: auto;
+  margin-bottom: 50px;
 }
 
 .columns_4 figure {
