@@ -22,6 +22,7 @@
               type="number"
               v-model="quantity"
               value="1"
+              min="1"
               class="input is-rounded"
               style="width:60px"
             >
