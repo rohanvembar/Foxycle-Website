@@ -1,11 +1,17 @@
 <template>
   <div class="main-background track">
     <h1>Track Your Order</h1>
-    <input class="input is-rounded input-bar" placeholder="Order Number" type="text" v-model="ordernum">
-    <router-link  :to="{ name: 'vieworder', params: { ordernumber: Number(ordernum) } }" exact-active-class="is-active">
-        <button v-on:click="verifyNumber" class="button submit-button is-info is-rounded">Track</button>
-    </router-link>
-
+    <b-field grouped>
+      <b-input placeholder="Order Number" type="number" v-model="ordernum" rounded></b-input>
+      <p class="control">
+        <router-link
+          :to="{ name: 'vieworder', params: { ordernumber: Number(ordernum) } }"
+          exact-active-class="is-active"
+        >
+          <button class="button is-info is-rounded">Search</button>
+        </router-link>
+      </p>
+    </b-field>
   </div>
 </template>
 
@@ -17,37 +23,33 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class OrderTracking extends Vue {
   ordernum: string = "";
-  
-  verifyNumber() {
 
-  }
+  verifyNumber() {}
 }
 </script>
 
 <style lang="scss" scoped>
+.track {
+  padding: 100px 20px 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  .track {
-    padding:100px 20px 30px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.title {
+  font-size: 50px;
+  text-decoration: none;
+}
 
-  .title {
-    font-size: 50px;
-    text-decoration: none;
-  }
+.input-bar {
+  padding: 5px;
+  font-size: 15px;
+  width: 15%;
+  height: 40px;
+}
 
-  .input-bar {
-    padding:5px;
-    font-size: 15px;
-    width: 15%;
-    height: 40px;
-  }
-
-  .submit-button {
-    margin: 20px;
-  }
-
+.submit-button {
+  margin: 20px;
+}
 </style>
