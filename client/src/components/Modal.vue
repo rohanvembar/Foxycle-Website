@@ -10,7 +10,7 @@
         <slot/>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-info is-rounded" v-on:click="successHandler()">{{ successButton }}</button>
+        <button class="button is-primary is-rounded" v-on:click="successHandler()">{{ successButton }}</button>
         <button class="button is-rounded" v-on:click="cancelHandler()">Cancel</button>
       </footer>
     </div>
@@ -40,6 +40,6 @@ export default class Modal extends Vue {
 <style lang="scss">
 
 .custom {
-  border-radius: 30px;
+  border-radius: 15px;
 }
 </style>

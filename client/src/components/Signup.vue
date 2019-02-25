@@ -1,38 +1,43 @@
 <template>
-  <modal v-bind:is-showing="isShowing" title="add employee" success-button="Signup" v-on:success="success" v-on:cancel="cancel">
+  <modal
+    v-bind:is-showing="isShowing"
+    title="add employee"
+    success-button="Signup"
+    v-on:success="success"
+    v-on:cancel="cancel"
+  >
     <form v-on:submit.prevent="onSubmit">
-      <p v-if="error" class="is-danger">
-        {{ error }}
-      </p>
+      <p v-if="error" class="is-danger">{{ error }}</p>
       <div class="field">
         <label class="label">First Name</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="first name" v-model="signup.firstName"/>
-        </div>
+        <b-field>
+          <b-input type="text" minlength="2" placeholder="first name" v-model="signup.firstName"></b-input>
+        </b-field>
       </div>
       <div class="field">
         <label class="label">Last Name</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="last name" v-model="signup.lastName"/>
-        </div>
+        <b-field>
+          <b-input type="text" minlength="2" placeholder="last name" v-model="signup.lastName"></b-input>
+        </b-field>
       </div>
       <div class="field">
         <label class="label">Employee ID</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="employee id" v-model="signup.emailAddress"/>
-        </div>
+        <b-field>
+          <b-input type="text" minlength="3" placeholder="employee id" v-model="signup.emailAddress"></b-input>
+        </b-field>
       </div>
       <div class="field">
         <label class="label">Password</label>
-        <div class="control">
-          <input class="input" type="password" placeholder="password" v-model="signup.password"/>
-        </div>
+        <b-field>
+          <b-input type="password" minlength="4" maxlength="16" placeholder="password" v-model="signup.password" password-reveal></b-input>
+        </b-field>
       </div>
       <div class="field">
         <label class="label">Role</label>
         <div class="control">
-          <input v-on:change="changeRole(1)" type="radio" name="role" value="admin"> Admin
-          <input v-on:change="changeRole(0)" type="radio" name="role" value="employee"> Employee
+          <b-radio v-on:change="changeRole(1)" name="role" v-model="radio" native-value="Admin">Admin</b-radio>
+          <b-radio  v-on:change="changeRole(0)" name="role" v-model="radio" native-value="Employee">Employee</b-radio>
+          
         </div>
       </div>
     </form>
@@ -60,7 +65,7 @@ export default class Signup extends Vue {
   };
   error: string | boolean = false;
 
-  changeRole(r : number) {
+  changeRole(r: number) {
     this.signup.role = r;
     console.log("changing: " + this.signup.role);
   }

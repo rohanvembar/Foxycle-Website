@@ -1,10 +1,9 @@
 <template>
   <div id="app" class="main-background">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
     <link
       rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-      crossorigin="anonymous"
+      href="//cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css"
     >
 
     <div class="navbar-padding"></div>
@@ -129,17 +128,13 @@
             class="fas fa-clock"
             style="padding-left: 2em"
           ></i>
-          
           Mon-Fri: 10AM to 6PM • Sat & Sun: 11AM-5PM
           <i
             class="fas fa-phone"
             style="padding-left: 2em"
           ></i>
           (805) 111-1111
-                    <i
-            class="fas fa-envelope"
-            style="padding-left: 2em"
-          ></i>
+          <i class="fas fa-envelope" style="padding-left: 2em"></i>
           info@foxycle.com
         </p>
       </div>
@@ -149,8 +144,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Buefy from 'buefy'
-Vue.use(Buefy)
+import Buefy from "buefy";
+Vue.use(Buefy, { defaultIconPack: "fas" });
 import axios from "axios";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
@@ -229,18 +224,47 @@ export default class App extends Vue {
 @import "./assets/mainstyle.scss";
 
 $colors: (
-    "white": ($white, $black),
-    "black": ($black, $white),
-    "light": ($light, $light-invert),
-    "dark": ($dark, $dark-invert),
-    "link": (hsl(217, 71%, 53%),findColorInvert($primary)),
-    "primary": ($primary, $primary-invert),
-    "info": ($info, $info-invert),
-    "success": ($success, $success-invert),
-    "warning": ($warning, $warning-invert),
-    "danger": ($danger, $danger-invert),
+  "white": (
+    $white,
+    $black
+  ),
+  "black": (
+    $black,
+    $white
+  ),
+  "light": (
+    $light,
+    $light-invert
+  ),
+  "dark": (
+    $dark,
+    $dark-invert
+  ),
+  "link": (
+    hsl(217, 71%, 53%),
+    findColorInvert($primary)
+  ),
+  "primary": (
+    $primary,
+    $primary-invert
+  ),
+  "info": (
+    $info,
+    $info-invert
+  ),
+  "success": (
+    $success,
+    $success-invert
+  ),
+  "warning": (
+    $warning,
+    $warning-invert
+  ),
+  "danger": (
+    $danger,
+    $danger-invert
+  )
 );
-
 
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
@@ -261,10 +285,9 @@ $colors: (
   background-color: #f8f8f8;
   width: 100%;
   z-index: 2;
-
 }
 
-.v-align{
-  padding-top:10px;
+.v-align {
+  padding-top: 10px;
 }
 </style>
