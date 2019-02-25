@@ -8,45 +8,67 @@
             <div class="ship">
               <div class="field inputbox">
                 <label>First Name</label>
-                <p class="control is-expanded has-icons-left">
-                  <input v-model="firstName" class="input" type="text" placeholder="first name">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                  </span>
-                </p>
+                <b-field>
+                  <b-input
+                    v-model="firstName"
+                    placeholder="first name"
+                    type="text"
+                    icon-pack="fas"
+                    icon="user"
+                  ></b-input>
+                </b-field>
               </div>
               <div class="field inputbox">
                 <label>Last Name</label>
-                <p class="control is-expanded has-icons-left">
-                  <input v-model="lastName" class="input" type="text" placeholder="last name">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                  </span>
-                </p>
+                <b-field>
+                  <b-input
+                    v-model="lastName"
+                    placeholder="last name"
+                    type="text"
+                    icon-pack="fas"
+                    icon="user"
+                  ></b-input>
+                </b-field>
               </div>
               <div class="field inputbox">
                 <label>Email</label>
-                <p class="control is-expanded has-icons-left">
-                  <input v-model="email" class="input" type="text" placeholder="email">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-envelope"></i>
-                  </span>
-                </p>
+                <b-field>
+                  <b-input
+                    v-model="email"
+                    placeholder="email"
+                    type="email"
+                    icon-pack="fas"
+                    icon="envelope"
+                  ></b-input>
+                </b-field>
               </div>
               <div class="field inputbox">
                 <label>Street Address</label>
-                <p class="control is-expanded has-icons-left">
-                  <input v-model="address" class="input" type="text" placeholder="street address">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-map-marker-alt"></i>
-                  </span>
-                </p>
+                <b-field>
+                  <b-input
+                    v-model="address"
+                    placeholder="street address"
+                    minlength="5"
+                    type="text"
+                    icon-pack="fas"
+                    icon="map-marker-alt"
+                  ></b-input>
+                </b-field>
               </div>
               <div class="field inputbox">
                 <label>City, State</label>
                 <p class="control is-expanded">
-                  <input v-model="city" class="input city" type="text" placeholder="city">
-                  <span class="select state">
+                <b-field>
+                  <b-input
+                  class="city"
+                    v-model="city"
+                    placeholder="city"
+                    minlength="2"
+                    type="text"
+                    icon-pack="fas"
+                    icon="map-marker-alt"
+                  ></b-input>
+                                  <span class="select state">
                     <select v-model="state" name="state">
                       <option value="AL">AL</option>
                       <option value="AK">AK</option>
@@ -101,6 +123,7 @@
                       <option value="WY">WYYYYY</option>
                     </select>
                   </span>
+                  </b-field>
                 </p>
               </div>
               <div class="field inputbox">
@@ -118,10 +141,10 @@
         <div class="column" v-else>
           <div class="ship">
             <div class="title">Pickup Info</div>Your order is only available for free store pickup:
-              <div class="pickupText">
-                <i class="fas fa-clock fa-fw"></i>
-                Your order will be ready within 2 business days
-              </div>
+            <div class="pickupText">
+              <i class="fas fa-clock fa-fw"></i>
+              Your order will be ready within 2 business days
+            </div>
             <br>
             <div class="field inputbox">
               <label>First Name</label>
@@ -540,6 +563,8 @@ export default class Checkout extends Vue {
 }
 label {
   float: left;
+  font-weight: bold;
+  padding-bottom: 5px;
 }
 th {
   border-bottom: black 2px solid;
