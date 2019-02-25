@@ -14,8 +14,8 @@
         <div class="column">
           <p class="title is-2">{{shopItem.name}}</p>
           <div class="is-divider"></div>
-          <p v-if="!shopItem.saleprice" class="subtitle is-3">${{shopItem.Price}}</p>
-          <p v-if="shopItem.saleprice" class="subtitle is-3">${{shopItem.saleprice}}</p>
+          <p v-if="shopItem.saleprice == '0'" class="subtitle is-3">${{shopItem.price}}</p>
+          <p v-else class="subtitle is-3">${{shopItem.saleprice}}</p>
 
           <div class="addquant">
             <input
