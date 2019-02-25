@@ -221,7 +221,6 @@ export default class App extends Vue {
 
 <style lang="scss">
 @import "~bulma/sass/utilities/_all";
-@import "./assets/mainstyle.scss";
 
 $colors: (
   "white": (
@@ -268,6 +267,7 @@ $colors: (
 
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
+@import "./assets/mainstyle.scss";
 
 .navicon {
   padding-right: 10px;

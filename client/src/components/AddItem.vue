@@ -7,46 +7,43 @@
     v-on:cancel="cancel"
   >
     <form v-on:submit.prevent="onSubmit">
+      <b-field label="Item Name">
+        <b-input type="text" minlength="5" placeholder="item name" v-model="newItemTitle" rounded></b-input>
+      </b-field>
+      <b-field label="Item Brand">
+        <b-input type="text" minlength="5" placeholder="item brand" v-model="newItemBrand" rounded></b-input>
+      </b-field>
+      <b-field label="Price">
+        <b-input
+          type="number"
+          min="0.01"
+          step="0.01"
+          placeholder="price"
+          maxlength="50"
+          v-model="newItemPrice"
+          rounded
+        ></b-input>
+      </b-field>
+      <b-field label="Sale Price (optional)">
+        <b-input
+          type="number"
+          min="0.01"
+          :max="newItemPrice - 0.1"
+          step="0.01"
+          placeholder="sale price"
+          v-model="newItemSalePrice"
+          rounded
+        ></b-input>
+      </b-field>
+      <b-field label="Image URL">
+        <b-input type="url" placeholder="image url" v-model="newItemImage" rounded></b-input>
+      </b-field>
+      <img v-if="newItemImage" width="150px" :src="newItemImage">
+      <b-field label="Quantity Available">
+        <b-input type="number" min="1" placeholder="quantity" v-model="newItemQuantity" rounded></b-input>
+      </b-field>
       <div class="field">
-        <label class="label">Item Name</label>
-        <div class="control">
-          <input
-            class="input is-rounded"
-            type="text"
-            placeholder="item name"
-            v-model="newItemTitle"
-          >
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Price</label>
-        <div class="control">
-          <input class="input is-rounded" type="number" placeholder="price" v-model="newItemPrice">
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Sale Price (optional)</label>
-        <div class="control">
-          <input class="input is-rounded" type="number" placeholder="sale price" v-model="newItemSalePrice">
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Image URL</label>
-        <div class="control">
-          <input class="input is-rounded" type="text" placeholder="url" v-model="newItemImage">
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Quantity on Hand</label>
-        <div class="control">
-          <input
-            class="input is-rounded"
-            type="number"
-            placeholder="quantity"
-            required
-            v-model="newItemQuantity"
-          >
-        </div>
+        <b-switch v-model="newItemShipping">Available to Ship</b-switch>
       </div>
       <div class="field">
         <label class="label">Categories</label>
@@ -61,29 +58,15 @@
           </div>
         </div>
       </div>
-      <div class="field">
-        <label class="label">Item Description</label>
-        <div class="control">
-          <textarea
-            class="textarea has-fixed-size is-rounded"
-            placeholder="description"
-            v-model="newItemDescription"
-          ></textarea>
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <input
-            id="storePickupSwitch"
-            type="checkbox"
-            name="switchColorSuccess"
-            class="switch is-info is-rounded"
-            checked="checked"
-            v-model="newItemShipping"
-          >
-          <label for="storePickupSwitch">Available to Ship</label>
-        </div>
-      </div>
+      <b-field label="Item Description">
+        <b-input
+          type="textarea"
+          minlength="10"
+          maxlength="10000"
+          placeholder="enter item description here"
+          v-model="newItemDescription"
+        ></b-input>
+      </b-field>
     </form>
   </modal>
 </template>
@@ -108,7 +91,7 @@ export default class AddItem extends Vue {
   newItemImage: string = "";
   newItemDescription: string = "";
   newItemCategories: string[] = [""];
-
+  newItemBrand: string = "";
   newItemQuantity: number | string = "";
   savedItem: iShopItem | string = "";
   newItemShipping: boolean = false;
@@ -122,7 +105,7 @@ export default class AddItem extends Vue {
         name: this.newItemTitle,
         price: this.newItemPrice,
         saleprice: this.newItemSalePrice,
-        brand: "",
+        brand: this.newItemBrand,
         categories: this.newItemCategories,
         image: this.newItemImage,
         delivery: this.newItemShipping,

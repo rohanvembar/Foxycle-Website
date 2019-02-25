@@ -27,13 +27,17 @@
     </button>
     <div class="itempage-main-content">Name
       <div class="itempage-title">
-        <input type="text" v-model="name" class="input">
+        <b-field>
+          <b-input type="text" minlength="5" maxlength="50" v-model="name" style="width: 500px"></b-input>
+        </b-field>
       </div>
       <hr class="itempage-line">
       <div class="itempage-row">
         <div class="itempage-image-column">
           <img class="itempage-image" :src="shopItem.image">
-          <input class="input" type="text" v-model="image" placeholder="image url...">
+          <b-field>
+            <b-input type="text" minlength="5" v-model="image"></b-input>
+          </b-field>
         </div>
         <div class="itempage-details-column">
           <table>
@@ -43,14 +47,15 @@
             <tr>
               <td class="itempage-price-box">
                 <center>
-                  <input
-                    class="input"
-                    type="number"
-                    min="0.01"
-                    step="0.01"
-                    v-model="price"
-                    placeholder="price..."
-                  >
+                  <b-field>
+                    <b-input
+                      type="number"
+                      min="0.01"
+                      step="0.01"
+                      v-model="price"
+                      placeholder="price"
+                    ></b-input>
+                  </b-field>
                 </center>
               </td>
             </tr>
@@ -63,14 +68,16 @@
             <tr>
               <td class="itempage-price-box">
                 <center>
-                  <input
-                    class="input"
-                    type="number"
-                    min="0.01"
-                    step="0.01"
-                    v-model="saleprice"
-                    placeholder="sale price..."
-                  >
+                  <b-field>
+                    <b-input
+                      type="number"
+                      :max = price
+                      step="0.01"
+                      value=""
+                      v-model="saleprice"
+                      placeholder="sale price"
+                    ></b-input>
+                  </b-field>
                 </center>
               </td>
             </tr>
