@@ -240,6 +240,8 @@ export default class App extends Vue {
   height: 50px;
   background-color: #f8f8f8;
   width: 100%;
+  z-index: 2;
+
 }
 
 .v-align{
