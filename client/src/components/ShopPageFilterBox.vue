@@ -26,23 +26,23 @@
     
       <p>Price</p>
       <div class = "select"> 
-        <select name="price">
+        <select name="price" v-on:change ="filterPrice($event)">
           <option selected="true" value="all">All</option>
           <option value="0-25">$0 - $25</option>
           <option value="25-50">$25 - $50</option>
           <option value="50-75">$50 - $75</option>
           <option value="75-100">$75 - $100</option>
-          <option value="100+">$100 +</option>
+          <option value="100">$100 +</option>
         </select>
       </div>
     
 
       <p>Store Pickup</p>
       <div class = "select">
-        <select name="pickup">
+        <select name="pickup" v-on:change ="filterDelivery($event)">
           <option selected="true" value="all">Either</option>
-          <option value="trek">Store Pickup</option>
-          <option value="foxycle">Ship to Me</option>
+          <option value="false">Store Pickup</option>
+          <option value="true">Ship to Me</option>
         </select>
       </div>
     </div>
@@ -55,6 +55,13 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class ShopPageFilterBox extends Vue {
   //@Prop() private msg!: string;
+  filterPrice(e){
+    this.$emit('priceFilter', e.target.value);
+  }
+
+  filterDelivery(e){
+    this.$emit('deliveryFilter', e.target.value);
+  }
 }
 </script>
 
