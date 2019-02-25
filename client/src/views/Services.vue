@@ -131,6 +131,8 @@ export default class Services extends Vue {
   align-items: top;
   justify-content: space-around;
   margin-bottom: 50px;
+  width: 90%;
+  margin: auto;
 }
 
 .indivisual-card {
