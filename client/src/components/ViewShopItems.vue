@@ -6,11 +6,11 @@
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
       crossorigin="anonymous"
     >
-    <ShopPageFilterBox v-if="hasItems()"/>
+    <ShopPageFilterBox @priceFilter = "onPriceFilter" @deliveryFilter = "onDeliveryFilter" v-if="hasItems()"/>
 
     <div id="wrap" v-if="hasItems()">
       <div id="columns" class="columns_4">
-        <figure class="has-ribbon" v-for="(item, index) in sortedItems" v-bind:key="index">
+        <figure class="has-ribbon" v-for="(item, index) in deliveryRefinedItems" v-bind:key="index">
           <!-- change indexof to whatever category you want to show the ribbon on -->
           <div
             class="ribbon is-danger"
@@ -65,6 +65,9 @@ export default class ViewShopItems extends Vue {
   error: string | boolean = false;
   items: iShopItem[] = [];
   saleText: string = "SALE";
+  priceFilter: String = "all";
+  deliveryFilter: String = "all";
+
   toast(item: iShopItem) {
     const ele = document.getElementById("toast");
     if (ele) {
@@ -105,6 +108,46 @@ export default class ViewShopItems extends Vue {
       });
   }
 
+  get priceRefinedItems() {
+    const p = this.priceFilter;
+    var priceArr_S = [];
+    if(p == "all"){
+      return this.sortedItems;
+    }
+    else{
+      priceArr_S = p.split('-');
+      console.log(priceArr_S);
+      if(priceArr_S.length == 1){
+        const price = Number(priceArr_S[0]);
+        console.log("price:" + priceArr_S[0]);
+        return this.sortedItems.filter(function(s) {
+          return (s.price >= price);
+        });
+      }
+      else{
+        const low = Number(priceArr_S[0]);
+        const high = Number(priceArr_S[1]);
+        return this.sortedItems.filter(function(s) {
+          return (s.price >= low && s.price < high);
+        });
+      }
+    }
+  }
+
+  get deliveryRefinedItems() {
+    const d = this.deliveryFilter;
+    if(d == "all"){
+      return this.priceRefinedItems;
+    }
+    else{
+      var deliveryBoolean = d == "true";
+      return this.priceRefinedItems.filter(function(s) {
+          return (s.delivery == deliveryBoolean);
+      });
+    }
+  }
+
+
   get sortedItems() {
     console.log("sorting: " + this.sortVal);
     function compareName(a, b) {
@@ -120,6 +163,16 @@ export default class ViewShopItems extends Vue {
 
     if (this.sortVal == "1") return this.items.sort(compareName);
     return this.items.sort(comparePrice);
+  }
+
+  onPriceFilter(newFilter){
+    this.priceFilter = newFilter;
+    console.log("price filter: " + newFilter);
+  }
+
+  onDeliveryFilter(newFilter){
+    this.deliveryFilter = newFilter;
+    console.log("delivery filter: " + newFilter);
   }
 
   goToItemPage() {}
