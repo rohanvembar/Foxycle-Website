@@ -129,6 +129,7 @@
             class="fas fa-clock"
             style="padding-left: 2em"
           ></i>
+          
           Mon-Fri: 10AM to 6PM • Sat & Sun: 11AM-5PM
           <i
             class="fas fa-phone"
@@ -148,6 +149,8 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Buefy from 'buefy'
+Vue.use(Buefy)
 import axios from "axios";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
@@ -222,8 +225,25 @@ export default class App extends Vue {
 
 
 <style lang="scss">
-@import "~bulma/css/bulma.css";
+@import "~bulma/sass/utilities/_all";
 @import "./assets/mainstyle.scss";
+
+$colors: (
+    "white": ($white, $black),
+    "black": ($black, $white),
+    "light": ($light, $light-invert),
+    "dark": ($dark, $dark-invert),
+    "link": (hsl(217, 71%, 53%),findColorInvert($primary)),
+    "primary": ($primary, $primary-invert),
+    "info": ($info, $info-invert),
+    "success": ($success, $success-invert),
+    "warning": ($warning, $warning-invert),
+    "danger": ($danger, $danger-invert),
+);
+
+
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
 
 .navicon {
   padding-right: 10px;
