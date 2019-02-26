@@ -58,10 +58,8 @@ import ViewOrderItems from "@/components/ViewOrderItems.vue";
 import StepProgress from "vue-step-progress";
 import { iOrder } from "../models/order.interface";
 import { iPurchasedItem } from "../models/purchaseditem.interface";
-
 import "../assets/step.css";
 import { iShopItem } from "@/models/shopitem.interface";
-
 @Component({
   components: {
     ViewOrderItems,
@@ -75,7 +73,6 @@ export default class ViewOrder extends Vue {
   orderError: boolean = false;
   purchaseditems: iPurchasedItem[] = [];
   items: iShopItem[] = [];
-
   created() {
     if (isNaN(Number(this.$route.params.ordernumber))) {
       this.orderError = true;
@@ -83,7 +80,6 @@ export default class ViewOrder extends Vue {
     }
     this.getOrder();
   }
-
   getItems() {
     for (var it in this.purchaseditems) {
       this.error = false;
@@ -100,7 +96,6 @@ export default class ViewOrder extends Vue {
         });
     }
   }
-
   getPurchasedItems() {
     this.error = false;
     axios
@@ -125,7 +120,6 @@ export default class ViewOrder extends Vue {
         console.log("[ViewOrder.vue] catch ");
       });
   }
-
   getOrder() {
     this.error = false;
     console.log(
@@ -178,79 +172,12 @@ export default class ViewOrder extends Vue {
   text-align: center;
   min-width: 40%;
 }
-
 .items {
   margin-bottom: 60px;
 }
-
 tr,
 th,
 td {
   vertical-align: middle;
 }
-    #table {
-        display:table;
-    }
-    .row {
-        display:table-row; 
-    }
-    .row1 {
-        display:table-row; 
-        font-weight: bold;
-        margin-bottom: 40px;
-        padding-bottom:40px;
-    }
-    .cell_row1{
-        display:table-cell;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left:80px;
-        padding-right:80px;
-        margin-bottom: 20px;
-        padding-bottom:30px;
-        font-size: 20px;
-        align-items: center; 
-        align-content: center;
-    }
-    .cell_img{
-        display:table-cell;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left:80px;
-        padding-bottom:20px;
-        font-size: 15px;
-        align-items: center; 
-        align-content: center;
-    }
-    .cell_product_name{
-        display:table-cell;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left: 20px;
-        padding-right:80px;
-        padding-bottom:20px;
-        font-size: 15px;
-        align-items: center; 
-        align-content: center;
-    }
-    .cell{
-        display:table-cell;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left:80px;
-        padding-right:80px;
-        padding-bottom:20px;
-        font-size: 15px;
-        align-items: center; 
-        align-content: center;
-    }
-    .itempage-image{
-        height: 70px;
-    }
 </style>
-
-
