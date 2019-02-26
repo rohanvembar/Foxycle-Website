@@ -125,24 +125,23 @@ export default class Cart extends Vue {
   }
 
   removeItem(item) {
-    const cartIndex = this.cart.indexOf(item);
+    // const cartIndex = this.cart.indexOf(item);
     const itemsIndex = this.items.indexOf(item.item);
 
-    if (cartIndex !== -1) {
-      this.cart.splice(cartIndex, 1);
-    }
+    // if (cartIndex !== -1) {
+    //   this.cart.splice(cartIndex, 1);
+    // }
     if (itemsIndex !== -1) {
       this.items.splice(itemsIndex, 1);
     }
     this.subtotal = 0;
-    this.computeSubtotal();
-    this.computeTotal();
     this.updateCart();
   }
 
   updateCart() {
     this.computeSubtotal();
     this.computeTotal();
+    this.cart = [];
     var flag = true;
     for (var i in this.items) {
       flag = true;
@@ -159,6 +158,7 @@ export default class Cart extends Vue {
         this.cart.push({ item: this.items[i], quantity: 1 });
       }
     }
+    this.cart.sort((a, b) => (a.item.id - b.item.id))
   }
   created() {
     this.updateCart();
