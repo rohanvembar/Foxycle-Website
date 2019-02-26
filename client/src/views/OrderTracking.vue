@@ -2,14 +2,9 @@
   <div class="main-background track">
     <h1>Track Your Order</h1>
     <b-field grouped>
-      <b-input placeholder="Order Number" type="number" v-model="ordernum" rounded></b-input>
+      <b-input placeholder="Order Number" type="number" v-model="ordernum" @keyup.enter.native="success(ordernum)" rounded></b-input>
       <p class="control">
-        <router-link
-          :to="{ name: 'vieworder', params: { ordernumber: Number(ordernum) } }"
-          exact-active-class="is-active"
-        >
-          <button class="button is-info is-rounded">Search</button>
-        </router-link>
+          <button v-on:click="success(ordernum)" class="button is-info is-rounded">Search</button>
       </p>
     </b-field>
   </div>
@@ -24,7 +19,9 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class OrderTracking extends Vue {
   ordernum: string = "";
 
-  verifyNumber() {}
+  success(orderNum) {
+    this.$router.push({ name: 'vieworder', params: { ordernumber: orderNum } })
+  }
 }
 </script>
 
