@@ -125,22 +125,23 @@ export default class Cart extends Vue {
   }
 
   removeItem(item) {
-    const cartIndex = this.cart.indexOf(item);
+    // const cartIndex = this.cart.indexOf(item);
     const itemsIndex = this.items.indexOf(item.item);
 
-    if (cartIndex !== -1) {
-      this.cart.splice(cartIndex, 1);
-    }
+    // if (cartIndex !== -1) {
+    //   this.cart.splice(cartIndex, 1);
+    // }
     if (itemsIndex !== -1) {
       this.items.splice(itemsIndex, 1);
     }
     this.subtotal = 0;
-    this.computeSubtotal();
-    this.computeTotal();
+    this.updateCart();
   }
-  created() {
+
+  updateCart() {
     this.computeSubtotal();
     this.computeTotal();
+    this.cart = [];
     var flag = true;
     for (var i in this.items) {
       flag = true;
@@ -157,6 +158,10 @@ export default class Cart extends Vue {
         this.cart.push({ item: this.items[i], quantity: 1 });
       }
     }
+    this.cart.sort((a, b) => a.item.id - b.item.id);
+  }
+  created() {
+    this.updateCart();
   }
 }
 </script>
@@ -172,6 +177,9 @@ export default class Cart extends Vue {
   min-width: 60%;
 }
 
+.table {
+  min-width: 80%;
+}
 .cart-table {
   padding-top: 50px;
   display: flex;
@@ -179,11 +187,14 @@ export default class Cart extends Vue {
   justify-content: center;
   padding-bottom: 50px;
   width: 100%;
+
   margin-bottom: 100px;
 }
 
 th,
 td {
+  min-width: 200px;
+
   padding: 10px 30px 10px 30px;
   vertical-align: middle;
 }
@@ -207,9 +218,8 @@ td {
   width: 40%;
 }
 .delete {
-  float:right;
+  float: right;
   margin-left: 20px;
 }
-
 </style>
 
