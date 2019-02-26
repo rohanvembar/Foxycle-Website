@@ -137,8 +137,10 @@ export default class Cart extends Vue {
     this.subtotal = 0;
     this.computeSubtotal();
     this.computeTotal();
+    this.updateCart();
   }
-  created() {
+
+  updateCart() {
     this.computeSubtotal();
     this.computeTotal();
     var flag = true;
@@ -158,6 +160,9 @@ export default class Cart extends Vue {
       }
     }
   }
+  created() {
+    this.updateCart();
+  }
 }
 </script>
 
@@ -172,6 +177,9 @@ export default class Cart extends Vue {
   min-width: 60%;
 }
 
+.table {
+  min-width: 80%;
+}
 .cart-table {
   padding-top: 50px;
   display: flex;
@@ -179,11 +187,14 @@ export default class Cart extends Vue {
   justify-content: center;
   padding-bottom: 50px;
   width: 100%;
+
   margin-bottom: 100px;
 }
 
 th,
 td {
+  min-width: 200px;
+
   padding: 10px 30px 10px 30px;
   vertical-align: middle;
 }
@@ -207,9 +218,8 @@ td {
   width: 40%;
 }
 .delete {
-  float:right;
+  float: right;
   margin-left: 20px;
 }
-
 </style>
 
