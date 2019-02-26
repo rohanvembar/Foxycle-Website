@@ -287,7 +287,7 @@ $colors: (
   height: 50px;
   background-color: #f8f8f8;
   width: 100%;
-  z-index: 999;
+  z-index: 4;
 }
 
 .v-align {
