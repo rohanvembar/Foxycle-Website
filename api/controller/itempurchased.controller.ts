@@ -31,6 +31,13 @@ export class ItemPurchasedController extends DefaultController {
                     console.log(savedOrder);
                 });
             });
+        router.route("/purchaseditems")
+            .get((req: Request, res: Response) => {
+                itemsPurchasedRepo.find().then((items: ItemPurchased[]) => {
+                    console.log(items)
+                    res.status(200).send(items);
+                })
+            });
         return router;
     }
 }

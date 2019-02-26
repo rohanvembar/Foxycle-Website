@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Category } from "./category.entity";
 @Entity()
 export class ShopItem {
     @PrimaryGeneratedColumn()
@@ -16,7 +17,8 @@ export class ShopItem {
     @Column()
     public brand!: string;
 
-    // add many to many
+    @ManyToMany(type => Category)
+    @JoinTable()
     @Column()
     public categories!: string;
 
