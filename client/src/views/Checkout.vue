@@ -473,7 +473,10 @@ export default class Checkout extends Vue {
         date: orderdate,
         name: this.firstName + " " + this.lastName,
         email: this.email,
-        address: where
+        address: where,
+        subtotal: this.subtotal,
+        total: this.total,
+        shippingCost: this.shipping
       })
       .then((response: AxiosResponse) => {
         console.log("[Checkout.vue]" + response.data);
@@ -482,6 +485,31 @@ export default class Checkout extends Vue {
         console.log("[Checkout.vue]" + "catch");
       });
     this.$store.state.items = [];
+
+    for (var i in this.cart) {
+      if (this.cart[i].item.saleprice)
+        var individualPrice = this.cart[i].item.saleprice * this.cart[i].quantity;
+      else
+        var individualPrice = this.cart[i].item.price * this.cart[i].quantity;
+      axios
+        .post(APIConfig.buildUrl("/newitempurchased"), {
+          orderNumber: this.ordernumber,
+          itemId: this.cart[i].item.id,
+          quantity: this.cart[i].quantity,
+          subtotal: individualPrice
+        })
+        .then((response: AxiosResponse) => {
+          console.log("[Checkout.vue]" + response.data);
+        })
+        .catch((response: AxiosError) => {
+          console.log("[Checkout.vue]" + "catch");
+        });
+      if (this.items[i].saleprice) {
+        this.subtotal += this.items[i].saleprice;
+      } else {
+        this.subtotal += this.items[i].price;
+      }
+    }
   }
 }
 </script>

@@ -5,3 +5,4 @@ export * from "./shopitem.controller";
 export * from "./contact.controller";
 export * from "./service.controller";
 export * from "./ordermanagement.controller";
+export * from "./itempurchased.controller";

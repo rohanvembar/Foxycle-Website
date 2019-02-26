@@ -12,6 +12,15 @@ export class OrderManagement {
 
     @Column()
     public mailingAddress!: string;
+
+    @Column()
+    public subtotal!: number;
+
+    @Column()
+    public shippingCost!: number;
+
+    @Column()
+    public total!: number; 
     
     @Column()
     public name!: string;

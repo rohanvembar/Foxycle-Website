@@ -1,9 +1,9 @@
 import cors from "cors";
 import express from "express";
-import { LoginController, UserController, AnnouncementController, ShopItemController, OrderManagementController, ContactController, ServiceController  } from "./controller";
+import { LoginController, UserController, AnnouncementController, ShopItemController, OrderManagementController, ContactController, ServiceController, ItemPurchasedController} from "./controller";
 
 import { DBConnection } from "./connection";
-import { OrderManagement } from "./entity";
+import { OrderManagement, ItemPurchased } from "./entity";
 
 export class Server {
   private myApp: Promise<express.Application>;
@@ -27,6 +27,7 @@ export class Server {
       app.use("/", new ContactController().router);
       app.use("/", new ServiceController().router);
       app.use("/", new OrderManagementController().router);
+      app.use("/", new ItemPurchasedController().router);
 
       return app;
     });
