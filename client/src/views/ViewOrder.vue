@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="ordererror" v-if="orderError">
-      That order number does not have an order :(
-    </div>
+    <div class="ordererror" v-if="orderError">That order number does not have an order :(</div>
     <div v-else>
       <div v-if="orderloaded">
         <link
@@ -15,19 +13,34 @@
           <h3>Order#: {{order.orderNumber}}</h3>
         </center>
         <div>
-          <step-progress v-if = "order.status < 5"
+          <step-progress
+            v-if="order.status < 5"
             :steps="['Received', 'Processed','Shipped', 'Delivered']"
             :current-step="order.status"
             icon-class="fas fa-check"
           ></step-progress>
-          <div v-else class = "canceled">
-            Your order has been canceled
-          </div>
+          <div v-else class="canceled">Your order has been canceled</div>
         </div>
         <br>
         <br>
         <div class="orders">
-          <ViewOrderItems/>
+          <div id="table">
+            <div class="row1">
+              <div class="cell_row1">Product</div>
+              <div class="cell_row1">Price</div>
+              <div class="cell_row1">Quantity</div>
+            </div>
+            <div v-for="(item, index) in purchaseditems" v-bind:key="index" class="row">
+              <div class="cell">
+                <div class="cell_img">
+                  <img class="itempage-image" :src="items[index].image">
+                </div>
+                <div class="cell_product_name">{{items[index].name}}</div>
+              </div>
+              <div class="cell">${{item.subtotal}}</div>
+              <div class="cell">{{item.quantity}}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -43,8 +56,10 @@ import OrdersRefineBox from "@/components/OrdersRefineBox.vue";
 import ViewOrderItems from "@/components/ViewOrderItems.vue";
 import StepProgress from "vue-step-progress";
 import { iOrder } from "../models/order.interface";
+import { iPurchasedItem } from "../models/purchaseditem.interface";
 
 import "../assets/step.css";
+import { iShopItem } from '@/models/shopitem.interface';
 
 @Component({
   components: {
@@ -57,6 +72,8 @@ export default class ViewOrder extends Vue {
   error: string | boolean = false;
   orderloaded: boolean = false;
   orderError: boolean = false;
+  purchaseditems: iPurchasedItem[] = [];
+  items: iShopItem[] = [];
 
   created() {
     if (isNaN(Number(this.$route.params.ordernumber))) {
@@ -65,6 +82,46 @@ export default class ViewOrder extends Vue {
     }
     this.getOrder();
   }
+
+  getItems() {
+    for (var it in this.purchaseditems) {
+      this.error = false;
+      console.log(this.purchaseditems[it].itemId)
+      axios
+        .get(APIConfig.buildUrl("/shopitem/" + this.purchaseditems[it].itemId))
+        .then((response: AxiosResponse) => {
+          this.items.push(response.data);
+          this.$emit("success");
+        })
+        .catch((res: AxiosError) => {
+          this.error = res.response && res.response.data.error;
+          console.log("[ItemPage.vue]" + this.error);
+        });      
+    }
+  }
+
+  getPurchasedItems() {
+    this.error = false;
+    axios
+      .get(APIConfig.buildUrl("/purchaseditems"))
+      .then((response: AxiosResponse) => {
+        var allitems = response.data;
+        this.purchaseditems = allitems.filter(
+          item => item.orderNumber == this.order.orderNumber
+        );
+        console.log("[ViewOrder.vue] purchaseditems: " + JSON.stringify(this.purchaseditems));
+        this.getItems();
+        console.log("[ItemPage.vue] items: " + this.items);
+        this.purchaseditems.sort((a, b) => a.itemId - b.itemId);
+        this.items.sort((a, b) => a.id - b.id);
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log("[ViewOrder.vue] catch ");
+      });
+  }
+
   getOrder() {
     this.error = false;
     console.log(
@@ -76,6 +133,7 @@ export default class ViewOrder extends Vue {
         this.order = response.data;
         this.orderloaded = true;
         console.log("[ViewOrder.vue] order: " + JSON.stringify(this.order));
+        this.getPurchasedItems();
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
@@ -114,7 +172,7 @@ export default class ViewOrder extends Vue {
   margin: 100px auto;
 }
 
-.canceled{
+.canceled {
   align-items: center;
   text-align: center;
   font-size: 35px;
@@ -126,6 +184,69 @@ export default class ViewOrder extends Vue {
   text-align: center;
   padding-top: 50px;
 }
+    #table {
+        display:table;
+    }
+    .row {
+        display:table-row; 
+    }
+    .row1 {
+        display:table-row; 
+        font-weight: bold;
+        margin-bottom: 40px;
+        padding-bottom:40px;
+    }
+    .cell_row1{
+        display:table-cell;
+        text-align : center;
+        vertical-align: middle;
+        margin-left: 40px;
+        padding-left:80px;
+        padding-right:80px;
+        margin-bottom: 20px;
+        padding-bottom:30px;
+        font-size: 20px;
+        align-items: center; 
+        align-content: center;
+    }
+    .cell_img{
+        display:table-cell;
+        text-align : center;
+        vertical-align: middle;
+        margin-left: 40px;
+        padding-left:80px;
+        padding-bottom:20px;
+        font-size: 15px;
+        align-items: center; 
+        align-content: center;
+    }
+    .cell_product_name{
+        display:table-cell;
+        text-align : center;
+        vertical-align: middle;
+        margin-left: 40px;
+        padding-left: 20px;
+        padding-right:80px;
+        padding-bottom:20px;
+        font-size: 15px;
+        align-items: center; 
+        align-content: center;
+    }
+    .cell{
+        display:table-cell;
+        text-align : center;
+        vertical-align: middle;
+        margin-left: 40px;
+        padding-left:80px;
+        padding-right:80px;
+        padding-bottom:20px;
+        font-size: 15px;
+        align-items: center; 
+        align-content: center;
+    }
+    .itempage-image{
+        height: 70px;
+    }
 </style>
 
 

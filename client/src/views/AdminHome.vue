@@ -23,7 +23,7 @@
           <article class="tile is-child notification is-primary round">
             <p class="title">orders</p>
             <p class="subtitle">
-              {{newOrders}} new orders today
+              view and manage customer orders
               <span class="right">
                 <router-link
                   class="button is-dark is-focused is-medium is-rounded"
@@ -36,7 +36,7 @@
           <article class="tile is-child notification is-warning round">
             <p class="title">inventory</p>
             <p class="subtitle">
-              {{outOfStock}} items out of stock
+              add or edit items, change sale pricing
               <span class="right">
                 <router-link
                   class="button is-dark is-focused is-medium is-rounded"

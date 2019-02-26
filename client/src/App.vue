@@ -1,5 +1,7 @@
 <template>
-  <div id="app" class="main-background">
+  <body class="has-navbar-fixed-top">
+
+  <div id="app" class="main-background has-navbar-fixed-top">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
     <link
       rel="stylesheet"
@@ -7,7 +9,7 @@
     >
 
     <div class="navbar-padding"></div>
-    <nav class="navbar is-info navbar-custom">
+    <nav class="navbar is-fixed-top is-info">
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="#" style="font-weight:bold;">
@@ -119,7 +121,7 @@
       v-on:success="successLogin()"
       v-on:cancel="cancelLogin()"
     />
-    <div class="footer2">
+    <div v-if="!isLoggedIn" class="footer2">
       <div class="content has-text-centered v-align">
         <p>
           <strong style="padding-right:2em">&copy; Foxycle</strong>
@@ -140,6 +142,7 @@
       </div>
     </div>
   </div>
+  </body>
 </template>
 
 <script lang="ts">
@@ -284,7 +287,7 @@ $colors: (
   height: 50px;
   background-color: #f8f8f8;
   width: 100%;
-  z-index: 2;
+  z-index: 4;
 }
 
 .v-align {

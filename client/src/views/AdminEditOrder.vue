@@ -87,6 +87,7 @@ export default class AdminEditOrder extends Vue {
     padding: 10px;
     margin-right: 250px;
     margin-bottom: 20px;
+    margin: auto;
     display: flex;
     width: 90%;
     align-items: top;

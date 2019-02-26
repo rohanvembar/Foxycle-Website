@@ -1,5 +1,5 @@
 <template>
-  <table class="table">
+  <table class="table is-hoverable">
     <thead>
       <th>Order #</th>
       <th>Date</th>
@@ -9,23 +9,28 @@
       <th>Order Status</th>
     </thead>
     <tbody>
-      <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
-        <td
-          class="tdorder"
-          v-bind:class="{ 'tablegreen': order.status == 4, 'tablered': order.status == 5 }"
-        >{{order.orderNumber}}</td>
+      <tr v-on:click="viewOrder(order.orderNumber)" v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
+        <td>{{order.orderNumber}}</td>
         <td>{{order.dateOrdered}}</td>
         <td>{{order.name}}</td>
         <td>{{order.email}}</td>
         <td>{{order.mailingAddress}}</td>
         <td>
           <div v-if="order.status != 5 | isOwner" class="select">
-            <select v-model="order.status" v-on:change="updateStatus($event, order)">
+            <select
+              v-bind:class="{ 'tablegreen': order.status == 4, 'tablered': order.status == 5 }"
+              v-model="order.status"
+              v-on:change="updateStatus($event, order)"
+            >
               <option value="1" :selected="order.status === 1 ? 'selected' : ''">Received</option>
               <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
               <option value="3" :selected="order.status === 3 ? 'selected' : ''">Shipped</option>
               <option value="4" :selected="order.status === 4 ? 'selected' : ''">Delivered</option>
-              <option v-if="isOwner" value="5" :selected="order.status === 5 ? 'selected' : ''">Canceled</option>
+              <option
+                v-if="isOwner"
+                value="5"
+                :selected="order.status === 5 ? 'selected' : ''"
+              >Canceled</option>
             </select>
           </div>
           <div v-else class="select">
@@ -58,6 +63,9 @@ export default class ManageOrderItems extends Vue {
   get isOwner(): boolean {
     this.role = this.$store.state.userRole.userRole;
     return this.role == 1;
+  }
+  viewOrder(orderNum) {
+    this.$router.push({ name: 'vieworder', params: { ordernumber: orderNum}});
   }
 
   updateStatus(e, order: iOrder) {
@@ -150,11 +158,12 @@ export default class ManageOrderItems extends Vue {
   min-width: 1000px;
   margin-bottom: 50px;
 }
+
 td,
 th {
   vertical-align: middle;
 }
-.tdorder {
+select {
   background-color: hsl(48, 100%, 67%);
 }
 .tablegreen {
