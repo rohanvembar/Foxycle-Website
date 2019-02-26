@@ -15,6 +15,7 @@ export class OrderManagementController extends DefaultController {
             .get((req: Request, res: Response) => {
                 console.log("retrieving all orders");
                 orderRepo.find().then((orders: OrderManagement[]) => {
+                    orders = orders.reverse();
                     res.status(200).send(orders);
                 })
             });
