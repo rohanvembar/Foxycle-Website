@@ -158,7 +158,7 @@ export default class Cart extends Vue {
         this.cart.push({ item: this.items[i], quantity: 1 });
       }
     }
-    this.cart.sort((a, b) => (a.item.id - b.item.id))
+    this.cart.sort((a, b) => a.item.id - b.item.id);
   }
   created() {
     this.updateCart();
