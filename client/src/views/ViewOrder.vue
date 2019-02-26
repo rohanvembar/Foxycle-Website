@@ -23,24 +23,25 @@
         </div>
         <br>
         <br>
-        <div class="orders">
-          <div id="table">
-            <div class="row1">
-              <div class="cell_row1">Product</div>
-              <div class="cell_row1">Price</div>
-              <div class="cell_row1">Quantity</div>
-            </div>
-            <div v-for="(item, index) in purchaseditems" v-bind:key="index" class="row">
-              <div class="cell">
-                <div class="cell_img">
-                  <img class="itempage-image" :src="items[index].image">
-                </div>
-                <div class="cell_product_name">{{items[index].name}}</div>
-              </div>
-              <div class="cell">${{item.subtotal}}</div>
-              <div class="cell">{{item.quantity}}</div>
-            </div>
-          </div>
+
+        <div class="items">
+          <table class="table">
+            <thead>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+            </thead>
+            <tbody></tbody>
+            <tr v-for="(item, index) in purchaseditems" v-bind:key="index" class="row">
+              <td>
+                <img width="150px" :src="items[index].image">
+                <br>
+                {{items[index].name}}
+              </td>
+              <td>${{item.subtotal}}</td>
+              <td>{{item.quantity}}</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -59,7 +60,7 @@ import { iOrder } from "../models/order.interface";
 import { iPurchasedItem } from "../models/purchaseditem.interface";
 
 import "../assets/step.css";
-import { iShopItem } from '@/models/shopitem.interface';
+import { iShopItem } from "@/models/shopitem.interface";
 
 @Component({
   components: {
@@ -86,7 +87,7 @@ export default class ViewOrder extends Vue {
   getItems() {
     for (var it in this.purchaseditems) {
       this.error = false;
-      console.log(this.purchaseditems[it].itemId)
+      console.log(this.purchaseditems[it].itemId);
       axios
         .get(APIConfig.buildUrl("/shopitem/" + this.purchaseditems[it].itemId))
         .then((response: AxiosResponse) => {
@@ -96,7 +97,7 @@ export default class ViewOrder extends Vue {
         .catch((res: AxiosError) => {
           this.error = res.response && res.response.data.error;
           console.log("[ItemPage.vue]" + this.error);
-        });      
+        });
     }
   }
 
@@ -109,7 +110,10 @@ export default class ViewOrder extends Vue {
         this.purchaseditems = allitems.filter(
           item => item.orderNumber == this.order.orderNumber
         );
-        console.log("[ViewOrder.vue] purchaseditems: " + JSON.stringify(this.purchaseditems));
+        console.log(
+          "[ViewOrder.vue] purchaseditems: " +
+            JSON.stringify(this.purchaseditems)
+        );
         this.getItems();
         console.log("[ItemPage.vue] items: " + this.items);
         this.purchaseditems.sort((a, b) => a.itemId - b.itemId);
@@ -166,87 +170,24 @@ export default class ViewOrder extends Vue {
   justify-content: space-evenly;
   height: 600px;
 }
-
-.container {
-  width: 600px;
-  margin: 100px auto;
-}
-
-.canceled {
-  align-items: center;
+.table {
+  border-radius: 8px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+  margin-bottom: 50px;
+  margin: auto;
   text-align: center;
-  font-size: 35px;
-  font-weight: bold;
+  min-width: 40%;
 }
 
-.ordererror {
-  font-size: 20px;
-  text-align: center;
-  padding-top: 50px;
+.items {
+  margin-bottom: 60px;
 }
-    #table {
-        display:table;
-    }
-    .row {
-        display:table-row; 
-    }
-    .row1 {
-        display:table-row; 
-        font-weight: bold;
-        margin-bottom: 40px;
-        padding-bottom:40px;
-    }
-    .cell_row1{
-        display:table-cell;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left:80px;
-        padding-right:80px;
-        margin-bottom: 20px;
-        padding-bottom:30px;
-        font-size: 20px;
-        align-items: center; 
-        align-content: center;
-    }
-    .cell_img{
-        display:table-cell;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left:80px;
-        padding-bottom:20px;
-        font-size: 15px;
-        align-items: center; 
-        align-content: center;
-    }
-    .cell_product_name{
-        display:table-cell;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left: 20px;
-        padding-right:80px;
-        padding-bottom:20px;
-        font-size: 15px;
-        align-items: center; 
-        align-content: center;
-    }
-    .cell{
-        display:table-cell;
-        text-align : center;
-        vertical-align: middle;
-        margin-left: 40px;
-        padding-left:80px;
-        padding-right:80px;
-        padding-bottom:20px;
-        font-size: 15px;
-        align-items: center; 
-        align-content: center;
-    }
-    .itempage-image{
-        height: 70px;
-    }
+
+tr,
+th,
+td {
+  vertical-align: middle;
+}
 </style>
 
 
