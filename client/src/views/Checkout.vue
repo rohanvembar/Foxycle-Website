@@ -594,9 +594,10 @@ label {
   font-weight: bold;
   padding-bottom: 5px;
 }
-th {
+th,tr,td {
   border-bottom: black 2px solid;
   padding-bottom: 10px;
+  vertical-align: middle;
 }
 
 .title {
