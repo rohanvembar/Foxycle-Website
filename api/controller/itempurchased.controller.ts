@@ -26,9 +26,9 @@ export class ItemPurchasedController extends DefaultController {
                 newItemPurchased.itemId = req.body.itemId;
                 newItemPurchased.quantity = req.body.quantity;
                 newItemPurchased.subtotal = req.body.subtotal;
-                itemsPurchasedRepo.save(newItemPurchased).then((savedOrder: ItemPurchased) => {
-                    res.status(200).send(savedOrder);
-                    console.log(savedOrder);
+                itemsPurchasedRepo.save(newItemPurchased).then((newPurchase: ItemPurchased) => {
+                    res.status(200).send(newPurchase);
+                    console.log(newPurchase);
                 });
             });
         return router;

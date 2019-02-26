@@ -26,7 +26,7 @@ export class ShopItemController extends DefaultController {
                 newItem.price = req.body.price;
                 newItem.saleprice = req.body.saleprice;
                 newItem.brand = req.body.brand;
-                newItem.categories = req.body.categories;
+                newItem.categoryId = req.body.categoryId;
                 newItem.image = req.body.image;
                 newItem.delivery = req.body.delivery;
                 newItem.quantity = req.body.quantity;
@@ -56,7 +56,7 @@ export class ShopItemController extends DefaultController {
                     foundItem.price = req.body.price;
                     foundItem.saleprice = req.body.saleprice;
                     foundItem.brand = req.body.brand;
-                    foundItem.categories = req.body.categories;
+                    foundItem.categoryId = req.body.categoryId;
                     foundItem.image = req.body.image;
                     foundItem.quantity = req.body.quantity;
                     foundItem.description = req.body.description;

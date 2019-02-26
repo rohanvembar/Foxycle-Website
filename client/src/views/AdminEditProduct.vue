@@ -138,6 +138,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import { categoryItem } from "../models/category.interface";
 import AddItem from "@/components/AddItem.vue";
 import Modal from "@/components/Modal.vue";
 
@@ -152,6 +153,7 @@ export default class AdminEditProduct extends Vue {
   showEditItem: boolean = false;
   error: string | boolean = false;
   items: iShopItem[] = [];
+  categoryItems: categoryItem[] = [];
   itemToEdit: number = 0;
   ItemTitle: string = "";
   ItemPrice: number | string = "";
@@ -202,8 +204,29 @@ export default class AdminEditProduct extends Vue {
     return !!this.$store.state.userId;
   }
   showEditItemModal(item: number) {
+    // NEEDS TO FILTER AT CONTROLLER LEVEL
+    axios
+      .get(APIConfig.buildUrl("/itemscategory/" + this.items[item].categoryId))
+      .then((response: AxiosResponse) => {
+        this.categoryItems = response.data;
+        console.log(
+          "[AdminEditProduct.vue]" + JSON.stringify(response.data.length)
+        );
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log("[AdminEditProduct.vue]" + this.error);
+      });
+
     if (!this.items[item].saleprice) {
       this.ItemSalePrice = "";
+    }
+    // Clearing array (clicking edit on multiple items fills it up)
+    this.ItemCategories = [""];
+    for (var i = 0; i < this.categoryItems.length; i++) {
+      // TEMPORARY WORKAROUND (NEED TO FILTER AT CONTROLLER LEVEL)
+      if (this.categoryItems[i].categoryId == this.items[item].categoryId)
+        this.ItemCategories.push(this.categoryItems[i].category);
     }
     this.showEditItem = true;
     this.itemToEdit = item;
@@ -212,7 +235,6 @@ export default class AdminEditProduct extends Vue {
     this.ItemImage = this.items[item].image;
     this.ItemDescription = this.items[item].description;
     this.ItemBrand = this.items[item].brand;
-    this.ItemCategories = this.items[item].categories;
     this.ItemQuantity = this.items[item].quantity;
     this.ItemShipping = this.items[item].delivery;
 

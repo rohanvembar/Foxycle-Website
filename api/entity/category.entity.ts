@@ -5,5 +5,8 @@ export class Category {
     public id!: number;
 
     @Column()
-    public categoryName!: string;
+    public categoryId!: number;
+
+    @Column()
+    public category!: string;
 }

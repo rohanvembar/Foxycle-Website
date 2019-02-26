@@ -18,7 +18,7 @@ export class ShopItem {
 
     // add many to many
     @Column()
-    public categories!: string;
+    public categoryId!: number;
 
     @Column()
     public image!: string;

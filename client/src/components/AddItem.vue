@@ -96,7 +96,41 @@ export default class AddItem extends Vue {
   savedItem: iShopItem | string = "";
   newItemShipping: boolean = false;
 
+  generate() {
+    var len;
+    var timestamp;
+    len = 8;
+    timestamp = +new Date();
+    var ts = timestamp.toString();
+    var parts = ts.split("").reverse();
+    var id = "";
+
+    for (var i = 0; i < len; ++i) {
+      var index = Math.floor(Math.random() * (parts.length - 1 - 0 + 1)) + 0;
+      id += parts[index];
+    }
+
+    return id;
+  }
+
   success() {
+    var categorynumber = this.generate();
+    // Adding categories of item
+    for (var i = 0; i < this.newItemCategories.length; i++) {
+      axios
+        .post(APIConfig.buildUrl("/newitemcategory"), {
+          categoryId: categorynumber,
+          category: this.newItemCategories[i]
+        })
+        .then((response: AxiosResponse) => {
+          console.log("[AddItem.vue] category" + JSON.stringify(response.data) + "number of categories: " + this.newItemCategories.length);
+          this.savedItem = response.data;
+        })
+        .catch((response: AxiosResponse) => {
+          console.log("[AddItem.vue] category" + "catch");
+        });
+    }
+
     if (!this.newItemSalePrice) {
       this.newItemSalePrice = 0;
     }
@@ -106,7 +140,7 @@ export default class AddItem extends Vue {
         price: this.newItemPrice,
         saleprice: this.newItemSalePrice,
         brand: this.newItemBrand,
-        categories: this.newItemCategories,
+        categoryId: categorynumber,
         image: this.newItemImage,
         delivery: this.newItemShipping,
         quantity: this.newItemQuantity,

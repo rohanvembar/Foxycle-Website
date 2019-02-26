@@ -4,7 +4,7 @@ export interface iShopItem {
     price: number,
     saleprice: number,
     brand: string,
-    categories: string[],
+    categoryId: number,
     image: string,
     delivery: boolean,
     quantity: number,
