@@ -88,7 +88,6 @@
         <b-field label="Sale Price (optional)">
           <b-input
             type="number"
-            min="0.01"
             :max="ItemPrice - 0.1"
             step="0.01"
             placeholder="sale price"
@@ -110,6 +109,7 @@
           <label class="label">Categories</label>
           <div class="control">
             <div class="select is-multiple">
+              <span> {{ItemCategories}} </span>
               <select multiple v-model="ItemCategories">
                 <option value="apparel">Apparel</option>
                 <option value="roadbike">Road Bike</option>
@@ -166,13 +166,14 @@ export default class AdminEditProduct extends Vue {
   successEdit() {
     this.showEditItem = false;
     if (!this.ItemSalePrice) {
-      this.ItemSalePrice = "";
+      this.ItemSalePrice = 0;
     }
     axios
       .put(APIConfig.buildUrl("/shopitem/" + this.items[this.itemToEdit].id), {
         name: this.ItemTitle,
         price: this.ItemPrice,
         saleprice: this.ItemSalePrice,
+        delivery: this.ItemShipping,
         brand: this.ItemCategories,
         categories: this.ItemCategories,
         image: this.ItemImage,
@@ -210,6 +211,8 @@ export default class AdminEditProduct extends Vue {
     this.ItemTitle = this.items[item].name;
     this.ItemPrice = this.items[item].price;
     this.ItemImage = this.items[item].image;
+    this.ItemSalePrice = this.items[item].saleprice;
+
     this.ItemDescription = this.items[item].description;
     this.ItemBrand = this.items[item].brand;
     this.ItemCategories = this.items[item].categories;

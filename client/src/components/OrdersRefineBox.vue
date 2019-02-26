@@ -53,6 +53,8 @@ export default class OrdersRefineBox extends Vue {
     text-align : left;
     margin-bottom: 40px;
     padding:10px;
+    position:fixed;
+    left: 50px;
 }
 .refine-title{
     font-weight: bold;

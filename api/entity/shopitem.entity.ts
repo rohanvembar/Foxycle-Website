@@ -11,7 +11,7 @@ export class ShopItem {
     @Column()
     public price!: number;
 
-    @Column()
+    @Column({default: 0})
     public saleprice!: number;
 
     @Column()
