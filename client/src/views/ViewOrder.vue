@@ -58,8 +58,10 @@ import ViewOrderItems from "@/components/ViewOrderItems.vue";
 import StepProgress from "vue-step-progress";
 import { iOrder } from "../models/order.interface";
 import { iPurchasedItem } from "../models/purchaseditem.interface";
+
 import "../assets/step.css";
 import { iShopItem } from "@/models/shopitem.interface";
+
 @Component({
   components: {
     ViewOrderItems,
@@ -73,6 +75,7 @@ export default class ViewOrder extends Vue {
   orderError: boolean = false;
   purchaseditems: iPurchasedItem[] = [];
   items: iShopItem[] = [];
+
   created() {
     if (isNaN(Number(this.$route.params.ordernumber))) {
       this.orderError = true;
@@ -80,6 +83,7 @@ export default class ViewOrder extends Vue {
     }
     this.getOrder();
   }
+
   getItems() {
     for (var it in this.purchaseditems) {
       this.error = false;
@@ -96,6 +100,7 @@ export default class ViewOrder extends Vue {
         });
     }
   }
+
   getPurchasedItems() {
     this.error = false;
     axios
@@ -120,6 +125,7 @@ export default class ViewOrder extends Vue {
         console.log("[ViewOrder.vue] catch ");
       });
   }
+
   getOrder() {
     this.error = false;
     console.log(
@@ -172,9 +178,11 @@ export default class ViewOrder extends Vue {
   text-align: center;
   min-width: 40%;
 }
+
 .items {
   margin-bottom: 60px;
 }
+
 tr,
 th,
 td {
