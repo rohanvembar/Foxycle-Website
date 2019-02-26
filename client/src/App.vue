@@ -121,7 +121,7 @@
       v-on:success="successLogin()"
       v-on:cancel="cancelLogin()"
     />
-    <div class="footer2">
+    <div v-if="!isLoggedIn" class="footer2">
       <div class="content has-text-centered v-align">
         <p>
           <strong style="padding-right:2em">&copy; Foxycle</strong>
