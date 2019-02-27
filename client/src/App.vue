@@ -1,6 +1,5 @@
 <template>
-  <body class="has-navbar-fixed-top">
-
+<body class="has-navbar-fixed-top">
   <div id="app" class="main-background has-navbar-fixed-top">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
     <link
@@ -44,8 +43,38 @@
               to="/ordertracking"
               exact-active-class="is-active"
             >track order</router-link>
-            <a class="navbar-item" v-if="!isLoggedIn" v-on:click="showLoginModal()">log in</a>
+            <b-dropdown v-if="!isLoggedIn" position="is-bottom-left">
+              <a class="navbar-item is-info" slot="trigger">log in</a>
+              <b-dropdown-item custom paddingless>
+                <form @submit.prevent="login">
+                  <div class="modal-card" style="width:300px;">
+                    <section class="modal-card-body">
+                      <b-field label="employee id">
+                        <b-input
+                          v-model="signup.emailAddress"
+                          type="text"
+                          placeholder=" your employee id"
+                          required
+                        ></b-input>
+                      </b-field>
 
+                      <b-field label="password">
+                        <b-input
+                          v-model="signup.password"
+                          type="password"
+                          password-reveal
+                          placeholder="your password"
+                          required
+                        ></b-input>
+                      </b-field>
+                    </section>
+                    <footer class="modal-card-foot">
+                      <button class="button is-primary">login</button>
+                    </footer>
+                  </div>
+                </form>
+              </b-dropdown-item>
+            </b-dropdown>
             <router-link
               class="navbar-item"
               to="/cart"
@@ -59,12 +88,22 @@
                 <font-awesome-icon icon="shopping-cart"/>
               </div>
             </router-link>
+            <b-dropdown>
+              <a v-if="isLoggedIn" class="navbar-item is-info" slot="trigger">
+                <span>
+                  manage
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-caret-down"></i>
+                  </span>
+                </span>
+              </a>
+              <b-dropdown-item custom>
+                <strong>Welcome, {{name}}</strong>
+              </b-dropdown-item>
+              <hr class="navbar-divider">
 
-            <div class="navbar-item has-dropdown is-hoverable" v-if="isLoggedIn">
-              <a class="navbar-link">manage</a>
-              <div class="navbar-dropdown">
+              <b-dropdown-item>
                 <router-link
-                  class="navbar-item"
                   to="/employeemanagement"
                   exact-active-class="is-active"
                   v-if="isLoggedIn && isOwner"
@@ -73,40 +112,31 @@
                     <font-awesome-icon icon="users" fixed-width/>
                   </span>employees
                 </router-link>
-                <router-link
-                  class="navbar-item"
-                  to="/editorder"
-                  exact-active-class="is-active"
-                  v-if="isLoggedIn"
-                >
-                  <div class="navicon">
-                    <font-awesome-icon icon="receipt" fixed-width/>
-                  </div>orders
-                </router-link>
-                <router-link
-                  class="navbar-item"
-                  to="/editproduct"
-                  exact-active-class="is-active"
-                  v-if="isLoggedIn"
-                >
-                  <div class="navicon">
+              </b-dropdown-item>
+              <b-dropdown-item>
+                <router-link to="/editproduct" exact-active-class="is-active" v-if="isLoggedIn">
+                  <span class="navicon">
                     <font-awesome-icon icon="truck-loading" fixed-width/>
-                  </div>inventory
+                  </span>inventory
                 </router-link>
-                <hr class="navbar-divider">
-
-                <router-link
-                  class="navbar-item"
-                  to="/editinfo"
-                  exact-active-class="is-active"
-                  v-if="isLoggedIn"
-                >
-                  <div class="navicon">
+              </b-dropdown-item>
+              <b-dropdown-item>
+                <router-link to="/editorder" exact-active-class="is-active" v-if="isLoggedIn">
+                  <span class="navicon">
+                    <font-awesome-icon icon="receipt" fixed-width/>
+                  </span>orders
+                </router-link>
+              </b-dropdown-item>
+              <hr class="navbar-divider">
+              <b-dropdown-item>
+                <router-link to="/editinfo" exact-active-class="is-active" v-if="isLoggedIn">
+                  <span class="navicon">
                     <font-awesome-icon icon="info-circle" fixed-width/>
-                  </div>foxycle info
+                  </span>foxycle info
                 </router-link>
-              </div>
-            </div>
+              </b-dropdown-item>
+            </b-dropdown>
+
             <a class="navbar-item" v-if="isLoggedIn" v-on:click="logout()">
               <font-awesome-icon icon="sign-out-alt"/>
             </a>
@@ -116,11 +146,6 @@
     </nav>
 
     <router-view/>
-    <SignIn
-      v-bind:is-showing="showLogin"
-      v-on:success="successLogin()"
-      v-on:cancel="cancelLogin()"
-    />
     <div v-if="!isLoggedIn" class="footer2">
       <div class="content has-text-centered v-align">
         <p>
@@ -142,17 +167,16 @@
       </div>
     </div>
   </div>
-  </body>
+</body>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Buefy from "buefy";
 Vue.use(Buefy, { defaultIconPack: "fas" });
-import axios from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { Component } from "vue-property-decorator";
 import Signup from "@/components/Signup.vue";
-import SignIn from "@/components/SignIn.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { faTools } from "@fortawesome/free-solid-svg-icons";
@@ -160,6 +184,7 @@ import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { APIConfig } from "./utils/api.utils";
+import { iUser } from "./models/user.interface";
 
 library.add(faShoppingCart);
 library.add(faTools);
@@ -170,15 +195,37 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 @Component({
   components: {
-    Signup,
-    SignIn
+    Signup
   }
 })
 export default class App extends Vue {
   public showSignup: boolean = false;
   public showLogin: boolean = false;
   public showEmployee: boolean = false;
+  error: string | boolean = false;
+  name: string = "";
+  userName: string = "";
   role: number = 0;
+  signup: LoginForm = {
+    emailAddress: "",
+    password: ""
+  };
+
+  getUserName() {
+    this.error = false;
+    axios
+      .get(APIConfig.buildUrl("/users/" + this.$store.state.userId))
+      .then((response: AxiosResponse) => {
+        this.name = response.data.user.firstName;
+        console.log(this.$store.state.userId);
+        console.log(this.name);
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        this.error = res.response && res.response.data.error;
+        console.log("[app.vue]" + this.error);
+      });
+  }
 
   get isOwner(): boolean {
     this.role = this.$store.state.userRole.userRole;
@@ -193,19 +240,32 @@ export default class App extends Vue {
   cancelSignup() {
     this.showSignup = false;
   }
-  showLoginModal() {
-    this.showLogin = true;
-  }
-  successLogin() {
-    this.showLogin = false;
-    this.showEmployee = true;
-    this.$router.push({ path: "/admin" });
-  }
-  cancelLogin() {
-    this.showLogin = false;
-  }
   get isLoggedIn(): boolean {
     return !!this.$store.state.userId;
+  }
+
+  login() {
+    this.error = false;
+    axios
+      .post(APIConfig.buildUrl("/login"), {
+        emailAddress: this.signup.emailAddress,
+        password: this.signup.password
+      })
+      .then((response: AxiosResponse<LoginResponse>) => {
+        this.$store.commit("login", {
+          token: response.data.token,
+          userid: response.data.userId
+        });
+        this.$store.commit("changeRole", {
+          userRole: response.data.role
+        });
+        this.$emit("success");
+        this.getUserName();
+      })
+      .catch((response: AxiosResponse) => {
+        this.error = response.data.error;
+      });
+    this.$router.push({ path: "/admin" });
   }
   logout() {
     debugger;
@@ -218,6 +278,15 @@ export default class App extends Vue {
         this.$router.push({ path: "/" });
       });
   }
+}
+interface LoginResponse {
+  token: string;
+  userId: number;
+  role: number;
+}
+export interface LoginForm {
+  emailAddress: string;
+  password: string;
 }
 </script>
 
@@ -271,6 +340,7 @@ $colors: (
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
 @import "./assets/mainstyle.scss";
+@import "./assets/navbar.sass";
 
 .navicon {
   padding-right: 10px;
