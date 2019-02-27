@@ -9,18 +9,18 @@
       <th>Order Status</th>
     </thead>
     <tbody>
-      <tr v-on:click="viewOrder(order.orderNumber)" v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
-        <td>{{order.orderNumber}}</td>
-        <td>{{order.dateOrdered}}</td>
-        <td>{{order.name}}</td>
-        <td>{{order.email}}</td>
-        <td>{{order.mailingAddress}}</td>
+      <tr v-for="(order, index) in refinedOrders" v-bind:key="index" class="row">
+        <td v-on:click="viewOrder(order.orderNumber)">{{order.orderNumber}}</td>
+        <td v-on:click="viewOrder(order.orderNumber)">{{order.dateOrdered}}</td>
+        <td v-on:click="viewOrder(order.orderNumber)">{{order.name}}</td>
+        <td v-on:click="viewOrder(order.orderNumber)">{{order.email}}</td>
+        <td v-on:click="viewOrder(order.orderNumber)">{{order.mailingAddress}}</td>
         <td>
-          <div v-if="order.status != 5 | isOwner" class="select">
+          <div v-if="order.status != 5 | isOwner" class="select" v-bind:class="{ 'is-primary': order.status == 4, 'is-danger': order.status == 5, 'is-link': order.status < 4}">
             <select
-              v-bind:class="{ 'tablegreen': order.status == 4, 'tablered': order.status == 5 }"
               v-model="order.status"
               v-on:change="updateStatus($event, order)"
+              class="is-focused"
             >
               <option value="1" :selected="order.status === 1 ? 'selected' : ''">Received</option>
               <option value="2" :selected="order.status === 2 ? 'selected' : ''">In Progress</option>
@@ -163,9 +163,7 @@ td,
 th {
   vertical-align: middle;
 }
-select {
-  background-color: hsl(48, 100%, 67%);
-}
+
 .tablegreen {
   background-color: hsl(171, 100%, 41%);
   color: white;
