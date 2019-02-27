@@ -55,6 +55,7 @@
                           type="text"
                           placeholder=" your employee id"
                           required
+                          rounded
                         ></b-input>
                       </b-field>
 
@@ -65,11 +66,12 @@
                           password-reveal
                           placeholder="your password"
                           required
+                          rounded
                         ></b-input>
                       </b-field>
                     </section>
                     <footer class="modal-card-foot">
-                      <button class="button is-primary">login</button>
+                      <button class="button is-primary is-rounded is-focused" style="width:100%">login</button>
                     </footer>
                   </div>
                 </form>

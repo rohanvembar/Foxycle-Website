@@ -63,16 +63,29 @@
     <modal
       v-bind:is-showing="showEditItem"
       title="edit an item"
+      formName="editItemForm"
       success-button="Save Changes"
       v-on:success="successEdit"
       v-on:cancel="cancelEdit"
     >
-      <form v-on:submit.prevent="onSubmit">
+      <form id="editItemForm" v-on:submit.prevent="successEdit">
         <b-field label="Item Name">
-          <b-input type="text" minlength="5" placeholder="item name" v-model="ItemTitle" rounded></b-input>
+          <b-input
+            type="text"
+            placeholder="item name"
+            v-model="ItemTitle"
+            rounded
+            required
+          ></b-input>
         </b-field>
         <b-field label="Item Brand">
-          <b-input type="text" minlength="5" placeholder="item brand" v-model="ItemBrand" rounded></b-input>
+          <b-input
+            type="text"
+            placeholder="item brand"
+            v-model="ItemBrand"
+            rounded
+            required
+          ></b-input>
         </b-field>
         <b-field label="Price">
           <b-input
@@ -83,6 +96,7 @@
             maxlength="50"
             v-model="ItemPrice"
             rounded
+            required
           ></b-input>
         </b-field>
         <b-field label="Sale Price (optional)">
@@ -96,20 +110,27 @@
           ></b-input>
         </b-field>
         <b-field label="Image URL">
-          <b-input type="url" placeholder="image url" v-model="ItemImage" rounded></b-input>
+          <b-input type="url" placeholder="image url" v-model="ItemImage" rounded required></b-input>
         </b-field>
         <img v-if="ItemImage" width="150px" :src="ItemImage">
         <b-field label="Quantity Available">
-          <b-input type="number" min="1" placeholder="quantity" v-model="ItemQuantity" rounded></b-input>
+          <b-input
+            type="number"
+            min="1"
+            placeholder="quantity"
+            v-model="ItemQuantity"
+            rounded
+            required
+          ></b-input>
         </b-field>
         <div class="field">
-          <b-switch v-model="ItemShipping">Available to Ship</b-switch>
+          <b-switch type="checkbox" v-model="ItemShipping">Available to Ship</b-switch>
         </div>
         <div class="field">
           <label class="label">Categories</label>
           <div class="control">
             <div class="select is-multiple">
-              <span> {{ItemCategories}} </span>
+              <span>{{ItemCategories}}</span>
               <select multiple v-model="ItemCategories">
                 <option value="apparel">Apparel</option>
                 <option value="roadbike">Road Bike</option>
@@ -126,6 +147,7 @@
             maxlength="10000"
             placeholder="enter item description here"
             v-model="ItemDescription"
+            required
           ></b-input>
         </b-field>
       </form>
@@ -163,9 +185,10 @@ export default class AdminEditProduct extends Vue {
   ItemCategories: string[] = [""];
   ItemBrand: string = "";
   ItemQuantity: number | string = "";
-  ItemShipping: boolean = false;
+  ItemShipping: boolean = true;
 
   successEdit() {
+    
     this.showEditItem = false;
     if (!this.ItemSalePrice) {
       this.ItemSalePrice = 0;
@@ -176,7 +199,7 @@ export default class AdminEditProduct extends Vue {
         price: this.ItemPrice,
         saleprice: this.ItemSalePrice,
         delivery: this.ItemShipping,
-        brand: this.ItemCategories,
+        brand: this.ItemBrand,
         categories: this.ItemCategories,
         image: this.ItemImage,
         quantity: this.ItemQuantity,
@@ -206,6 +229,7 @@ export default class AdminEditProduct extends Vue {
   }
   showEditItemModal(item: number) {
     // NEEDS TO FILTER AT CONTROLLER LEVEL
+    
     axios
       .get(APIConfig.buildUrl("/itemscategory/" + this.items[item].categoryId))
       .then((response: AxiosResponse) => {
@@ -222,6 +246,8 @@ export default class AdminEditProduct extends Vue {
     if (!this.items[item].saleprice) {
       this.ItemSalePrice = "";
     }
+                    console.log(this.ItemShipping);
+
     // Clearing array (clicking edit on multiple items fills it up)
     this.ItemCategories = [""];
     for (var i = 0; i < this.categoryItems.length; i++) {

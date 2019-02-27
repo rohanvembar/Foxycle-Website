@@ -2,16 +2,17 @@
   <modal
     v-bind:is-showing="isShowing"
     title="add an item"
+    formName="addItemForm"
     success-button="Add"
     v-on:success="success"
     v-on:cancel="cancel"
   >
-    <form v-on:submit.prevent="onSubmit">
+    <form id="addItemForm" v-on:submit.prevent="success">
       <b-field label="Item Name">
-        <b-input type="text" minlength="5" placeholder="item name" v-model="newItemTitle" rounded></b-input>
+        <b-input type="text" placeholder="item name" v-model="newItemTitle" rounded required></b-input>
       </b-field>
       <b-field label="Item Brand">
-        <b-input type="text" minlength="5" placeholder="item brand" v-model="newItemBrand" rounded></b-input>
+        <b-input type="text" placeholder="item brand" v-model="newItemBrand" rounded required></b-input>
       </b-field>
       <b-field label="Price">
         <b-input
@@ -22,6 +23,7 @@
           maxlength="50"
           v-model="newItemPrice"
           rounded
+          required
         ></b-input>
       </b-field>
       <b-field label="Sale Price (optional)">
@@ -36,14 +38,21 @@
         ></b-input>
       </b-field>
       <b-field label="Image URL">
-        <b-input type="url" placeholder="image url" v-model="newItemImage" rounded></b-input>
+        <b-input type="url" placeholder="image url" v-model="newItemImage" rounded required></b-input>
       </b-field>
       <img v-if="newItemImage" width="150px" :src="newItemImage">
       <b-field label="Quantity Available">
-        <b-input type="number" min="1" placeholder="quantity" v-model="newItemQuantity" rounded></b-input>
+        <b-input
+          type="number"
+          min="1"
+          placeholder="quantity"
+          v-model="newItemQuantity"
+          rounded
+          required
+        ></b-input>
       </b-field>
       <div class="field">
-        <b-switch v-model="newItemShipping">Available to Ship</b-switch>
+        <b-switch type="checkbox" v-model="newItemShipping">Available to Ship</b-switch>
       </div>
       <div class="field">
         <label class="label">Categories</label>
@@ -65,6 +74,7 @@
           maxlength="10000"
           placeholder="enter item description here"
           v-model="newItemDescription"
+          required
         ></b-input>
       </b-field>
     </form>
@@ -123,7 +133,12 @@ export default class AddItem extends Vue {
           category: this.newItemCategories[i]
         })
         .then((response: AxiosResponse) => {
-          console.log("[AddItem.vue] category" + JSON.stringify(response.data) + "number of categories: " + this.newItemCategories.length);
+          console.log(
+            "[AddItem.vue] category" +
+              JSON.stringify(response.data) +
+              "number of categories: " +
+              this.newItemCategories.length
+          );
           this.savedItem = response.data;
         })
         .catch((response: AxiosResponse) => {
@@ -147,6 +162,7 @@ export default class AddItem extends Vue {
         description: this.newItemDescription
       })
       .then((response: AxiosResponse) => {
+        console.log(this.newItemShipping);
         console.log("[AddItem.vue]" + JSON.stringify(response.data));
         this.savedItem = response.data;
         this.$emit("success");
