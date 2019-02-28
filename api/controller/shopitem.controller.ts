@@ -58,6 +58,7 @@ export class ShopItemController extends DefaultController {
                     foundItem.brand = req.body.brand;
                     foundItem.categoryId = req.body.categoryId;
                     foundItem.image = req.body.image;
+                    foundItem.delivery = req.body.delivery;
                     foundItem.quantity = req.body.quantity;
                     foundItem.description = req.body.description;
                     shopItemRepo.save(foundItem).then((updatedItem: ShopItem) => {

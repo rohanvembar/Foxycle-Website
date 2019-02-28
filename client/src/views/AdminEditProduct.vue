@@ -70,22 +70,10 @@
     >
       <form id="editItemForm" v-on:submit.prevent="successEdit">
         <b-field label="Item Name">
-          <b-input
-            type="text"
-            placeholder="item name"
-            v-model="ItemTitle"
-            rounded
-            required
-          ></b-input>
+          <b-input type="text" placeholder="item name" v-model="ItemTitle" rounded required></b-input>
         </b-field>
         <b-field label="Item Brand">
-          <b-input
-            type="text"
-            placeholder="item brand"
-            v-model="ItemBrand"
-            rounded
-            required
-          ></b-input>
+          <b-input type="text" placeholder="item brand" v-model="ItemBrand" rounded required></b-input>
         </b-field>
         <b-field label="Price">
           <b-input
@@ -188,11 +176,11 @@ export default class AdminEditProduct extends Vue {
   ItemShipping: boolean = true;
 
   successEdit() {
-    
     this.showEditItem = false;
     if (!this.ItemSalePrice) {
       this.ItemSalePrice = 0;
     }
+    console.log(this.ItemShipping);
     axios
       .put(APIConfig.buildUrl("/shopitem/" + this.items[this.itemToEdit].id), {
         name: this.ItemTitle,
@@ -229,7 +217,7 @@ export default class AdminEditProduct extends Vue {
   }
   showEditItemModal(item: number) {
     // NEEDS TO FILTER AT CONTROLLER LEVEL
-    
+
     axios
       .get(APIConfig.buildUrl("/itemscategory/" + this.items[item].categoryId))
       .then((response: AxiosResponse) => {
@@ -237,6 +225,16 @@ export default class AdminEditProduct extends Vue {
         console.log(
           "[AdminEditProduct.vue]" + JSON.stringify(response.data.length)
         );
+        this.itemToEdit = item;
+        this.ItemTitle = this.items[item].name;
+        this.ItemPrice = this.items[item].price;
+        this.ItemImage = this.items[item].image;
+        this.ItemSalePrice = this.items[item].saleprice;
+        this.ItemDescription = this.items[item].description;
+        this.ItemBrand = this.items[item].brand;
+        this.ItemQuantity = this.items[item].quantity;
+        this.ItemShipping = this.items[item].delivery;
+        this.showEditItem = true;
       })
       .catch((res: AxiosError) => {
         this.error = res.response && res.response.data.error;
@@ -246,7 +244,6 @@ export default class AdminEditProduct extends Vue {
     if (!this.items[item].saleprice) {
       this.ItemSalePrice = "";
     }
-                    console.log(this.ItemShipping);
 
     // Clearing array (clicking edit on multiple items fills it up)
     this.ItemCategories = [""];
@@ -255,19 +252,6 @@ export default class AdminEditProduct extends Vue {
       if (this.categoryItems[i].categoryId == this.items[item].categoryId)
         this.ItemCategories.push(this.categoryItems[i].category);
     }
-    this.showEditItem = true;
-    this.itemToEdit = item;
-    this.ItemTitle = this.items[item].name;
-    this.ItemPrice = this.items[item].price;
-    this.ItemImage = this.items[item].image;
-    this.ItemSalePrice = this.items[item].saleprice;
-
-    this.ItemDescription = this.items[item].description;
-    this.ItemBrand = this.items[item].brand;
-    this.ItemQuantity = this.items[item].quantity;
-    this.ItemShipping = this.items[item].delivery;
-
-    console.log(this.itemToEdit);
   }
 
   showAddItemModal() {
