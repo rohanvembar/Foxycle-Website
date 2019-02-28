@@ -54,7 +54,6 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import OrdersRefineBox from "@/components/OrdersRefineBox.vue";
-import ViewOrderItems from "@/components/ViewOrderItems.vue";
 import StepProgress from "vue-step-progress";
 import { iOrder } from "../models/order.interface";
 import { iPurchasedItem } from "../models/purchaseditem.interface";
@@ -64,7 +63,6 @@ import { iShopItem } from "@/models/shopitem.interface";
 
 @Component({
   components: {
-    ViewOrderItems,
     "step-progress": StepProgress
   }
 })

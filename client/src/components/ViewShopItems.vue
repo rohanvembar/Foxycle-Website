@@ -6,27 +6,36 @@
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
       crossorigin="anonymous"
     >
-    <ShopPageFilterBox @priceFilter = "onPriceFilter" @deliveryFilter = "onDeliveryFilter" v-if="hasItems()"/>
+    <ShopPageFilterBox
+      @priceFilter="onPriceFilter"
+      @deliveryFilter="onDeliveryFilter"
+      v-if="hasItems()"
+    />
 
     <div id="wrap" v-if="hasItems()">
       <div id="columns" class="columns_4">
         <figure class="has-ribbon" v-for="(item, index) in deliveryRefinedItems" v-bind:key="index">
           <!-- change indexof to whatever category you want to show the ribbon on -->
-          <div
-            class="ribbon is-danger"
-            v-if="item.saleprice"
-          >{{ saleText }}</div>
+          <div class="ribbon is-danger" v-if="item.saleprice">{{ saleText }}</div>
           <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
             <div class="imagediv">
               <img :src="item.image" class="image">
             </div>
           </router-link>
           <figcaption>{{item.name}}</figcaption>
-          <span class="price" v-if="item.saleprice">Original price: <del>${{item.price}}</del></span>
+          <span class="price" v-if="item.saleprice">
+            Original price:
+            <del>${{item.price}}</del>
+          </span>
           <br>
           <span class="price" v-if="!item.saleprice">${{item.price}}</span>
-          <span class="price" v-if="item.saleprice"><b>Sale: ${{item.saleprice}}</b></span>
-          <div class="buttonadd button is-rounded is-info is-focused" v-on:click="toast(item)">add to cart</div>
+          <span class="price" v-if="item.saleprice">
+            <b>Sale: ${{item.saleprice}}</b>
+          </span>
+          <div
+            class="buttonadd button is-rounded is-info is-focused"
+            v-on:click="toast(item)"
+          >add to cart</div>
         </figure>
       </div>
     </div>
@@ -44,6 +53,9 @@
         <font-awesome-icon icon="shopping-cart"/>
       </div>
       <div id="desc">successfully added to your cart</div>
+    </div>
+    <div id="badtoast">
+      <div id="desc">Insufficient stock</div>
     </div>
   </div>
 </template>
@@ -83,11 +95,36 @@ export default class ViewShopItems extends Vue {
     return this.items.length > 0;
   }
 
+  badtoast() {
+    const ele = document.getElementById("badtoast");
+    if (ele) {
+      ele.className = "show";
+      setTimeout(function() {
+        ele.className = ele.className.replace("show", "");
+      }, 3000);
+    }
+  }
+
   addToCart(item: iShopItem) {
-    this.$store.commit("cart", item);
-    console.log(
-      "[ViewShopItems.vue]" + JSON.stringify(this.$store.state.items)
-    );
+    var items: iShopItem[] = this.$store.state.items;
+    var quan = 0;
+    for (var i in items) {
+      if (items[i].id == item.id) {
+        quan++;
+      }
+    }
+
+    var totalquan = +1 + +quan;
+    console.log(totalquan);
+    if (totalquan > item.quantity) {
+      console.log("out of stock" + totalquan);
+      this.badtoast();
+    } else {
+      this.$store.commit("cart", item);
+      console.log(
+        "[ViewShopItems.vue]" + JSON.stringify(this.$store.state.items)
+      );
+    }
   }
 
   created() {
@@ -99,7 +136,12 @@ export default class ViewShopItems extends Vue {
     axios
       .get(APIConfig.buildUrl("/shopitems"))
       .then((response: AxiosResponse) => {
-        this.items = response.data;
+        var allItems: iShopItem[] = response.data;
+        for (var item in allItems) {
+          if (allItems[item].quantity > 0) {
+            this.items.push(allItems[item]);
+          }
+        }
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
@@ -111,24 +153,22 @@ export default class ViewShopItems extends Vue {
   get priceRefinedItems() {
     const p = this.priceFilter;
     var priceArr_S = [];
-    if(p == "all"){
+    if (p == "all") {
       return this.sortedItems;
-    }
-    else{
-      priceArr_S = p.split('-');
+    } else {
+      priceArr_S = p.split("-");
       console.log(priceArr_S);
-      if(priceArr_S.length == 1){
+      if (priceArr_S.length == 1) {
         const price = Number(priceArr_S[0]);
         console.log("price:" + priceArr_S[0]);
         return this.sortedItems.filter(function(s) {
-          return (s.price >= price);
+          return s.price >= price;
         });
-      }
-      else{
+      } else {
         const low = Number(priceArr_S[0]);
         const high = Number(priceArr_S[1]);
         return this.sortedItems.filter(function(s) {
-          return (s.price >= low && s.price < high);
+          return s.price >= low && s.price < high;
         });
       }
     }
@@ -136,17 +176,15 @@ export default class ViewShopItems extends Vue {
 
   get deliveryRefinedItems() {
     const d = this.deliveryFilter;
-    if(d == "all"){
+    if (d == "all") {
       return this.priceRefinedItems;
-    }
-    else{
+    } else {
       var deliveryBoolean = d == "true";
       return this.priceRefinedItems.filter(function(s) {
-          return (s.delivery == deliveryBoolean);
+        return s.delivery == deliveryBoolean;
       });
     }
   }
-
 
   get sortedItems() {
     console.log("sorting: " + this.sortVal);
@@ -165,12 +203,12 @@ export default class ViewShopItems extends Vue {
     return this.items.sort(comparePrice);
   }
 
-  onPriceFilter(newFilter){
+  onPriceFilter(newFilter) {
     this.priceFilter = newFilter;
     console.log("price filter: " + newFilter);
   }
 
-  onDeliveryFilter(newFilter){
+  onDeliveryFilter(newFilter) {
     this.deliveryFilter = newFilter;
     console.log("delivery filter: " + newFilter);
   }
@@ -186,7 +224,25 @@ export default class ViewShopItems extends Vue {
   max-width: 50px;
   height: 55px;
   margin: auto;
-  background-color: #00D0B2;
+  background-color: #00d0b2;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+
+  position: fixed;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  font-size: 17px;
+  white-space: nowrap;
+}
+#badtoast {
+  visibility: hidden;
+  max-width: 50px;
+  height: 55px;
+  margin: auto;
+  background-color: rgb(212, 49, 63);
   color: #fff;
   text-align: center;
   border-radius: 5px;
@@ -222,12 +278,27 @@ export default class ViewShopItems extends Vue {
   overflow: hidden;
   white-space: nowrap;
 }
+#badtoast #desc {
+  color: #fff;
+
+  padding: 16px;
+
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 .ribbon {
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
-    border-radius: 1px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+  border-radius: 1px;
 }
 #toast.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,
+    fadeout 0.5s 2s;
+  animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s,
+    fadeout 0.5s 2.5s;
+}
+#badtoast.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,
     fadeout 0.5s 2s;
@@ -335,7 +406,7 @@ export default class ViewShopItems extends Vue {
   width: 90%;
   margin: auto;
   max-width: 1100px;
-  padding-bottom:50px;
+  padding-bottom: 50px;
 }
 
 .columns_4 figure {
@@ -397,7 +468,7 @@ div#columns figure figcaption {
   transition: 0.3s;
 }
 .buttonadd:hover {
-  background: #00D0B2;
+  background: #00d0b2;
   color: #f1f2f3;
 }
 @media screen and (max-width: 960px) {

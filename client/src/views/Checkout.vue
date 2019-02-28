@@ -509,6 +509,24 @@ export default class Checkout extends Vue {
       } else {
         this.subtotal += this.items[i].price;
       }
+      axios
+      .put(APIConfig.buildUrl("/shopitem/" + this.cart[i].item.id), {
+        name: this.cart[i].item.name,
+        price: this.cart[i].item.price,
+        saleprice: this.cart[i].item.saleprice,
+        delivery: this.cart[i].item.delivery,
+        brand: this.cart[i].item.brand,
+        categories: this.cart[i].item.categoryId,
+        image: this.cart[i].item.image,
+        quantity: this.cart[i].item.quantity - this.cart[i].quantity,
+        description: this.cart[i].item.description
+      })
+      .then((response: AxiosResponse) => {
+        this.$emit("success");
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("catch");
+      });
     }
   }
 }
