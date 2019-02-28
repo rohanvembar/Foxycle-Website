@@ -7,7 +7,6 @@
             class="itempage-image"
             style="max-height:300px"
             :src="shopItem.image"
-            :data-badge="hello"
           >
         </div>
         <div class="column is-one-fifth"></div>
@@ -28,11 +27,11 @@
             >
             <span class="space"></span>
             <!-- <router-link to="/cart"> -->
-              <button
-                class="button is-info is-rounded is-focused"
-                v-on:click="addToCart"
-                exact-active-class="is-active"
-              >add to cart</button>
+            <button
+              class="button is-info is-rounded is-focused"
+              v-on:click="addToCart"
+              exact-active-class="is-active"
+            >add to cart</button>
             <!-- </router-link> -->
             <div
               v-if="!shopItem.delivery"
@@ -56,6 +55,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import { iCart } from '@/models/cart.interface';
 
 @Component
 export default class ItemPage extends Vue {
@@ -80,14 +80,24 @@ export default class ItemPage extends Vue {
 
   addToCart() {
     if (this.shopItem) {
-      if (this.quantity > this.shopItem.quantity) {
-        console.log("out of stock")
-        this.toast()
+      var items: iShopItem[] = this.$store.state.items;
+      var quan = 0;
+      for (var i in items) {
+        if (items[i].id == this.shopItem.id) {
+          quan++;
+        }
+      }
+      
+      var totalquan = +this.quantity + +quan;
+      console.log(totalquan)
+      if (totalquan > this.shopItem.quantity) {
+        console.log("out of stock" + totalquan)
+        this.toast();
       } else {
-        for (var i = 0; i < this.quantity; i++) {
+        for (var k = 0; k < this.quantity; k++) {
           this.$store.commit("cart", this.shopItem);
         }
-        this.$router.push({ name: "cart"})
+        this.$router.push({ name: "cart" });
       }
     }
   }
@@ -156,7 +166,7 @@ export default class ItemPage extends Vue {
   max-width: 50px;
   height: 55px;
   margin: auto;
-  background-color: #00D0B2;
+  background-color: rgb(212, 49, 63);
   color: #fff;
   text-align: center;
   border-radius: 5px;
