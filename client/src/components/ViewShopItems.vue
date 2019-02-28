@@ -99,7 +99,12 @@ export default class ViewShopItems extends Vue {
     axios
       .get(APIConfig.buildUrl("/shopitems"))
       .then((response: AxiosResponse) => {
-        this.items = response.data;
+        var allItems: iShopItem[] = response.data
+        for (var item in allItems) {
+          if (allItems[item].quantity > 0) {
+            this.items.push(allItems[item]);
+          }
+        }
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
