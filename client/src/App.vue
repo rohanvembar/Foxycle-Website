@@ -71,7 +71,10 @@
                       </b-field>
                     </section>
                     <footer class="modal-card-foot">
-                      <button class="button is-primary is-rounded is-focused" style="width:100%">login</button>
+                      <button
+                        class="button is-primary is-rounded is-focused"
+                        style="width:100%"
+                      >login</button>
                     </footer>
                   </div>
                 </form>
@@ -104,39 +107,44 @@
               </b-dropdown-item>
               <hr class="navbar-divider">
 
-              <b-dropdown-item>
-                <router-link
-                  to="/employeemanagement"
-                  exact-active-class="is-active"
-                  v-if="isLoggedIn && isOwner"
-                >
+              <router-link
+                to="/employeemanagement"
+                exact-active-class="is-active"
+                v-if="isLoggedIn && isOwner"
+              >
+                <b-dropdown-item class="menu-selectors">
                   <span class="navicon">
                     <font-awesome-icon icon="users" fixed-width/>
-                  </span>employees
-                </router-link>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <router-link to="/editproduct" exact-active-class="is-active" v-if="isLoggedIn">
+                  </span>
+                  employees
+                </b-dropdown-item>
+              </router-link>
+              <router-link to="/editproduct" exact-active-class="is-active" v-if="isLoggedIn">
+                <b-dropdown-item class="menu-selectors">
                   <span class="navicon">
                     <font-awesome-icon icon="truck-loading" fixed-width/>
-                  </span>inventory
-                </router-link>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <router-link to="/editorder" exact-active-class="is-active" v-if="isLoggedIn">
+                  </span>
+                  inventory
+                </b-dropdown-item>
+              </router-link>
+              <router-link to="/editorder" exact-active-class="is-active" v-if="isLoggedIn">
+                <b-dropdown-item class="menu-selectors">
                   <span class="navicon">
                     <font-awesome-icon icon="receipt" fixed-width/>
-                  </span>orders
-                </router-link>
-              </b-dropdown-item>
+                  </span>
+                  orders
+                </b-dropdown-item>
+              </router-link>
               <hr class="navbar-divider">
-              <b-dropdown-item>
-                <router-link to="/editinfo" exact-active-class="is-active" v-if="isLoggedIn">
+              <router-link to="/editinfo" exact-active-class="is-active" v-if="isLoggedIn">
+                <b-dropdown-item class="menu-selectors">
                   <span class="navicon">
+                    
                     <font-awesome-icon icon="info-circle" fixed-width/>
-                  </span>foxycle info
-                </router-link>
-              </b-dropdown-item>
+                  </span>
+                  foxycle info
+                </b-dropdown-item>
+              </router-link>
             </b-dropdown>
 
             <a class="navbar-item" v-if="isLoggedIn" v-on:click="logout()">
@@ -364,5 +372,9 @@ $colors: (
 
 .v-align {
   padding-top: 10px;
+}
+
+.menu-selectors {
+  color: hsl(217, 71%, 53%);
 }
 </style>

@@ -139,8 +139,8 @@ export default class ManageOrderItems extends Vue {
       return 0;
     }
     function compareDate(a, b) {
-      if (a.dateOrdered < b.dateOrdered) return -1;
-      if (a.dateOrdered > b.dateOrdered) return 1;
+      if (a.dateOrdered > b.dateOrdered) return -1;
+      if (a.dateOrdered < b.dateOrdered) return 1;
       return 0;
     }
 
@@ -160,8 +160,9 @@ export default class ManageOrderItems extends Vue {
 }
 
 td,
-th {
+th, tr {
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .tablegreen {
