@@ -160,8 +160,9 @@ export default class ManageOrderItems extends Vue {
 }
 
 td,
-th {
+th, tr {
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .tablegreen {

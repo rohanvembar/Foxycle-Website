@@ -304,7 +304,7 @@ import { iCart } from "../models/cart.interface";
 import card from "vue-credit-card";
 
 let defaultProps = {
-  number: "5555555555554444",
+  number: "",
   name: "",
   expiry: "",
   cvc: ""
