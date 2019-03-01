@@ -8,7 +8,6 @@
       </select>
     </div>
     <div class="shop">
-      <!-- <ShopPageFilterBox /> -->
       <ViewShopItems :sortVal= "sortVal"/>
     </div>
 
@@ -21,12 +20,10 @@ import axios, { AxiosResponse } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ViewShopItems from "@/components/ViewShopItems.vue";
-import ShopPageFilterBox from "@/components/ShopPageFilterBox.vue";
 
 @Component({
   components: {
     ViewShopItems,
-    ShopPageFilterBox
   }
 })
 export default class Shop extends Vue {

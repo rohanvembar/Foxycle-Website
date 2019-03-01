@@ -6,14 +6,16 @@
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
       crossorigin="anonymous"
     >
-    <ShopPageFilterBox
-      @priceFilter="onPriceFilter"
-      @deliveryFilter="onDeliveryFilter"
-      v-if="hasItems()"
-    />
+    <div class="filter">
+      <ShopPageFilterBox
+        @priceFilter="onPriceFilter"
+        @deliveryFilter="onDeliveryFilter"
+        v-if="hasItems()"
+      />
+    </div>
 
-    <div id="wrap" v-if="hasItems()">
-      <div id="columns" class="columns_4">
+    <div id="wrap">
+      <div id="columns" class="columns_4" v-if="hasItems()">
         <figure class="has-ribbon" v-for="(item, index) in deliveryRefinedItems" v-bind:key="index">
           <!-- change indexof to whatever category you want to show the ribbon on -->
           <div class="ribbon is-danger" v-if="item.saleprice">{{ saleText }}</div>
@@ -413,6 +415,8 @@ export default class ViewShopItems extends Vue {
   width: 24%;
   margin-right: 1%;
   object-fit: cover;
+  width: 237.6px;
+  height: 309px;
 }
 .columns_4 figure:nth-child(4) {
   margin-right: 0;
@@ -444,7 +448,9 @@ div#columns figure {
 }
 
 div#columns figure img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
   border-bottom: 1px solid #ccc;
   padding-bottom: 15px;
   margin-bottom: 5px;
@@ -473,22 +479,22 @@ div#columns figure figcaption {
 }
 @media screen and (max-width: 960px) {
   #columns figure {
-    width: 24%;
+    min-width: 24%;
   }
 }
 @media screen and (max-width: 767px) {
   #columns figure {
-    width: 32%;
+    min-width: 32%;
   }
 }
 @media screen and (max-width: 600px) {
   #columns figure {
-    width: 49%;
+    min-width: 49%;
   }
 }
 @media screen and (max-width: 500px) {
   #columns figure {
-    width: 100%;
+    min-width: 100%;
   }
 }
 
@@ -500,5 +506,10 @@ div#columns figure figcaption {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.filter {
+  position: fixed;
+  margin-left: -10%;
 }
 </style>

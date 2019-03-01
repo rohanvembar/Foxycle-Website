@@ -68,8 +68,7 @@ export default class ShopPageFilterBox extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .filter-box {
-  position: fixed;
-  margin-left: -10%;
+
   height: 350px;
   width: 170px;
   background-color: #fefefe;
