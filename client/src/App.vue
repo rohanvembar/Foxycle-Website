@@ -44,11 +44,19 @@
               exact-active-class="is-active"
             >track order</router-link>
             <b-dropdown v-if="!isLoggedIn" position="is-bottom-left">
-              <a class="navbar-item is-info" slot="trigger">log in</a>
+              <a class="navbar-item is-info" slot="trigger">
+                <span>
+                  log in
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-caret-down"></i>
+                  </span>
+                </span>
+              </a>
               <b-dropdown-item custom paddingless>
                 <form @submit.prevent="login">
                   <div class="modal-card" style="width:300px;">
                     <section class="modal-card-body">
+                      <b-notification v-if="loginFailed" type="is-danger">Incorrect ID or Password</b-notification>
                       <b-field label="employee id">
                         <b-input
                           v-model="signup.emailAddress"
@@ -139,7 +147,6 @@
               <router-link to="/editinfo" exact-active-class="is-active" v-if="isLoggedIn">
                 <b-dropdown-item class="menu-selectors">
                   <span class="navicon">
-                    
                     <font-awesome-icon icon="info-circle" fixed-width/>
                   </span>
                   foxycle info
@@ -212,6 +219,7 @@ export default class App extends Vue {
   public showSignup: boolean = false;
   public showLogin: boolean = false;
   public showEmployee: boolean = false;
+  loginFailed: boolean = false;
   error: string | boolean = false;
   name: string = "";
   userName: string = "";
@@ -262,6 +270,8 @@ export default class App extends Vue {
         password: this.signup.password
       })
       .then((response: AxiosResponse<LoginResponse>) => {
+        this.loginFailed = false;
+
         this.$store.commit("login", {
           token: response.data.token,
           userid: response.data.userId
@@ -271,11 +281,13 @@ export default class App extends Vue {
         });
         this.$emit("success");
         this.getUserName();
+        this.$router.push({ path: "/admin" });
       })
-      .catch((response: AxiosResponse) => {
-        this.error = response.data.error;
+      .catch((error: AxiosError) => {
+        this.loginFailed = true;
+        console.log("error");
+        this.error = error.code;
       });
-    this.$router.push({ path: "/admin" });
   }
   logout() {
     debugger;
