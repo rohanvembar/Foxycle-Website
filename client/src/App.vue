@@ -104,7 +104,7 @@
             <b-dropdown>
               <a v-if="isLoggedIn" class="navbar-item is-info" slot="trigger">
                 <span>
-                  manage
+                  my account
                   <span class="icon is-small is-left">
                     <i class="fas fa-caret-down"></i>
                   </span>
@@ -152,11 +152,14 @@
                   foxycle info
                 </b-dropdown-item>
               </router-link>
+              <hr class="navbar-divider">
+              <b-dropdown-item class="menu-selectors" v-on:click="logout()">
+                <span class="navicon">
+                  <font-awesome-icon icon="sign-out-alt" fixed-width/>
+                </span>
+                log out
+              </b-dropdown-item>
             </b-dropdown>
-
-            <a class="navbar-item" v-if="isLoggedIn" v-on:click="logout()">
-              <font-awesome-icon icon="sign-out-alt"/>
-            </a>
           </div>
         </div>
       </div>
