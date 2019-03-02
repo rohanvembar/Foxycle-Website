@@ -1,39 +1,56 @@
 <template>
   <div>
     <div class="main-background row-sections">
-        <div class="message is-info section">
-          <h1 class="message-header">New Announcement</h1>
-          <div class="announcement-input">
-            <input
-              class="input-field"
-              type="text"
-              v-model="newAnnouncementTitle"
-              placeholder="title"
-            >
-            <textarea
-              class="input-field"
-              type="text"
-              v-model="newAnnouncementBody"
-              placeholder="body"
-            ></textarea>
-            <button class="button input-field" v-on:click="newAnnouncement()">Save</button>
+      <div class="box new">
+        <h3 class="message-header">New Announcement</h3>
+        <form id="newAnnouncementForm" v-on:submit.prevent="newAnnouncement()">
+          <p v-if="error" class="is-danger">{{ error }}</p>
+          <div class="field">
+            <label class="label">Title</label>
+            <b-field>
+              <b-input
+                required
+                type="text"
+                minlength="2"
+                placeholder="title"
+                v-model="newAnnouncementTitle"
+              ></b-input>
+            </b-field>
           </div>
-        </div>
-        <div class="message is-info announcements">
-          <h1 class="message-header">Manage Announcements</h1>
-          <div v-for="(a, index) in announcements" v-bind:key="index" class="message is-info">
-            <div class="message-header">
-              <p>{{a.title}}</p>
-              <p>{{a.date}}</p>
-            </div>
-            <p class="message-body">{{a.body}}</p>
-            <div class="delete-button">
-              <button v-on:click="deleteAnnouncement(a)" class="button">delete</button>
-            </div>
+          <div class="field">
+            <label class="label">Content</label>
+            <b-field>
+              <b-input
+                required
+                type="textarea"
+                minlength="2"
+                placeholder="content"
+                v-model="newAnnouncementBody"
+              ></b-input>
+            </b-field>
+            <button class="button is-primary is-rounded" style="width:100%" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+      <div class="announcements box">
+        <h3 class="message-header">Manage Announcements</h3>
+        <div v-for="(a, index) in announcements" v-bind:key="index" class="message">
+          <div class="message-header">
+            <p>{{a.title}}</p>
+            <p>{{a.date}}</p>
+          </div>
+          <p class="message-body">{{a.body}}</p>
+          <div class="delete-button">
+            <button
+              v-on:click="deleteAnnouncement(a)"
+              class="button is-danger is-rounded"
+              style="margin:10px;"
+            >delete</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 
@@ -54,6 +71,23 @@ export default class EditAnnouncements extends Vue {
     this.getAllAnnouncements();
   }
 
+  goodToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `new announcement created successfully`,
+      position: "is-bottom",
+      type: "is-primary"
+    });
+  }
+
+  badToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `announcement deleted successfully`,
+      position: "is-bottom",
+      type: "is-danger"
+    });
+  }
   getAllAnnouncements() {
     this.error = false;
     axios
@@ -86,6 +120,7 @@ export default class EditAnnouncements extends Vue {
       .catch((response: AxiosResponse) => {
         this.error = "bad";
       });
+    this.badToast();
   }
 
   newAnnouncement() {
@@ -104,6 +139,7 @@ export default class EditAnnouncements extends Vue {
         this.$emit("success");
         this.newAnnouncementTitle = "";
         this.newAnnouncementBody = "";
+        this.goodToast();
       })
       .catch((response: AxiosResponse) => {
         console.log("[AdminEditInfo.vue]" + "catch");
@@ -137,6 +173,9 @@ export default class EditAnnouncements extends Vue {
   font-size: 50px;
   font-weight: bold;
 }
+.main-background {
+  width: 90%;
+}
 .row-sections {
   display: flex;
   justify-content: space-between;
@@ -159,10 +198,16 @@ export default class EditAnnouncements extends Vue {
   justify-content: flex-end;
   align-items: center;
 }
-.announcements{
+.announcements {
   overflow-y: scroll;
   height: 450px;
-  width: 50%
+  width: 100%;
 }
-
+.box {
+  margin: 15px;
+}
+.new {
+  width: 600px;
+  height: 450px;
+}
 </style>

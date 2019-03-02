@@ -122,6 +122,14 @@ export default class AddItem extends Vue {
 
     return id;
   }
+  goodToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `new item added successfully`,
+      position: "is-bottom",
+      type: "is-primary"
+    });
+  }
 
   success() {
     var categorynumber = this.generate();
@@ -166,6 +174,7 @@ export default class AddItem extends Vue {
         console.log("[AddItem.vue]" + JSON.stringify(response.data));
         this.savedItem = response.data;
         this.$emit("success");
+        this.goodToast();
       })
       .catch((response: AxiosResponse) => {
         console.log("[AddItem.vue]" + "catch");

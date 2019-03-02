@@ -26,20 +26,18 @@
             </span>
             <span>edit announcements</span>
           </button>
-          <button
-            class="button is-rounded is-focused is-info"
-            v-on:click="changePageServices"
-          ><span class="icon is-medium">
+          <button class="button is-rounded is-focused is-info" v-on:click="changePageServices">
+            <span class="icon is-medium">
               <i class="fas fa-concierge-bell"></i>
             </span>
-            <span>edit services</span></button>
-          <button
-            class="button is-rounded is-focused is-info"
-            v-on:click="changePageContact"
-          ><span class="icon is-medium">
+            <span>edit services</span>
+          </button>
+          <button class="button is-rounded is-focused is-info" v-on:click="changePageContact">
+            <span class="icon is-medium">
               <i class="fas fa-info-circle"></i>
             </span>
-            <span>edit contact info</span></button>
+            <span>edit contact info</span>
+          </button>
         </div>
         <EditAnnouncements v-if="announcements"/>
         <EditServices v-if="services"/>

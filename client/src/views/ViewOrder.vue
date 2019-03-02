@@ -1,6 +1,13 @@
 <template>
   <div>
-    <div class="ordererror" v-if="orderError">That order number does not have an order :(</div>
+    <div class="ordererror" v-if="orderError">
+      <b-message
+        title="Something went wrong"
+        type="is-danger"
+        has-icon
+        closable="false"
+      >That order number doesn't have a valid order :(</b-message>
+    </div>
     <div v-else>
       <div v-if="orderloaded">
         <link
@@ -19,12 +26,14 @@
             :current-step="order.status"
             icon-class="fas fa-check"
           ></step-progress>
-          <div v-else class="canceled">Your order has been canceled</div>
+          <div v-else class="canceled ordererror">
+            <b-message type="is-danger" has-icon closable="false">Your order has been cancelled</b-message>
+          </div>
         </div>
         <br>
         <br>
 
-        <div class="items">
+        <div v-if="order.status < 5" class="items">
           <table class="table">
             <thead>
               <th>Product</th>
@@ -148,6 +157,12 @@ export default class ViewOrder extends Vue {
 </script>
 
 <style scoped>
+.ordererror {
+  text-align: center;
+  padding-top: 50px;
+  width: 40%;
+  margin: auto;
+}
 .header {
   align-items: left;
   padding-top: 30px;

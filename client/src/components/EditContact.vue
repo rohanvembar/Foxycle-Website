@@ -2,68 +2,70 @@
   <div>
     <div class="main-background row-sections">
       <div class="column-sections">
-        <div class="message is-info manage-contact">
-          <h1 class="message-header">Manage Contacts</h1>
-          <article class="row-sections" v-for="(a, index) in contacts" v-bind:key="index">
-            <div class="column-sections">
-              <p class="title">Hours</p>
-              <div class="content hours row-sections">
-                <div>
-                  <p>Monday:</p>
-                  <p>Tuesday:</p>
-                  <p>Wednesday:</p>
-                  <p>Thursday:</p>
-                  <p>Friday:</p>
-                  <p>Saturday:</p>
-                  <p>Sunday:</p>
+        <div class="box manage-contact">
+          <h3 class="message-header">Manage Info</h3>
+          <form v-on:submit.prevent="saveContact()">
+            <article class="row-sections" v-for="(a, index) in contacts" v-bind:key="index">
+              <div class="column-sections">
+                <p class="title">Hours</p>
+                <div class="content hours row-sections">
+                  <div>
+                    <p>Monday:</p>
+                    <p>Tuesday:</p>
+                    <p>Wednesday:</p>
+                    <p>Thursday:</p>
+                    <p>Friday:</p>
+                    <p>Saturday:</p>
+                    <p>Sunday:</p>
+                  </div>
+                  <div class="times">
+                    <p>
+                      <input required type="text" v-model="mon">
+                    </p>
+                    <p>
+                      <input required type="text" v-model="tues">
+                    </p>
+                    <p>
+                      <input required type="text" v-model="wed">
+                    </p>
+                    <p>
+                      <input required type="text" v-model="thurs">
+                    </p>
+                    <p>
+                      <input required type="text" v-model="fri">
+                    </p>
+                    <p>
+                      <input required type="text" v-model="sat">
+                    </p>
+                    <p>
+                      <input required type="text" v-model="sun">
+                    </p>
+                  </div>
                 </div>
-                <div class="times">
+              </div>
+              <div class="column-sections">
+                <p class="title">Phone</p>
+                <div class="content">
                   <p>
-                    <input type="text" v-model="mon">
+                    <input required type="tel" v-model="phone">
                   </p>
+                </div>
+                <p class="title">Address</p>
+                <div class="content">
                   <p>
-                    <input type="text" v-model="tues">
+                    <textarea required type="text" v-model="address"></textarea>
                   </p>
+                </div>
+                <p class="title">Email</p>
+                <div class="content">
                   <p>
-                    <input type="text" v-model="wed">
-                  </p>
-                  <p>
-                    <input type="text" v-model="thurs">
-                  </p>
-                  <p>
-                    <input type="text" v-model="fri">
-                  </p>
-                  <p>
-                    <input type="text" v-model="sat">
-                  </p>
-                  <p>
-                    <input type="text" v-model="sun">
+                    <input required type="text" v-model="email">
                   </p>
                 </div>
               </div>
-            </div>
-            <div class="column-sections">
-              <p class="title">Phone</p>
-              <div class="content">
-                <p>
-                  <input type="tel" v-model="phone">
-                </p>
-              </div>
-              <p class="title">Address</p>
-              <div class="content">
-                <p>
-                  <textarea type="text" v-model="address"></textarea>
-                </p>
-              </div>
-              <p class="title">Email</p>
-              <div class="content">
-                <p>
-                  <input type="text" v-model="email">
-                </p>
-              </div>
-            </div>
-          </article>
-          <button class="button is-primary" style="float:right" v-on:click="saveContact">save</button>
+            </article>
+            <button class="button is-primary is-rounded" style="width:100%;margin-top:15px;">save</button>
+          </form>
         </div>
       </div>
     </div>
@@ -97,28 +99,38 @@ export default class EditContact extends Vue {
   }
 
   saveContact() {
-    console.log("[EditContact] saving contact")
+    console.log("[EditContact] saving contact");
     axios
       .put(APIConfig.buildUrl("/contacts/" + this.contacts[0].id), {
-        monHours:this.mon,
-        tueHours:this.tues,
-        wedHours:this.wed,
-        thuHours:this.thurs,
-        friHours:this.fri,
-        satHours:this.sat,
-        sunHours:this.sun,
-        phoneNumber:this.phone,
-        address:this.address,
-        email:this.email
+        monHours: this.mon,
+        tueHours: this.tues,
+        wedHours: this.wed,
+        thuHours: this.thurs,
+        friHours: this.fri,
+        satHours: this.sat,
+        sunHours: this.sun,
+        phoneNumber: this.phone,
+        address: this.address,
+        email: this.email
       })
       .then((response: AxiosResponse) => {
         this.contacts[0] = response.data;
         this.$emit("success");
+        this.goodToast();
       })
       .catch((response: AxiosResponse) => {
         console.log("catch");
         this.error = "bad";
       });
+  }
+
+  goodToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `contact info saved successfully`,
+      position: "is-bottom",
+      type: "is-primary"
+    });
   }
 
   getAllContacts() {
@@ -127,7 +139,7 @@ export default class EditContact extends Vue {
       .get(APIConfig.buildUrl("/contacts"))
       .then((response: AxiosResponse) => {
         this.contacts = response.data;
-        this.mon =  this.contacts[0].monHours;
+        this.mon = this.contacts[0].monHours;
         this.tues = this.contacts[0].tueHours;
         this.wed = this.contacts[0].wedHours;
         this.thurs = this.contacts[0].thuHours;
