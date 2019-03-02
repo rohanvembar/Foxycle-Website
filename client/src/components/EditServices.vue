@@ -205,6 +205,8 @@ export default class EditServices extends Vue {
   newInstallationBody: string = "";
 
   deleteService(id: number) {
+    this.badToast();
+
     this.error = false;
     axios
       .delete(APIConfig.buildUrl("/services/" + id))
@@ -220,10 +222,18 @@ export default class EditServices extends Vue {
 
   goodToast() {
     this.$toast.open({
-      duration: 2000,
+      duration: 3000,
       message: `new service created successfully`,
       position: "is-bottom",
       type: "is-primary"
+    });
+  }
+  badToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `item removed successfully`,
+      position: "is-bottom",
+      type: "is-danger"
     });
   }
 

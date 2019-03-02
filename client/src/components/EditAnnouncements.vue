@@ -41,7 +41,11 @@
           </div>
           <p class="message-body">{{a.body}}</p>
           <div class="delete-button">
-            <button v-on:click="deleteAnnouncement(a)" class="button is-danger">delete</button>
+            <button
+              v-on:click="deleteAnnouncement(a)"
+              class="button is-danger is-rounded"
+              style="margin:10px;"
+            >delete</button>
           </div>
         </div>
       </div>
@@ -69,13 +73,21 @@ export default class EditAnnouncements extends Vue {
 
   goodToast() {
     this.$toast.open({
-      duration: 2000,
+      duration: 3000,
       message: `new announcement created successfully`,
       position: "is-bottom",
       type: "is-primary"
     });
   }
 
+  badToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `announcement deleted successfully`,
+      position: "is-bottom",
+      type: "is-danger"
+    });
+  }
   getAllAnnouncements() {
     this.error = false;
     axios
@@ -108,6 +120,7 @@ export default class EditAnnouncements extends Vue {
       .catch((response: AxiosResponse) => {
         this.error = "bad";
       });
+    this.badToast();
   }
 
   newAnnouncement() {

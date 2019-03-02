@@ -196,11 +196,29 @@ export default class AdminEditProduct extends Vue {
       .then((response: AxiosResponse) => {
         this.$emit("success");
         this.getAllItems();
+        this.goodToast();
       })
       .catch((response: AxiosResponse) => {
         console.log("catch");
         this.error = "bad";
       });
+  }
+  goodToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `item edited successfully`,
+      position: "is-bottom",
+      type: "is-primary"
+    });
+  }
+
+  badToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `item removed successfully`,
+      position: "is-bottom",
+      type: "is-danger"
+    });
   }
   cancelEdit() {
     this.showEditItem = false;
@@ -268,6 +286,7 @@ export default class AdminEditProduct extends Vue {
           return item.id != deletedItem.id;
         });
         this.$emit("success");
+        this.badToast();
       })
       .catch((response: AxiosResponse) => {
         this.error = "bad";

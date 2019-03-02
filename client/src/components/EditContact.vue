@@ -126,7 +126,7 @@ export default class EditContact extends Vue {
 
   goodToast() {
     this.$toast.open({
-      duration: 2000,
+      duration: 3000,
       message: `contact info saved successfully`,
       position: "is-bottom",
       type: "is-primary"
