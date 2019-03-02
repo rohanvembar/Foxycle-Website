@@ -62,7 +62,12 @@
               v-if="isLoggedIn"
               to="/admin"
               exact-active-class="is-active"
-            >employee home</router-link>
+            >             <p class="control">
+                <span class="icon">
+                  <i class="fas fa-store-alt" aria-hidden="true"></i>
+                </span>
+                <span>employee home</span>
+              </p></router-link>
           </div>
 
           <div class="navbar-end">
