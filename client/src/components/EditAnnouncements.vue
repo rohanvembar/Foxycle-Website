@@ -2,7 +2,7 @@
   <div>
     <div class="main-background row-sections">
       <div class="box new">
-        <h2>New Announcement</h2>
+        <h3 class="message-header">New Announcement</h3>
         <form id="newAnnouncementForm" v-on:submit.prevent="newAnnouncement()">
           <p v-if="error" class="is-danger">{{ error }}</p>
           <div class="field">
@@ -28,17 +28,13 @@
                 v-model="newAnnouncementBody"
               ></b-input>
             </b-field>
-            <button
-              class="button is-primary is-rounded"
-              style="width:100%"
-              type="submit"
-            >Save</button>
+            <button class="button is-primary is-rounded" style="width:100%" type="submit">Save</button>
           </div>
         </form>
       </div>
       <div class="announcements box">
-        <h2>Manage Announcements</h2>
-        <div v-for="(a, index) in announcements" v-bind:key="index" class="message is-info">
+        <h3 class="message-header">Manage Announcements</h3>
+        <div v-for="(a, index) in announcements" v-bind:key="index" class="message">
           <div class="message-header">
             <p>{{a.title}}</p>
             <p>{{a.date}}</p>
@@ -69,6 +65,15 @@ export default class EditAnnouncements extends Vue {
 
   created() {
     this.getAllAnnouncements();
+  }
+
+  goodToast() {
+    this.$toast.open({
+      duration: 2000,
+      message: `new announcement created successfully`,
+      position: "is-bottom",
+      type: "is-primary"
+    });
   }
 
   getAllAnnouncements() {
@@ -121,6 +126,7 @@ export default class EditAnnouncements extends Vue {
         this.$emit("success");
         this.newAnnouncementTitle = "";
         this.newAnnouncementBody = "";
+        this.goodToast();
       })
       .catch((response: AxiosResponse) => {
         console.log("[AdminEditInfo.vue]" + "catch");
@@ -155,7 +161,7 @@ export default class EditAnnouncements extends Vue {
   font-weight: bold;
 }
 .main-background {
-  width:90%;
+  width: 90%;
 }
 .row-sections {
   display: flex;
@@ -188,7 +194,7 @@ export default class EditAnnouncements extends Vue {
   margin: 15px;
 }
 .new {
-  width:600px;
-  height:450px;
+  width: 600px;
+  height: 450px;
 }
 </style>

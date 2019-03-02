@@ -218,6 +218,15 @@ export default class EditServices extends Vue {
       });
   }
 
+  goodToast() {
+    this.$toast.open({
+      duration: 2000,
+      message: `new service created successfully`,
+      position: "is-bottom",
+      type: "is-primary"
+    });
+  }
+
   newTuneUp() {
     if (
       this.newTuneUpBody == "" ||
@@ -240,6 +249,7 @@ export default class EditServices extends Vue {
         this.newTuneUpBody = "";
         this.newTuneUpTitle = "";
         this.newTuneUpPrice = "";
+        this.goodToast();
       })
       .catch((response: AxiosResponse) => {
         console.log("[EditServices.vue]" + "catch");
@@ -267,6 +277,7 @@ export default class EditServices extends Vue {
         this.newAandRBody = "";
         this.newAandRTitle = "";
         this.newAandRPrice = "";
+        this.goodToast();
       })
       .catch((response: AxiosResponse) => {
         console.log("[EditServices.vue]" + "catch");
@@ -294,6 +305,7 @@ export default class EditServices extends Vue {
         this.newInstallationBody = "";
         this.newInstallationTitle = "";
         this.newInstallationPrice = "";
+        this.goodToast();
       })
       .catch((response: AxiosResponse) => {
         console.log("[EditServices.vue]" + "catch");
