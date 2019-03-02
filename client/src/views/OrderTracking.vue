@@ -1,5 +1,6 @@
 <template>
   <div class="main-background track">
+    <div class="box">
     <h1>Track Your Order</h1>
     <b-field grouped>
       <b-input placeholder="Order Number" type="number" v-model="ordernum" @keyup.enter.native="success(ordernum)" rounded></b-input>
@@ -7,6 +8,7 @@
           <button v-on:click="success(ordernum)" class="button is-info is-rounded">Search</button>
       </p>
     </b-field>
+    </div>
   </div>
 </template>
 
@@ -48,5 +50,8 @@ export default class OrderTracking extends Vue {
 
 .submit-button {
   margin: 20px;
+}
+.box {
+  text-align: center;
 }
 </style>
