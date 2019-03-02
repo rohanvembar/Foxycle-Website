@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="main-background">
-      <div class="message is-info manage-services">
-        <h1 class="message-header">Manage Services</h1>
+      <div class="manage-services">
         <div class="row-sections">
           <div class="indivisual-card">
             <div class="card-title">
@@ -15,7 +14,7 @@
                   <p class="section-title">
                     {{a.title}} - ${{a.price}}
                     <button
-                      class="button"
+                      class="button is-small is-rounded is-danger"
                       v-on:click="deleteService(a.id)"
                     >delete</button>
                   </p>
@@ -23,25 +22,40 @@
                   <p>{{a.description}}</p>
                 </article>
               </div>
-              <div class="message is-info section">
-                <h1 class="message-header">New Tune Up</h1>
-                <div>
-                  <input type="text" v-model="newTuneUpTitle" placeholder="title">
-                  <input
-                    type="number"
-                    min="0.01"
-                    step="0.01"
-                    v-model="newTuneUpPrice"
-                    placeholder="price"
-                  >
-                  <textarea
-                    class="input-field"
-                    type="text"
-                    v-model="newTuneUpBody"
-                    placeholder="body"
-                  ></textarea>
-                  <button class="button input-field" v-on:click="newTuneUp()">Save</button>
-                </div>
+              <div class="section">
+                <h3 class="message-header">New Tune Up</h3>
+                <form id="newTuneUp" v-on:submit.prevent="newTuneUp()">
+                  <div class="field">
+                    <label class="label">Name</label>
+                    <b-field>
+                      <b-input
+                        required
+                        type="text"
+                        minlength="2"
+                        placeholder="title"
+                        v-model="newTuneUpTitle"
+                      ></b-input>
+                    </b-field>
+                  </div>
+                  <div class="field">
+                    <label class="label">Price</label>
+                    <b-field>
+                      <b-input required type="number" placeholder="price" v-model="newTuneUpPrice"></b-input>
+                    </b-field>
+                  </div>
+                  <div class="field">
+                    <label class="label">Description</label>
+                    <b-field>
+                      <b-input
+                        required
+                        type="textarea"
+                        placeholder="description"
+                        v-model="newTuneUpBody"
+                      ></b-input>
+                    </b-field>
+                  </div>
+                  <button class="button is-primary is-rounded" style="width:100%">Save</button>
+                </form>
               </div>
             </div>
           </div>
@@ -56,30 +70,51 @@
                   <p class="section-title">
                     {{a.title}} - ${{a.price}}
                     <button
-                      class="button"
+                      class="button is-danger is-rounded is-small"
                       v-on:click="deleteService(a.id)"
                     >delete</button>
                   </p>
                   <p>{{a.description}}</p>
                 </article>
               </div>
-            </div>
-            <div class="message is-info section">
-              <h1 class="message-header">New Adjustment & Repair</h1>
-              <div>
-                <input type="text" v-model="newAandRTitle" placeholder="title">
-                <input
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  v-model="newAandRPrice"
-                  placeholder="price"
-                >
-                <textarea class="input-field" type="text" v-model="newAandRBody" placeholder="body"></textarea>
-                <button class="button input-field" v-on:click="newAandR()">Save</button>
+              <div class="section">
+                <h3 class="message-header">New Adjustment or Repair</h3>
+                <form id="newAandRForm" v-on:submit.prevent="newAandR()">
+                  <div class="field">
+                    <label class="label">Name</label>
+                    <b-field>
+                      <b-input
+                        required
+                        type="text"
+                        minlength="2"
+                        placeholder="title"
+                        v-model="newAandRTitle"
+                      ></b-input>
+                    </b-field>
+                  </div>
+                  <div class="field">
+                    <label class="label">Price</label>
+                    <b-field>
+                      <b-input required type="number" placeholder="price" v-model="newAandRPrice"></b-input>
+                    </b-field>
+                  </div>
+                  <div class="field">
+                    <label class="label">Description</label>
+                    <b-field>
+                      <b-input
+                        required
+                        type="textarea"
+                        placeholder="description"
+                        v-model="newAandRBody"
+                      ></b-input>
+                    </b-field>
+                  </div>
+                  <button class="button is-primary is-rounded" style="width:100%">Save</button>
+                </form>
               </div>
             </div>
           </div>
+
           <div class="indivisual-card">
             <div class="card-title">
               <font-awesome-icon icon="arrow-alt-circle-down"/>
@@ -91,32 +126,52 @@
                   <p class="section-title">
                     {{a.title}} - ${{a.price}}
                     <button
-                      class="button"
+                      class="button is-small is-danger is-rounded"
                       v-on:click="deleteService(a.id)"
                     >delete</button>
                   </p>
                   <p>{{a.description}}</p>
                 </article>
               </div>
-              <div class="message is-info section">
-                <h1 class="message-header">New Installation</h1>
-                <div>
-                  <input type="text" v-model="newInstallationTitle" placeholder="title">
-                  <input
-                    type="number"
-                    min="0.01"
-                    step="0.01"
-                    v-model="newInstallationPrice"
-                    placeholder="price"
-                  >
-                  <textarea
-                    class="input-field"
-                    type="text"
-                    v-model="newInstallationBody"
-                    placeholder="body"
-                  ></textarea>
-                  <button class="button input-field" v-on:click="newInstallation()">Save</button>
-                </div>
+              <div class="section">
+                <h3 class="message-header">New Installation</h3>
+                <form id="newInstallationForm" v-on:submit.prevent="newInstallation()">
+                  <div class="field">
+                    <label class="label">Name</label>
+                    <b-field>
+                      <b-input
+                        required
+                        type="text"
+                        minlength="2"
+                        placeholder="title"
+                        v-model="newInstallationTitle"
+                      ></b-input>
+                    </b-field>
+                  </div>
+                  <div class="field">
+                    <label class="label">Price</label>
+                    <b-field>
+                      <b-input
+                        required
+                        type="number"
+                        placeholder="price"
+                        v-model="newInstallationPrice"
+                      ></b-input>
+                    </b-field>
+                  </div>
+                  <div class="field">
+                    <label class="label">Description</label>
+                    <b-field>
+                      <b-input
+                        required
+                        type="textarea"
+                        placeholder="description"
+                        v-model="newInstallationBody"
+                      ></b-input>
+                    </b-field>
+                  </div>
+                  <button class="button is-primary is-rounded" style="width:100%">Save</button>
+                </form>
               </div>
             </div>
           </div>
