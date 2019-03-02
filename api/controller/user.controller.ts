@@ -61,7 +61,8 @@ export class UserController extends DefaultController {
           if (user) {
             res.send({ user });
           } else {
-            res.status(404);
+            res.status(404).send({reason: "no user with that id exists"});
+            return;
           }
         },
         () => {
