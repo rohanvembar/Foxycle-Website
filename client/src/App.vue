@@ -25,10 +25,38 @@
         <div id="navMenu" class="navbar-menu">
           <div class="navbar-start">
             <div class="navbar-item"></div>
-            <router-link class="navbar-item" to="/" exact-active-class="is-active">home</router-link>
-            <router-link class="navbar-item" to="/shop" exact-active-class="is-active">shop</router-link>
-            <router-link class="navbar-item" to="/services" exact-active-class="is-active">services</router-link>
-            <router-link class="navbar-item" to="/contact" exact-active-class="is-active">contact</router-link>
+            <router-link class="navbar-item" to="/" exact-active-class="is-active">
+              <p class="control">
+                <span class="icon">
+                  <i class="fas fa-home" aria-hidden="true"></i>
+                </span>
+                <span>home</span>
+              </p>
+            </router-link>
+            <router-link class="navbar-item" to="/shop" exact-active-class="is-active">
+              <p class="control">
+                <span class="icon">
+                  <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+                </span>
+                <span>shop</span>
+              </p>
+            </router-link>
+            <router-link class="navbar-item" to="/services" exact-active-class="is-active">
+              <p class="control">
+                <span class="icon">
+                  <i class="fas fa-wrench" aria-hidden="true"></i>
+                </span>
+                <span>services</span>
+              </p>
+            </router-link>
+            <router-link class="navbar-item" to="/contact" exact-active-class="is-active">
+              <p class="control">
+                <span class="icon">
+                  <i class="fas fa-info" aria-hidden="true"></i>
+                </span>
+                <span>contact</span>
+              </p>
+            </router-link>
             <router-link
               class="navbar-item"
               v-if="isLoggedIn"
@@ -38,11 +66,14 @@
           </div>
 
           <div class="navbar-end">
-            <router-link
-              class="navbar-item"
-              to="/ordertracking"
-              exact-active-class="is-active"
-            >track order</router-link>
+            <router-link class="navbar-item" to="/ordertracking" exact-active-class="is-active">
+              <p class="control">
+                <span class="icon">
+                  <i class="fas fa-truck" aria-hidden="true"></i>
+                </span>
+                <span style="padding-left:5px">track order</span>
+              </p>
+            </router-link>
             <b-dropdown v-if="!isLoggedIn" position="is-bottom-left">
               <a class="navbar-item is-info" slot="trigger">
                 <span>
@@ -88,19 +119,6 @@
                 </form>
               </b-dropdown-item>
             </b-dropdown>
-            <router-link
-              class="navbar-item"
-              to="/cart"
-              v-if="!isLoggedIn"
-              exact-active-class="is-active"
-            >
-              <div
-                v-bind:class="{ 'badge': this.$store.state.items.length > 0 }"
-                :data-badge="this.$store.state.items.length"
-              >
-                <font-awesome-icon icon="shopping-cart"/>
-              </div>
-            </router-link>
             <b-dropdown>
               <a v-if="isLoggedIn" class="navbar-item is-info" slot="trigger">
                 <span>
@@ -160,6 +178,14 @@
                 log out
               </b-dropdown-item>
             </b-dropdown>
+            <router-link class="navbar-item" to="/cart" exact-active-class="is-active">
+              <div
+                v-bind:class="{ 'badge': this.$store.state.items.length > 0 }"
+                :data-badge="this.$store.state.items.length"
+              >
+                <font-awesome-icon icon="shopping-cart"/>
+              </div>
+            </router-link>
           </div>
         </div>
       </div>

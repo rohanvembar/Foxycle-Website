@@ -30,7 +30,7 @@
         <tbody>
           <tr>
             <td>
-            <button class="button is-primary" v-on:click="addEmployee">add employee</button>
+              <button class="button is-primary" v-on:click="addEmployee">add employee</button>
             </td>
             <td></td>
             <td></td>
@@ -44,7 +44,12 @@
             <td>{{empl.emailAddress}}</td>
             <td>{{empl.role == 1 ? "Admin" : "Employee"}}</td>
             <td>
-              <button class="button is-primary" v-on:click="changeRole(empl)">change role</button>
+              <button
+                v-if="$store.state.userId != empl.id"
+                class="button is-primary"
+                v-on:click="changeRole(empl)"
+              >change role</button>
+              <button v-else class="button is-primary" disabled>change role</button>
             </td>
             <td>
               <button
@@ -104,6 +109,8 @@ export default class EmployeeManagement extends Vue {
         this.error = res.response && res.response.data.error;
         console.log("[EmployeeManagement.vue]" + this.error);
       });
+    console.log("HELO");
+    console.log(this.$store.state.userId);
   }
 
   changeRole(employee: iUser) {
@@ -163,13 +170,11 @@ export default class EmployeeManagement extends Vue {
   border-radius: 5px;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   margin-bottom: 50px;
-
 }
 th,
 td {
   padding: 10px 30px 10px 30px;
   vertical-align: middle;
-
 }
 .center {
   margin-left: auto;
