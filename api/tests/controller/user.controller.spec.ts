@@ -19,6 +19,7 @@ describe("/users", () => {
     user.firstName = "testUser";
     user.lastName = "testUser";
     user.password = "password";
+    user.role = 1;
     return conn.getRepository(User).save(user);
   };
 
@@ -71,9 +72,11 @@ describe("/users", () => {
           firstName: "test",
           lastName: "test",
           password: "password",
+          role: 1
         })
         .then((response: request.Response) => {
-          expect(response.body.user.emailAddress).toEqual(email);
+          console.log(response.body)
+          expect(response.body.createdUser.emailAddress).toEqual(email);
           done();
         });
     });
