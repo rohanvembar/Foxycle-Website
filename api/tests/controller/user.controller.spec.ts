@@ -102,4 +102,18 @@ describe("/users", () => {
         });
     });
   });
+  describe("PUT '/", () => {
+    test("should change user's role", done => {
+      const email = "test@test.com";
+      return createUser(email, connection).then((createdUser: User) => {
+        return request(myApp)
+          .put("/employees/1")
+          .expect(200)
+          .then((response: request.Response) => {
+            expect(response.body.role).toEqual(0);
+            done();
+          });
+      });
+    });
+  })
 });
