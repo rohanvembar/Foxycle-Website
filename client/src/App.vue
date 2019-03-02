@@ -88,19 +88,6 @@
                 </form>
               </b-dropdown-item>
             </b-dropdown>
-            <router-link
-              class="navbar-item"
-              to="/cart"
-              v-if="!isLoggedIn"
-              exact-active-class="is-active"
-            >
-              <div
-                v-bind:class="{ 'badge': this.$store.state.items.length > 0 }"
-                :data-badge="this.$store.state.items.length"
-              >
-                <font-awesome-icon icon="shopping-cart"/>
-              </div>
-            </router-link>
             <b-dropdown>
               <a v-if="isLoggedIn" class="navbar-item is-info" slot="trigger">
                 <span>
@@ -160,6 +147,14 @@
                 log out
               </b-dropdown-item>
             </b-dropdown>
+            <router-link class="navbar-item" to="/cart" exact-active-class="is-active">
+              <div
+                v-bind:class="{ 'badge': this.$store.state.items.length > 0 }"
+                :data-badge="this.$store.state.items.length"
+              >
+                <font-awesome-icon icon="shopping-cart"/>
+              </div>
+            </router-link>
           </div>
         </div>
       </div>
