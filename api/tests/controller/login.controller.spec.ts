@@ -28,7 +28,8 @@ describe("/login", () => {
       emailAddress: "test@test.com",
       firstName: "test",
       lastName: "test",
-      password: "password"
+      password: "password",
+      role: 0
     }).then(() => {
       request(app)
         .post("/login")
