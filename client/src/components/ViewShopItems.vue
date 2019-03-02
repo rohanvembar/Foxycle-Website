@@ -415,8 +415,6 @@ export default class ViewShopItems extends Vue {
   width: 24%;
   margin-right: 1%;
   object-fit: cover;
-  width: 237.6px;
-  height: 309px;
 }
 .columns_4 figure:nth-child(4) {
   margin-right: 0;
