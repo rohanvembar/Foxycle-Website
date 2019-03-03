@@ -33,7 +33,7 @@ export class UserController extends DefaultController {
           res.status(200).send({ createdUser });
         },
         (reason: any) => {
-          res.status(500).send({ reason: "The email was not unique" });
+          res.status(500).send({ reason: "Employee already exists. Choose a different Employee ID." });
         }
       );
     });

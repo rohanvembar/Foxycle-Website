@@ -8,7 +8,8 @@
     v-on:cancel="cancel"
   >
     <form id="addEmployeeForm" v-on:submit.prevent="success">
-      <p v-if="error" class="is-danger">{{ error }}</p>
+      <b-notification v-if="error" type="is-danger">{{ error }}</b-notification>
+
       <div class="field">
         <label class="label">First Name</label>
         <b-field>
