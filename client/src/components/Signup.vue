@@ -10,7 +10,7 @@
     <form id="addEmployeeForm" v-on:submit.prevent="success">
       <b-notification v-if="error" type="is-danger">{{ error }}</b-notification>
 
-      <div class="field">
+      <div class="field"> 
         <label class="label">First Name</label>
         <b-field>
           <b-input
