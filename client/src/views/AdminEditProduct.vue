@@ -280,10 +280,10 @@ export default class AdminEditProduct extends Vue {
     this.$snackbar.open({
       duration: 5000,
       message:
-        "Do you really want to delete this item?",
+        "Are you sure? Ignore this to do nothing",
       type: "is-danger",
       position: "is-bottom",
-      actionText: "Yes, really delete",
+      actionText: "Yes, delete",
       queue: false,
       onAction: () => {
         this.error = false;
