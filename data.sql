@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.24)
 # Database: dev
-# Generation Time: 2019-03-03 23:10:30 +0000
+# Generation Time: 2019-03-03 23:20:27 +0000
 # ************************************************************
 
 
@@ -122,6 +122,21 @@ CREATE TABLE `item_purchased` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `item_purchased` WRITE;
+/*!40000 ALTER TABLE `item_purchased` DISABLE KEYS */;
+
+INSERT INTO `item_purchased` (`id`, `orderNumber`, `itemId`, `quantity`, `subtotal`)
+VALUES
+	(25,55157252,50,1,110),
+	(26,1655551,50,1,110),
+	(27,1655551,53,1,130),
+	(28,55514481,54,1,130),
+	(29,55514481,56,1,500),
+	(30,55514481,53,1,130),
+	(31,55514481,55,1,250);
+
+/*!40000 ALTER TABLE `item_purchased` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table order_management
@@ -142,6 +157,17 @@ CREATE TABLE `order_management` (
   PRIMARY KEY (`orderNumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `order_management` WRITE;
+/*!40000 ALTER TABLE `order_management` DISABLE KEYS */;
+
+INSERT INTO `order_management` (`orderNumber`, `status`, `dateOrdered`, `mailingAddress`, `name`, `email`, `subtotal`, `shippingCost`, `total`)
+VALUES
+	(1655551,1,'03.03.2019','Store Pickup','fake fake','fake@fake.com',240,10,250),
+	(55157252,1,'03.03.2019','fake, fake, AR 00000','Fake Name','fake@gmail.com',110,10,120),
+	(55514481,1,'03.03.2019','Store Pickup','fake fake','fake@blah.com',1010,10,1020);
+
+/*!40000 ALTER TABLE `order_management` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table service
@@ -191,6 +217,15 @@ CREATE TABLE `session` (
   CONSTRAINT `FK_3d2f174ef04fb312fdebd0ddc53` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `session` WRITE;
+/*!40000 ALTER TABLE `session` DISABLE KEYS */;
+
+INSERT INTO `session` (`id`, `expiresAt`, `userId`)
+VALUES
+	(7,'2019-03-03 15:49:57',5);
+
+/*!40000 ALTER TABLE `session` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table shop_item
@@ -217,12 +252,12 @@ LOCK TABLES `shop_item` WRITE;
 
 INSERT INTO `shop_item` (`id`, `name`, `price`, `brand`, `image`, `delivery`, `quantity`, `saleprice`, `description`, `categoryId`)
 VALUES
-	(50,'2019 Marrakesh Deore',110,'Salsa Cycles','https://salsacycles.com/files/bikes/salsa-marrakesh-19-BK8353-drop-bar-deore-touring-bike-640x360.jpg',1,5,0,'This is a fun bike!',35885156),
+	(50,'2019 Marrakesh Deore',110,'Salsa Cycles','https://salsacycles.com/files/bikes/salsa-marrakesh-19-BK8353-drop-bar-deore-touring-bike-640x360.jpg',1,3,0,'This is a fun bike!',35885156),
 	(51,'KENT GZR700 Road Bike',160,'KENT','https://images-na.ssl-images-amazon.com/images/I/81nsr0LPsYL._SX425_.jpg',0,6,0,'awesome bike!!!!!',10500655),
-	(53,'Grail',130,'Gravel Bikes','https://static.canyon.com/_img/bikes/2019/grail-cf-sl-7_c1281.png',0,4,0,'awesome bike!!!!!',41858651),
-	(54,'Long Haul Trucker',130,'Surly Bikes','https://surlybikes.com/uploads/bikes/surly-long-haul-trucker-bike-700c-blue-BK0417-1200x800.jpg',0,4,0,'awesome bike!!!!!',55141165),
-	(55,'Cannondale Quick 7 Bike',250,'Cannondale','https://www.rei.com/media/product/145841',0,6,0,'an awesome bike!!!',60559125),
-	(56,'Tandem Bike',500,'cool brand','https://outdoors.byu.edu/wp-content/uploads/2016/02/Smooth-Blue.png',0,3,0,'an awesome bike!!!',66175511);
+	(53,'Grail',130,'Gravel Bikes','https://static.canyon.com/_img/bikes/2019/grail-cf-sl-7_c1281.png',0,2,0,'awesome bike!!!!!',41858651),
+	(54,'Long Haul Trucker',130,'Surly Bikes','https://surlybikes.com/uploads/bikes/surly-long-haul-trucker-bike-700c-blue-BK0417-1200x800.jpg',0,3,0,'awesome bike!!!!!',55141165),
+	(55,'Cannondale Quick 7 Bike',250,'Cannondale','https://www.rei.com/media/product/145841',0,5,0,'an awesome bike!!!',60559125),
+	(56,'Tandem Bike',500,'cool brand','https://outdoors.byu.edu/wp-content/uploads/2016/02/Smooth-Blue.png',0,2,0,'an awesome bike!!!',66175511);
 
 /*!40000 ALTER TABLE `shop_item` ENABLE KEYS */;
 UNLOCK TABLES;
