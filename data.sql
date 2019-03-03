@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.24)
 # Database: dev
-# Generation Time: 2019-03-03 22:54:51 +0000
+# Generation Time: 2019-03-03 23:10:30 +0000
 # ************************************************************
 
 
@@ -64,7 +64,13 @@ LOCK TABLES `category` WRITE;
 
 INSERT INTO `category` (`id`, `categoryId`, `category`)
 VALUES
-	(23,35885156,'');
+	(23,35885156,''),
+	(24,10500655,''),
+	(25,81555768,''),
+	(26,41858651,''),
+	(27,55141165,''),
+	(28,60559125,''),
+	(29,66175511,'');
 
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -91,6 +97,15 @@ CREATE TABLE `contact` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `contact` WRITE;
+/*!40000 ALTER TABLE `contact` DISABLE KEYS */;
+
+INSERT INTO `contact` (`id`, `monHours`, `tueHours`, `wedHours`, `thuHours`, `friHours`, `satHours`, `sunHours`, `phoneNumber`, `address`, `email`, `map`)
+VALUES
+	(1,'10 AM - 6 PM','10 AM - 6 PM','10 AM - 6 PM','10 AM - 6 PM','10 AM - 6 PM','10 AM - 5 PM','12 AM - 5 PM','(805) 111-1111','1 Grand Avenue San Luis Obispo, CA 93407','info@foxycle.com','\"https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed\"');
+
+/*!40000 ALTER TABLE `contact` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table item_purchased
@@ -143,6 +158,23 @@ CREATE TABLE `service` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+LOCK TABLES `service` WRITE;
+/*!40000 ALTER TABLE `service` DISABLE KEYS */;
+
+INSERT INTO `service` (`id`, `title`, `price`, `description`, `category`)
+VALUES
+	(1,'Basic Tune-Up',25,'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.','tune-ups'),
+	(2,'Premium Tune-Up',35,'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.','tune-ups'),
+	(3,'Brake System Tune-Up',45,'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.','tune-ups'),
+	(4,'Basic Tune-Up',25,'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.','adjustments'),
+	(5,'Premium Tune-Up',35,'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.','adjustments'),
+	(6,'Brake System Tune-Up',45,'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.','adjustments'),
+	(7,'Basic Tune-Up',25,'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.','installations'),
+	(8,'Premium Tune-Up',35,'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.','installations'),
+	(9,'Brake System Tune-Up',45,'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.','installations');
+
+/*!40000 ALTER TABLE `service` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table session
@@ -185,7 +217,12 @@ LOCK TABLES `shop_item` WRITE;
 
 INSERT INTO `shop_item` (`id`, `name`, `price`, `brand`, `image`, `delivery`, `quantity`, `saleprice`, `description`, `categoryId`)
 VALUES
-	(50,'2019 Marrakesh Deore',110,'Salsa Cycles','https://salsacycles.com/files/bikes/salsa-marrakesh-19-BK8353-drop-bar-deore-touring-bike-640x360.jpg',1,5,0,'This is a fun bike!',35885156);
+	(50,'2019 Marrakesh Deore',110,'Salsa Cycles','https://salsacycles.com/files/bikes/salsa-marrakesh-19-BK8353-drop-bar-deore-touring-bike-640x360.jpg',1,5,0,'This is a fun bike!',35885156),
+	(51,'KENT GZR700 Road Bike',160,'KENT','https://images-na.ssl-images-amazon.com/images/I/81nsr0LPsYL._SX425_.jpg',0,6,0,'awesome bike!!!!!',10500655),
+	(53,'Grail',130,'Gravel Bikes','https://static.canyon.com/_img/bikes/2019/grail-cf-sl-7_c1281.png',0,4,0,'awesome bike!!!!!',41858651),
+	(54,'Long Haul Trucker',130,'Surly Bikes','https://surlybikes.com/uploads/bikes/surly-long-haul-trucker-bike-700c-blue-BK0417-1200x800.jpg',0,4,0,'awesome bike!!!!!',55141165),
+	(55,'Cannondale Quick 7 Bike',250,'Cannondale','https://www.rei.com/media/product/145841',0,6,0,'an awesome bike!!!',60559125),
+	(56,'Tandem Bike',500,'cool brand','https://outdoors.byu.edu/wp-content/uploads/2016/02/Smooth-Blue.png',0,3,0,'an awesome bike!!!',66175511);
 
 /*!40000 ALTER TABLE `shop_item` ENABLE KEYS */;
 UNLOCK TABLES;
