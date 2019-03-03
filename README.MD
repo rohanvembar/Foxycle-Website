@@ -15,7 +15,8 @@ Team Members + Roles:
 0. Install docker and npm
 1. `git clone https://github.com/CSC307Winter2019/TheGiraffes.git` in whatever directory you want.
 2. `cd` into that directory.
-3. Create a file called `config.json` with this content:
+3. Create a file called `config.json` in `/api` with this content:
+
  `{
   "dev": {
     "host": "localhost",
@@ -33,6 +34,7 @@ Team Members + Roles:
     "database": "test"
   }
 }`
+
 4. Run `npm install` in the `/client` and `/api` directory.
 5. In the repo's root directory, run `docker-compose up`.
 6. In the `/api` directory, run `npm run dev`.
