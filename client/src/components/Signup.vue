@@ -64,15 +64,13 @@
         <label class="label">Role</label>
         <div class="control">
           <b-radio
-            v-on:change="changeRole(1)"
+            v-on:input="changeRole(1)"
             name="role"
-            v-model="radio"
             native-value="Admin"
           >Admin</b-radio>
           <b-radio
-            v-on:change="changeRole(0)"
+            v-on:input="changeRole(0)"
             name="role"
-            v-model="radio"
             native-value="Employee"
           >Employee</b-radio>
         </div>
