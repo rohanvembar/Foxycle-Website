@@ -65,24 +65,24 @@ describe("/users", () => {
     var id = 1;
     test("should return a 404 status because there isn't anything in the database", done => {
       request(myApp)
-        .get("/users/"+id)
+        .get("/users/" + id)
         .then((response: request.Response) => {
           expect(response.body.reason).toEqual("no user with that id exists");
           done();
         });
-    });  
+    });
     test("should return the user with the given id", done => {
       const email = "test@test.com";
       return createUser(email, connection).then((createdUser: User) => {
         return request(myApp)
-          .get("/users/"+id)
+          .get("/users/" + id)
           .expect(200)
           .then((response: request.Response) => {
             expect(response.body.user.emailAddress).toEqual(email);
             done();
           });
       });
-    });  
+    });
   });
   describe("POST '/'", () => {
     test("should create a user", done => {
@@ -113,6 +113,21 @@ describe("/users", () => {
             expect(response.body.role).toEqual(0);
             done();
           });
+      });
+    });
+  })
+  describe("DELETE '/", () => {
+    test("should delete given user from table", done => {
+      const email = "test@test.com";
+      return createUser(email, connection).then((createdUser: User) => {
+        request(myApp)
+          .delete("/employees/1")
+          .expect(200)
+          .then((response: request.Response) => {
+            console.log(response.body)
+            expect(response.body.emailAddress).toEqual(email);
+            done();
+          })
       });
     });
   })
