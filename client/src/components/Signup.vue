@@ -2,42 +2,78 @@
   <modal
     v-bind:is-showing="isShowing"
     title="add employee"
-    success-button="Signup"
+    success-button="Add Employee"
     formName="addEmployeeForm"
     v-on:success="success"
     v-on:cancel="cancel"
   >
-    <form id="addEmployeeForm" v-on:submit.prevent="onSubmit">
+    <form id="addEmployeeForm" v-on:submit.prevent="success">
       <p v-if="error" class="is-danger">{{ error }}</p>
       <div class="field">
         <label class="label">First Name</label>
         <b-field>
-          <b-input required type="text" minlength="2" placeholder="first name" v-model="signup.firstName"></b-input>
+          <b-input
+            required
+            type="text"
+            minlength="2"
+            placeholder="first name"
+            v-model="signup.firstName"
+          ></b-input>
         </b-field>
       </div>
       <div class="field">
         <label class="label">Last Name</label>
         <b-field>
-          <b-input required type="text" minlength="2" placeholder="last name" v-model="signup.lastName"></b-input>
+          <b-input
+            required
+            type="text"
+            minlength="2"
+            placeholder="last name"
+            v-model="signup.lastName"
+          ></b-input>
         </b-field>
       </div>
       <div class="field">
         <label class="label">Employee ID</label>
         <b-field>
-          <b-input required type="text" minlength="3" placeholder="employee id" v-model="signup.emailAddress"></b-input>
+          <b-input
+            required
+            type="text"
+            minlength="3"
+            placeholder="employee id"
+            v-model="signup.emailAddress"
+          ></b-input>
         </b-field>
       </div>
       <div class="field">
         <label class="label">Password</label>
         <b-field>
-          <b-input required type="password" minlength="4" maxlength="16" placeholder="password" v-model="signup.password" password-reveal></b-input>
+          <b-input
+            required
+            type="password"
+            minlength="4"
+            maxlength="16"
+            placeholder="password"
+            v-model="signup.password"
+            password-reveal
+          ></b-input>
         </b-field>
       </div>
       <div class="field">
         <label class="label">Role</label>
         <div class="control">
-          <b-radio v-on:change="changeRole(1)" name="role" v-model="radio" native-value="Admin">Admin</b-radio>
-          <b-radio v-on:change="changeRole(0)" name="role" v-model="radio" native-value="Employee">Employee</b-radio>
+          <b-radio
+            v-on:change="changeRole(1)"
+            name="role"
+            v-model="radio"
+            native-value="Admin"
+          >Admin</b-radio>
+          <b-radio
+            v-on:change="changeRole(0)"
+            name="role"
+            v-model="radio"
+            native-value="Employee"
+          >Employee</b-radio>
         </div>
       </div>
     </form>
