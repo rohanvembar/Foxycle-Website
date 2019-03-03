@@ -115,6 +115,7 @@ export default class Signup extends Vue {
       })
       .then((response: AxiosResponse<iUser>) => {
         this.$emit("success");
+        this.goodToast();
       })
       .catch((errorResponse: any) => {
         this.error = errorResponse.response.data.reason;
@@ -123,6 +124,15 @@ export default class Signup extends Vue {
 
   cancel() {
     this.$emit("cancel");
+  }
+
+  goodToast() {
+    this.$toast.open({
+      duration: 3000,
+      message: `new employee added successfully`,
+      position: "is-bottom",
+      type: "is-primary"
+    });
   }
 }
 
