@@ -131,19 +131,29 @@ export default class EmployeeManagement extends Vue {
   }
 
   deleteEmployee(empl: iUser) {
-    this.error = false;
-    axios
-      .delete(APIConfig.buildUrl("/employees/" + empl.id))
-      .then((response: AxiosResponse) => {
-        const deletedEmployee = response.data;
-        this.employees = this.employees.filter(employee => {
-          return employee.id != deletedEmployee.id;
-        });
-        this.$emit("success");
-      })
-      .catch((response: AxiosResponse) => {
-        this.error = "bad";
-      });
+    this.$snackbar.open({
+      duration: 5000,
+      message: "Are you sure? Ignore this to do nothing",
+      type: "is-danger",
+      position: "is-bottom",
+      actionText: "Yes, delete",
+      queue: false,
+      onAction: () => {
+        this.error = false;
+        axios
+          .delete(APIConfig.buildUrl("/employees/" + empl.id))
+          .then((response: AxiosResponse) => {
+            const deletedEmployee = response.data;
+            this.employees = this.employees.filter(employee => {
+              return employee.id != deletedEmployee.id;
+            });
+            this.$emit("success");
+          })
+          .catch((response: AxiosResponse) => {
+            this.error = "bad";
+          });
+      }
+    });
   }
 
   addEmployee() {
