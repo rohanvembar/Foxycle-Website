@@ -35,8 +35,18 @@ Team Members + Roles:
   }
 }`
 
+<<<<<<< HEAD
 4. Run `npm install` in the `/client` and `/api` directory.
 5. In the repo's root directory, run `docker-compose up`.
 6. In the `/api` directory, run `npm run dev`.
 7. In the `/client` directory, run `npm run serve`.
 8. In your browser, navigate to `localhost:8080`
+=======
+4. Run a SQL query to create a database `dev` and `test`
+ * `create database dev`, `create database test`
+5. Run `npm install` in the `/client` and `/api` directory.
+6. In the repo's root directory, run `docker-compose up`.
+7. In the `/api` directory, run `npm run dev`.
+8. In the `/client` directory, run `npm run serve`.
+9. In your browser, navigate to `localhost:8080`
+>>>>>>> 27d4ae105a7f1313b02a839df93a1a4971b0b199
