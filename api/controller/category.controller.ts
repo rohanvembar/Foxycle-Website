@@ -20,11 +20,13 @@ export class CategoryController extends DefaultController {
             });
         router.route("/itemscategory/:id")
             .get((req: Request, res: Response) => {
-                console.log("retrieving item categories with id of " + req.params.categoryId);
-                itemCategoryRepo.find(req.params.categoryId).then((categories: Category[]) => {
+                var id = req.params.id;
+                console.log("retrieving item categories with id of " + id);
+                itemCategoryRepo.find(id).then((categories: Category[]) => {
                     if (categories == undefined) {
                         return;
                     }
+                    console.log(categories)
                     res.status(200).send(categories);
                 })
             });

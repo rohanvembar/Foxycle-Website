@@ -180,7 +180,7 @@ export default class AdminEditProduct extends Vue {
     if (!this.ItemSalePrice) {
       this.ItemSalePrice = 0;
     }
-    console.log(this.ItemShipping);
+    console.log("[AdminEditProduct.vue] shipping? " + this.ItemShipping);
     axios
       .put(APIConfig.buildUrl("/shopitem/" + this.items[this.itemToEdit].id), {
         name: this.ItemTitle,
@@ -235,14 +235,13 @@ export default class AdminEditProduct extends Vue {
   }
   showEditItemModal(item: number) {
     // NEEDS TO FILTER AT CONTROLLER LEVEL
-
+    console.log("[AdminEditProduct.vue] cat id: " + this.items[item].categoryId)
     axios
       .get(APIConfig.buildUrl("/itemscategory/" + this.items[item].categoryId))
       .then((response: AxiosResponse) => {
         this.categoryItems = response.data;
-        console.log(
-          "[AdminEditProduct.vue]" + JSON.stringify(response.data.length)
-        );
+        console.log("[AdminEditProduct.vue] cats: " + JSON.stringify(response.data));
+        console.log("[AdminEditProduct.vue] cat length: " + JSON.stringify(response.data.length));
         this.itemToEdit = item;
         this.ItemTitle = this.items[item].name;
         this.ItemPrice = this.items[item].price;
@@ -314,9 +313,6 @@ export default class AdminEditProduct extends Vue {
       .get(APIConfig.buildUrl("/shopitems"))
       .then((response: AxiosResponse) => {
         this.items = response.data;
-        console.log(
-          "[AdminEditProduct.vue]" + JSON.stringify(response.data.length)
-        );
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
