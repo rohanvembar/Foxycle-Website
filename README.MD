@@ -38,8 +38,8 @@ Team Members + Roles:
 4. Run a SQL query to create a database `dev` and `test`
  * `create database dev`, `create database test`
 5. Run `npm install` in the `/client` and `/api` directory.
-6. In the root directory, run the data.sql query 
-7. In the repo's root directory, run `docker-compose up`.
-8. In the `/api` directory, run `npm run dev`.
-9. In the `/client` directory, run `npm run serve`.
+6. In the repo's root directory, run `docker-compose up`.
+7. In the `/api` directory, run `npm run dev`.
+8. In the `/client` directory, run `npm run serve`.
+9. Query the `dev` database with the contents of `data.sql` 
 10. In your browser, navigate to `localhost:8080`

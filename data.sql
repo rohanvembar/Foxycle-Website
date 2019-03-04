@@ -1,333 +1,123 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 4541
-#
-# http://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
-#
-# Host: 127.0.0.1 (MySQL 5.7.24)
-# Database: dev
-# Generation Time: 2019-03-03 23:20:27 +0000
-# ************************************************************
-
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.7.24 - MySQL Community Server (GPL)
+-- Server OS:                    Linux
+-- HeidiSQL Version:             10.1.0.5464
+-- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
-# Dump of table announcement
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `announcement`;
-
-CREATE TABLE `announcement` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  `body` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `announcement` WRITE;
+-- Dumping data for table dev.announcement: ~4 rows (approximately)
 /*!40000 ALTER TABLE `announcement` DISABLE KEYS */;
-
-INSERT INTO `announcement` (`id`, `title`, `date`, `body`)
-VALUES
-	(9,'50% off all apparel','02-20-2019','Get 50% off all apparel this week!'),
-	(10,'20% off all road bikes','02-20-2019','Get 20% off all road bikes this month!'),
-	(11,'Store closed this Saturday','02-20-2019','Foxycle will be closed this Saturday.'),
-	(12,'test announcement','02-25-2019','test');
-
+REPLACE INTO `announcement` (`id`, `title`, `date`, `body`) VALUES
+	(9, '50% off all apparel', '02-20-2019', 'Get 50% off all apparel this week!'),
+	(10, '20% off all road bikes', '02-20-2019', 'Get 20% off all road bikes this month!'),
+	(11, 'Store closed this Saturday', '02-20-2019', 'Foxycle will be closed this Saturday.'),
+	(12, 'test announcement', '02-25-2019', 'test');
 /*!40000 ALTER TABLE `announcement` ENABLE KEYS */;
-UNLOCK TABLES;
 
+-- Dumping data for table dev.brand: ~6 rows (approximately)
+/*!40000 ALTER TABLE `brand` DISABLE KEYS */;
+REPLACE INTO `brand` (`id`, `name`) VALUES
+	(15813118, 'Giant'),
+	(17715252, 'Raleigh'),
+	(36572959, 'Liv'),
+	(51141533, 'Foxycle'),
+	(55776470, 'Trek'),
+	(83515711, 'Diamondback');
+/*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
-# Dump of table category
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `category`;
-
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `categoryId` int(11) NOT NULL,
-  `category` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `category` WRITE;
+-- Dumping data for table dev.category: ~12 rows (approximately)
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-
-INSERT INTO `category` (`id`, `categoryId`, `category`)
-VALUES
-	(23,35885156,''),
-	(24,10500655,''),
-	(25,81555768,''),
-	(26,41858651,''),
-	(27,55141165,''),
-	(28,60559125,''),
-	(29,66175511,'');
-
+REPLACE INTO `category` (`id`, `categoryId`, `category`) VALUES
+	(1, 55005547, 'roadbike'),
+	(2, 14517551, 'roadbike'),
+	(3, 17551539, 'apparel'),
+	(4, 23003764, 'roadbike'),
+	(5, 91551511, 'roadbike'),
+	(6, 25777184, 'roadbike'),
+	(7, 35155851, 'roadbike'),
+	(8, 75184111, 'apparel'),
+	(9, 92561277, 'apparel'),
+	(10, 63717143, 'apparel'),
+	(11, 47348404, 'roadbike'),
+	(12, 43315544, 'roadbike');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
-UNLOCK TABLES;
 
-
-# Dump of table contact
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `contact`;
-
-CREATE TABLE `contact` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `monHours` varchar(255) NOT NULL,
-  `tueHours` varchar(255) NOT NULL,
-  `wedHours` varchar(255) NOT NULL,
-  `thuHours` varchar(255) NOT NULL,
-  `friHours` varchar(255) NOT NULL,
-  `satHours` varchar(255) NOT NULL,
-  `sunHours` varchar(255) NOT NULL,
-  `phoneNumber` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `map` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `contact` WRITE;
+-- Dumping data for table dev.contact: ~1 rows (approximately)
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-
-INSERT INTO `contact` (`id`, `monHours`, `tueHours`, `wedHours`, `thuHours`, `friHours`, `satHours`, `sunHours`, `phoneNumber`, `address`, `email`, `map`)
-VALUES
-	(1,'10 AM - 6 PM','10 AM - 6 PM','10 AM - 6 PM','10 AM - 6 PM','10 AM - 6 PM','10 AM - 5 PM','12 AM - 5 PM','(805) 111-1111','1 Grand Avenue San Luis Obispo, CA 93407','info@foxycle.com','\"https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed\"');
-
+REPLACE INTO `contact` (`id`, `monHours`, `tueHours`, `wedHours`, `thuHours`, `friHours`, `satHours`, `sunHours`, `phoneNumber`, `address`, `email`, `map`) VALUES
+	(1, '10 AM - 6 PM', '10 AM - 6 PM', '10 AM - 6 PM', '10 AM - 6 PM', '10 AM - 6 PM', '10 AM - 5 PM', '12 AM - 5 PM', '(805) 111-1111', '1 Grand Avenue San Luis Obispo, CA 93407', 'info@foxycle.com', '"https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed"');
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
-UNLOCK TABLES;
 
-
-# Dump of table item_purchased
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `item_purchased`;
-
-CREATE TABLE `item_purchased` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `orderNumber` int(11) NOT NULL,
-  `itemId` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `subtotal` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `item_purchased` WRITE;
+-- Dumping data for table dev.item_purchased: ~6 rows (approximately)
 /*!40000 ALTER TABLE `item_purchased` DISABLE KEYS */;
-
-INSERT INTO `item_purchased` (`id`, `orderNumber`, `itemId`, `quantity`, `subtotal`)
-VALUES
-	(25,55157252,50,1,110),
-	(26,1655551,50,1,110),
-	(27,1655551,53,1,130),
-	(28,55514481,54,1,130),
-	(29,55514481,56,1,500),
-	(30,55514481,53,1,130),
-	(31,55514481,55,1,250);
-
+REPLACE INTO `item_purchased` (`id`, `orderNumber`, `itemId`, `quantity`, `subtotal`) VALUES
+	(1, 48444177, 4, 1, 999),
+	(2, 48444177, 7, 1, 99),
+	(3, 15551545, 7, 1, 99),
+	(4, 15551545, 9, 1, 35),
+	(5, 53655631, 7, 1, 99),
+	(6, 16368410, 5, 1, 599);
 /*!40000 ALTER TABLE `item_purchased` ENABLE KEYS */;
-UNLOCK TABLES;
 
-
-# Dump of table order_management
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `order_management`;
-
-CREATE TABLE `order_management` (
-  `orderNumber` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
-  `dateOrdered` varchar(255) NOT NULL,
-  `mailingAddress` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `subtotal` int(11) NOT NULL,
-  `shippingCost` int(11) NOT NULL,
-  `total` int(11) NOT NULL,
-  PRIMARY KEY (`orderNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `order_management` WRITE;
+-- Dumping data for table dev.order_management: ~4 rows (approximately)
 /*!40000 ALTER TABLE `order_management` DISABLE KEYS */;
-
-INSERT INTO `order_management` (`orderNumber`, `status`, `dateOrdered`, `mailingAddress`, `name`, `email`, `subtotal`, `shippingCost`, `total`)
-VALUES
-	(1655551,1,'03.03.2019','Store Pickup','fake fake','fake@fake.com',240,10,250),
-	(55157252,1,'03.03.2019','fake, fake, AR 00000','Fake Name','fake@gmail.com',110,10,120),
-	(55514481,1,'03.03.2019','Store Pickup','fake fake','fake@blah.com',1010,10,1020);
-
+REPLACE INTO `order_management` (`orderNumber`, `status`, `dateOrdered`, `mailingAddress`, `subtotal`, `shippingCost`, `total`, `name`, `email`) VALUES
+	(15551545, 4, '03.04.2019', '1234 Fake Address, San Luis Obispo, CA 93401', 134, 10, 144, 'John Smith', 'johnsmith@gmail.com'),
+	(16368410, 5, '03.04.2019', 'Store Pickup', 599, 10, 609, 'John Smith', 'johnsmith@gmail.com'),
+	(48444177, 1, '03.04.2019', 'Store Pickup', 1098, 10, 1108, 'John Smith', 'johnsmith@gmail.com'),
+	(53655631, 3, '03.04.2019', '1234 Fake Address, San Luis Obispo, CA 93401', 99, 10, 109, 'John Smith', 'johnsmith@gmail.com');
 /*!40000 ALTER TABLE `order_management` ENABLE KEYS */;
-UNLOCK TABLES;
 
-
-# Dump of table service
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `service`;
-
-CREATE TABLE `service` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `price` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `category` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `service` WRITE;
+-- Dumping data for table dev.service: ~9 rows (approximately)
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-
-INSERT INTO `service` (`id`, `title`, `price`, `description`, `category`)
-VALUES
-	(1,'Basic Tune-Up',25,'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.','tune-ups'),
-	(2,'Premium Tune-Up',35,'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.','tune-ups'),
-	(3,'Brake System Tune-Up',45,'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.','tune-ups'),
-	(4,'Basic Tune-Up',25,'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.','adjustments'),
-	(5,'Premium Tune-Up',35,'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.','adjustments'),
-	(6,'Brake System Tune-Up',45,'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.','adjustments'),
-	(7,'Basic Tune-Up',25,'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.','installations'),
-	(8,'Premium Tune-Up',35,'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.','installations'),
-	(9,'Brake System Tune-Up',45,'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.','installations');
-
+REPLACE INTO `service` (`id`, `title`, `price`, `description`, `category`) VALUES
+	(1, 'Basic Tune-Up', 25, 'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.', 'tune-ups'),
+	(2, 'Premium Tune-Up', 35, 'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.', 'tune-ups'),
+	(3, 'Brake System Tune-Up', 45, 'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.', 'tune-ups'),
+	(4, 'Basic Tune-Up', 25, 'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.', 'adjustments'),
+	(5, 'Premium Tune-Up', 35, 'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.', 'adjustments'),
+	(6, 'Brake System Tune-Up', 45, 'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.', 'adjustments'),
+	(7, 'Basic Tune-Up', 25, 'Includes brake inspection and adjustments, derailleur inspection and adjustments, \ntire inspection and inflation, safety check of all bolts and wipe down of frame.', 'installations'),
+	(8, 'Premium Tune-Up', 35, 'Everything included in the Basic Tune-Up, plus wheel truing, pivot point lube, chain clean and \nlube and frame clean and polish.', 'installations'),
+	(9, 'Brake System Tune-Up', 45, 'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.', 'installations');
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
-UNLOCK TABLES;
 
-
-# Dump of table session
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `session`;
-
-CREATE TABLE `session` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `expiresAt` datetime NOT NULL,
-  `userId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `REL_3d2f174ef04fb312fdebd0ddc5` (`userId`),
-  CONSTRAINT `FK_3d2f174ef04fb312fdebd0ddc53` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `session` WRITE;
+-- Dumping data for table dev.session: ~1 rows (approximately)
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
-
-INSERT INTO `session` (`id`, `expiresAt`, `userId`)
-VALUES
-	(7,'2019-03-03 15:49:57',5);
-
+REPLACE INTO `session` (`id`, `expiresAt`, `userId`) VALUES
+	(4, '2019-03-04 16:24:33', 3);
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
-UNLOCK TABLES;
 
-
-# Dump of table shop_item
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `shop_item`;
-
-CREATE TABLE `shop_item` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `price` int(11) NOT NULL,
-  `brand` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `delivery` tinyint(4) NOT NULL DEFAULT '0',
-  `quantity` int(11) NOT NULL DEFAULT '1',
-  `saleprice` int(11) NOT NULL DEFAULT '0',
-  `description` mediumtext NOT NULL,
-  `categoryId` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `shop_item` WRITE;
+-- Dumping data for table dev.shop_item: ~8 rows (approximately)
 /*!40000 ALTER TABLE `shop_item` DISABLE KEYS */;
-
-INSERT INTO `shop_item` (`id`, `name`, `price`, `brand`, `image`, `delivery`, `quantity`, `saleprice`, `description`, `categoryId`)
-VALUES
-	(50,'2019 Marrakesh Deore',110,'Salsa Cycles','https://salsacycles.com/files/bikes/salsa-marrakesh-19-BK8353-drop-bar-deore-touring-bike-640x360.jpg',1,3,0,'This is a fun bike!',35885156),
-	(51,'KENT GZR700 Road Bike',160,'KENT','https://images-na.ssl-images-amazon.com/images/I/81nsr0LPsYL._SX425_.jpg',0,6,0,'awesome bike!!!!!',10500655),
-	(53,'Grail',130,'Gravel Bikes','https://static.canyon.com/_img/bikes/2019/grail-cf-sl-7_c1281.png',0,2,0,'awesome bike!!!!!',41858651),
-	(54,'Long Haul Trucker',130,'Surly Bikes','https://surlybikes.com/uploads/bikes/surly-long-haul-trucker-bike-700c-blue-BK0417-1200x800.jpg',0,3,0,'awesome bike!!!!!',55141165),
-	(55,'Cannondale Quick 7 Bike',250,'Cannondale','https://www.rei.com/media/product/145841',0,5,0,'an awesome bike!!!',60559125),
-	(56,'Tandem Bike',500,'cool brand','https://outdoors.byu.edu/wp-content/uploads/2016/02/Smooth-Blue.png',0,2,0,'an awesome bike!!!',66175511);
-
+REPLACE INTO `shop_item` (`id`, `name`, `price`, `saleprice`, `brandId`, `categoryId`, `image`, `delivery`, `quantity`, `description`) VALUES
+	(1, 'Trek Bike 1', 5000, 0, 55776470, 43315544, 'https://trek.scene7.com/is/image/TrekBicycleProducts/MadoneSLR9eTapD_20_28486_A_Primary?$responsive-pjpg$&cache=on,on&wid=480&hei=360', 0, 5, 'Description of a red Trek bike.'),
+	(2, 'Trek Bike 2', 3000, 0, 55776470, 14517551, 'https://trek.scene7.com/is/image/TrekBicycleProducts/EmondaSLR9DEtap_20_28489_A_Primary?$responsive-pjpg$&cache=on,on&wid=480&hei=360', 0, 10, 'Description of a Trek Bike again.'),
+	(4, 'Diamondback Century 2 (2018)', 1500, 999, 83515711, 23003764, 'https://cdn.shopify.com/s/files/1/0286/1214/products/diamondback-century-2-2018-green-50cm-3327524503596_288x192.jpg?v=1549861860', 0, 9, 'Diamondback\'s Century 2 combines cutting-edge technology with a competitive component mix to deliver a bike that’s long on performance and short on dollar signs. The heart of this bike is its custom formed and butted aluminum tubes. Those tubes aren’t simply stylish; they also provide you with the perfect balance of weight savings and strength.\n\nNext, DB laid out those tubes using our Enhanced Performance Geometry as a blueprint. While traditional road bike geometry stretches the rider out in as low and long a position as possible, their Century models feature a slightly taller head tube and slightly relaxed head angle, both of which place you in a riding position that is still plenty fast and “aero,” but upright enough to be sustained on those long rides.\n\nThe Century 2’s components are equally up to the task. Tektro disc brakes and an 18-speed Shimano drivetrain are absolutely uncommon at this price.\n\nReady Ride bikes are shipped 95 percent assembled. Typical bike assembly is time-consuming and requires technical know-how. Ready Ride reduces the time and skills needed for the final, four-step assembly.'),
+	(5, 'Raleigh Carlton (2018)', 599, 0, 17715252, 91551511, 'https://cdn.shopify.com/s/files/1/0286/1214/products/raleigh-carlton-2018-small-5-3-5-6-420705402907_288x288.jpg?v=1549863717', 0, 4, 'If you’re looking for a fast, great handling city bike with classic good looks, you can’t go wrong with the Carlton. Whether you are cruising to the corner store for a sixer or riding to work, the Carlton is great for casual urban trips, quick errands and commuting. A single speed with flip flop rear wheel, the Carlton can also be a fixed gear bike. This city bike has a unique Raleigh silhouette with dual top tubes, a one piece integrated handlebar and stem for a nice clean look, and a platform rack with classy wood inlay featuring a burnished Raleigh Heron insignia. Reflective decaling on the downtube adds visibility for riding at night or the early morning hours, and the bike bell lets peds and other commuters know you’re coming.'),
+	(6, 'Giant Contend 1 (2019)', 499, 0, 15813118, 35155851, 'https://cdn.shopify.com/s/files/1/0286/1214/products/giant-contend-1-2019-charcoal-medium-5-8-5-10-3904585957420_288x192.jpg?v=1549852478', 0, 5, 'If you’re looking for a fast, great handling city bike with classic good looks, you can’t go wrong with the Carlton. Whether you are cruising to the corner store for a sixer or riding to work, the Carlton is great for casual urban trips, quick errands and commuting. A single speed with flip flop rear wheel, the Carlton can also be a fixed gear bike. This city bike has a unique Raleigh silhouette with dual top tubes, a one piece integrated handlebar and stem for a nice clean look, and a platform rack with classy wood inlay featuring a burnished Raleigh Heron insignia. Reflective decaling on the downtube adds visibility for riding at night or the early morning hours, and the bike bell lets peds and other commuters know you’re coming.'),
+	(7, 'Giant Blue Helmet', 99, 0, 15813118, 75184111, 'https://cdn.shopify.com/s/files/1/0286/1214/products/giant-rev-comp-mips-helmet-matte-blue-medium-large-2981561630764_288x192.jpg?v=1551385121', 1, 2, 'Designed for everyday road riding performance, the all-new Rev Comp follows in the footsteps of the pro-level Rev, a favorite among WorldTour riders including Giro d’Italia champion Tom Dumoulin. This all-rounder introduces some new features to optimize its comfort, protection and versatility. It has 14 vents to maximize airflow, a Cinch Pro fit system for quick and comfortable fit adjustment, and is available with MIPS to offer added impact protection. Other features include integrated magnetic light mounts for riding in low-light conditions or at night.'),
+	(8, 'Liv Rev MIPS Helmet', 179, 0, 36572959, 92561277, 'https://cdn.shopify.com/s/files/1/0286/1214/products/liv-rev-mips-helmet-black-purple-small-28027818954_288x288.jpg?v=1549702794', 1, 5, 'Designed for everyday road riding performance, the all-new Rev Comp follows in the footsteps of the pro-level Rev, a favorite among WorldTour riders including Giro d’Italia champion Tom Dumoulin. This all-rounder introduces some new features to optimize its comfort, protection and versatility. It has 14 vents to maximize airflow, a Cinch Pro fit system for quick and comfortable fit adjustment, and is available with MIPS to offer added impact protection. Other features include integrated magnetic light mounts for riding in low-light conditions or at night.'),
+	(9, 'Liv BeLiv Long Sleeve Women\'s Jersey', 35, 0, 36572959, 63717143, 'https://cdn.shopify.com/s/files/1/0286/1214/products/liv-beliv-long-sleeve-women-s-jersey-white-black-x-small-28110178698_480x480.jpg?v=1549871457', 1, 4, 'Liv CLUB fit\nFull length front zipper\n3 back pockets\nFlatlock seams, non-restrictive collar\nSublimated graphics\nTransTextura(TM) fabric wicks moisture and dries quickly\nHigh-visibility reflective accents');
 /*!40000 ALTER TABLE `shop_item` ENABLE KEYS */;
-UNLOCK TABLES;
 
+-- Dumping data for table dev.shop_item_category_id_category: ~0 rows (approximately)
+/*!40000 ALTER TABLE `shop_item_category_id_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shop_item_category_id_category` ENABLE KEYS */;
 
-# Dump of table shop_item_categories_category
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `shop_item_categories_category`;
-
-CREATE TABLE `shop_item_categories_category` (
-  `shopItemId` int(11) NOT NULL,
-  `categoryId` int(11) NOT NULL,
-  PRIMARY KEY (`shopItemId`,`categoryId`),
-  KEY `FK_ff43b91b2ba745874e958ca1745` (`categoryId`),
-  CONSTRAINT `FK_0074e141f869cfc316d0f6e877b` FOREIGN KEY (`shopItemId`) REFERENCES `shop_item` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_ff43b91b2ba745874e958ca1745` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-# Dump of table shop_item_category_id_category
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `shop_item_category_id_category`;
-
-CREATE TABLE `shop_item_category_id_category` (
-  `shopItemId` int(11) NOT NULL,
-  `categoryId` int(11) NOT NULL,
-  PRIMARY KEY (`shopItemId`,`categoryId`),
-  KEY `FK_dd9984e54b067fb306b3ae68812` (`categoryId`),
-  CONSTRAINT `FK_18626aeee07cef6bd753b67de16` FOREIGN KEY (`shopItemId`) REFERENCES `shop_item` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_dd9984e54b067fb306b3ae68812` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-# Dump of table user
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `user`;
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `profileUrl` varchar(255) DEFAULT NULL,
-  `emailAddress` varchar(255) NOT NULL,
-  `role` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `IDX_eea9ba2f6e1bb8cb89c4e672f6` (`emailAddress`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-LOCK TABLES `user` WRITE;
+-- Dumping data for table dev.user: ~2 rows (approximately)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-
-INSERT INTO `user` (`id`, `firstName`, `lastName`, `password`, `profileUrl`, `emailAddress`, `role`)
-VALUES
-	(5,'owner','owner','owner',NULL,'owner',1),
-	(6,'empl','empl','empl',NULL,'empl',0);
-
+REPLACE INTO `user` (`id`, `firstName`, `lastName`, `password`, `profileUrl`, `emailAddress`, `role`) VALUES
+	(2, 'Employee', 'Person', 'empl', NULL, 'empl', 0),
+	(3, 'Owner', 'Person', 'owner', NULL, 'owner', 1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 
-
-
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

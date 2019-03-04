@@ -228,8 +228,8 @@ export default class ViewShopItems extends Vue {
     console.log("delivery filter: " + newFilter);
   }
 
-  onBrandFilter(newFilter){
-    this.brandselect = newFilter
+  onBrandFilter(newFilter) {
+    this.brandselect = newFilter;
   }
 
   goToItemPage() {}
@@ -525,6 +525,16 @@ div#columns figure figcaption {
 
 .filter {
   position: fixed;
-  margin-left: -10%;
+  height: 100%;
+  margin-left: 20px;
+}
+
+.editbutton {
+  margin: px;
+  display: block;
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 100%;
 }
 </style>
