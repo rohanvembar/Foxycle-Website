@@ -5,7 +5,7 @@
         <div class="box manage-contact">
           <h3 class="message-header">Manage Info</h3>
           <form v-on:submit.prevent="saveContact()">
-            <article class="row-sections" v-for="(a, index) in contacts" v-bind:key="index">
+            <article class="row-sections">
               <div class="column-sections">
                 <p class="title">Hours</p>
                 <div class="content hours row-sections">
