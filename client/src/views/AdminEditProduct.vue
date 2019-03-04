@@ -277,20 +277,31 @@ export default class AdminEditProduct extends Vue {
   }
 
   removeItem(item: iShopItem) {
-    this.error = false;
-    axios
-      .delete(APIConfig.buildUrl("/deleteitem/" + item.id))
-      .then((response: AxiosResponse) => {
-        const deletedItem = response.data;
-        this.items = this.items.filter(item => {
-          return item.id != deletedItem.id;
-        });
-        this.$emit("success");
-        this.badToast();
-      })
-      .catch((response: AxiosResponse) => {
-        this.error = "bad";
-      });
+    this.$snackbar.open({
+      duration: 5000,
+      message:
+        "Are you sure? Ignore this to do nothing",
+      type: "is-danger",
+      position: "is-bottom",
+      actionText: "Yes, delete",
+      queue: false,
+      onAction: () => {
+        this.error = false;
+        axios
+          .delete(APIConfig.buildUrl("/deleteitem/" + item.id))
+          .then((response: AxiosResponse) => {
+            const deletedItem = response.data;
+            this.items = this.items.filter(item => {
+              return item.id != deletedItem.id;
+            });
+            this.$emit("success");
+            this.badToast();
+          })
+          .catch((response: AxiosResponse) => {
+            this.error = "bad";
+          });
+      }
+    });
   }
 
   created() {

@@ -107,20 +107,31 @@ export default class EditAnnouncements extends Vue {
   }
 
   deleteAnnouncement(announcement: iAnnouncement) {
-    this.error = false;
-    axios
-      .delete(APIConfig.buildUrl("/announcements/" + announcement.id))
-      .then((response: AxiosResponse) => {
-        const deletedAnnouncement = response.data;
-        this.announcements = this.announcements.filter(announcement => {
-          return announcement.id != deletedAnnouncement.id;
-        });
-        this.$emit("success");
-      })
-      .catch((response: AxiosResponse) => {
-        this.error = "bad";
-      });
-    this.badToast();
+    this.$snackbar.open({
+      duration: 5000,
+      message:
+        "Are you sure? Ignore this to do nothing",
+      type: "is-danger",
+      position: "is-bottom",
+      actionText: "Yes, delete",
+      queue: false,
+      onAction: () => {
+        this.error = false;
+        axios
+          .delete(APIConfig.buildUrl("/announcements/" + announcement.id))
+          .then((response: AxiosResponse) => {
+            const deletedAnnouncement = response.data;
+            this.announcements = this.announcements.filter(announcement => {
+              return announcement.id != deletedAnnouncement.id;
+            });
+            this.$emit("success");
+          })
+          .catch((response: AxiosResponse) => {
+            this.error = "bad";
+          });
+        this.badToast();
+      }
+    });
   }
 
   newAnnouncement() {

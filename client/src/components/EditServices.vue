@@ -205,19 +205,28 @@ export default class EditServices extends Vue {
   newInstallationBody: string = "";
 
   deleteService(id: number) {
-    this.badToast();
-
-    this.error = false;
-    axios
-      .delete(APIConfig.buildUrl("/services/" + id))
-      .then((response: AxiosResponse) => {
-        const deletedService = response.data;
-        this.getAllServices();
-        this.$emit("success");
-      })
-      .catch((response: AxiosResponse) => {
-        this.error = "bad";
-      });
+    this.$snackbar.open({
+      duration: 5000,
+      message: "Are you sure? Ignore this to do nothing",
+      type: "is-danger",
+      position: "is-bottom",
+      actionText: "Yes, delete",
+      queue: false,
+      onAction: () => {
+        this.error = false;
+        axios
+          .delete(APIConfig.buildUrl("/services/" + id))
+          .then((response: AxiosResponse) => {
+            const deletedService = response.data;
+            this.getAllServices();
+            this.$emit("success");
+            this.badToast();
+          })
+          .catch((response: AxiosResponse) => {
+            this.error = "bad";
+          });
+      }
+    });
   }
 
   goodToast() {
