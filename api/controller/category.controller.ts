@@ -26,8 +26,14 @@ export class CategoryController extends DefaultController {
                     if (categories == undefined) {
                         return;
                     }
-                    console.log(categories)
-                    res.status(200).send(categories);
+                    var refined_categories: Category[] = [];
+                    for (var i in categories) {
+                        if (categories[i].categoryId == id) {
+                            refined_categories.push(categories[i])
+                        }
+                    }
+                    console.log(refined_categories)
+                    res.status(200).send(refined_categories);
                 })
             });
         router.route("/newitemcategory")

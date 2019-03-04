@@ -181,6 +181,14 @@ export default class AdminEditProduct extends Vue {
       this.ItemSalePrice = 0;
     }
     console.log("[AdminEditProduct.vue] shipping? " + this.ItemShipping);
+    var categorynumber = this.generate();
+    // Adding categories of item
+    for (var i = 0; i < this.ItemCategories.length; i++) {
+      axios.post(APIConfig.buildUrl("/newitemcategory"), {
+        categoryId: categorynumber,
+        category: this.ItemCategories[i]
+      });
+    }
     axios
       .put(APIConfig.buildUrl("/shopitem/" + this.items[this.itemToEdit].id), {
         name: this.ItemTitle,
@@ -188,7 +196,7 @@ export default class AdminEditProduct extends Vue {
         saleprice: this.ItemSalePrice,
         delivery: this.ItemShipping,
         brand: this.ItemBrand,
-        categories: this.ItemCategories,
+        categoryId: categorynumber,
         image: this.ItemImage,
         quantity: this.ItemQuantity,
         description: this.ItemDescription
@@ -233,15 +241,38 @@ export default class AdminEditProduct extends Vue {
   get isLoggedIn(): boolean {
     return !!this.$store.state.userId;
   }
+  generate() {
+    var len;
+    var timestamp;
+    len = 8;
+    timestamp = +new Date();
+    var ts = timestamp.toString();
+    var parts = ts.split("").reverse();
+    var id = "";
+
+    for (var i = 0; i < len; ++i) {
+      var index = Math.floor(Math.random() * (parts.length - 1 - 0 + 1)) + 0;
+      id += parts[index];
+    }
+
+    return id;
+  }
   showEditItemModal(item: number) {
     // NEEDS TO FILTER AT CONTROLLER LEVEL
-    console.log("[AdminEditProduct.vue] cat id: " + this.items[item].categoryId)
+    console.log(
+      "[AdminEditProduct.vue] cat id: " + this.items[item].categoryId
+    );
     axios
       .get(APIConfig.buildUrl("/itemscategory/" + this.items[item].categoryId))
       .then((response: AxiosResponse) => {
         this.categoryItems = response.data;
-        console.log("[AdminEditProduct.vue] cats: " + JSON.stringify(response.data));
-        console.log("[AdminEditProduct.vue] cat length: " + JSON.stringify(response.data.length));
+        console.log(
+          "[AdminEditProduct.vue] cats: " + JSON.stringify(response.data)
+        );
+        console.log(
+          "[AdminEditProduct.vue] cat length: " +
+            JSON.stringify(response.data.length)
+        );
         this.itemToEdit = item;
         this.ItemTitle = this.items[item].name;
         this.ItemPrice = this.items[item].price;
@@ -251,6 +282,15 @@ export default class AdminEditProduct extends Vue {
         this.ItemBrand = this.items[item].brand;
         this.ItemQuantity = this.items[item].quantity;
         this.ItemShipping = this.items[item].delivery;
+
+        // Clearing array (clicking edit on multiple items fills it up)
+        this.ItemCategories = [];
+        for (var i = 0; i < this.categoryItems.length; i++) {
+          // TEMPORARY WORKAROUND (NEED TO FILTER AT CONTROLLER LEVEL)
+          if (this.categoryItems[i].categoryId == this.items[item].categoryId)
+            this.ItemCategories.push(this.categoryItems[i].category);
+        }
+
         this.showEditItem = true;
       })
       .catch((res: AxiosError) => {
@@ -261,14 +301,6 @@ export default class AdminEditProduct extends Vue {
     if (!this.items[item].saleprice) {
       this.ItemSalePrice = "";
     }
-
-    // Clearing array (clicking edit on multiple items fills it up)
-    this.ItemCategories = [""];
-    for (var i = 0; i < this.categoryItems.length; i++) {
-      // TEMPORARY WORKAROUND (NEED TO FILTER AT CONTROLLER LEVEL)
-      if (this.categoryItems[i].categoryId == this.items[item].categoryId)
-        this.ItemCategories.push(this.categoryItems[i].category);
-    }
   }
 
   showAddItemModal() {
@@ -278,8 +310,7 @@ export default class AdminEditProduct extends Vue {
   removeItem(item: iShopItem) {
     this.$snackbar.open({
       duration: 5000,
-      message:
-        "Are you sure? Ignore this to do nothing",
+      message: "Are you sure? Ignore this to do nothing",
       type: "is-danger",
       position: "is-bottom",
       actionText: "Yes, delete",
