@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from "express";
-import { LoginController, UserController, AnnouncementController, ShopItemController, OrderManagementController, ContactController, ServiceController, ItemPurchasedController, CategoryController} from "./controller";
+import { BrandController, LoginController, UserController, AnnouncementController, ShopItemController, OrderManagementController, ContactController, ServiceController, ItemPurchasedController, CategoryController} from "./controller";
 
 import { DBConnection } from "./connection";
 import { OrderManagement, ItemPurchased } from "./entity";
@@ -29,6 +29,7 @@ export class Server {
       app.use("/", new OrderManagementController().router);
       app.use("/", new ItemPurchasedController().router);
       app.use("/", new CategoryController().router);
+      app.use("/", new BrandController().router);
 
       return app;
     });

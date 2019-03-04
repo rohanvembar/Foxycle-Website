@@ -11,9 +11,21 @@
       <b-field label="Item Name">
         <b-input type="text" placeholder="item name" v-model="newItemTitle" rounded required></b-input>
       </b-field>
-      <b-field label="Item Brand">
-        <b-input type="text" placeholder="item brand" v-model="newItemBrand" rounded required></b-input>
-      </b-field>
+      
+      <div class="field">
+        <label class="label">Item Brand</label>
+        <div class="control">
+          <div class="select">
+            <select v-model="brandIdStr">
+              <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
+              <option value="-1">Other</option>
+            </select>
+          </div>
+          <b-field label="Brand Name">
+            <b-input :disabled = "brandIdStr != '-1'" type="text" placeholder="item name" v-model="newItemBrand" rounded required></b-input>
+          </b-field>
+        </div>
+      </div>
       <b-field label="Price">
         <b-input
           type="number"
@@ -83,10 +95,12 @@
 
 
 <script lang="ts">
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import { iBrand } from "../models/brand.interface";
+
 import Modal from "./Modal.vue";
 @Component({
   components: {
@@ -95,6 +109,7 @@ import Modal from "./Modal.vue";
 })
 export default class AddItem extends Vue {
   @Prop(Boolean) isShowing: boolean = false;
+  @Prop() brands: iBrand[] = [];
   newItemTitle: string = "";
   newItemPrice: number | string = "";
   newItemSalePrice: number | string = "";
@@ -105,6 +120,8 @@ export default class AddItem extends Vue {
   newItemQuantity: number | string = "";
   savedItem: iShopItem | string = "";
   newItemShipping: boolean = false;
+  brandId: number = -1;
+  brandIdStr: string = "";
 
   generate() {
     var len;
@@ -131,6 +148,52 @@ export default class AddItem extends Vue {
     });
   }
 
+  addNewBrand(categorynumber){
+    axios
+        .post(APIConfig.buildUrl("/newBrand"), {
+          name: this.newItemBrand,
+          id: this.brandId
+        })
+        .then((response: AxiosResponse) => {
+          console.log(
+            "[AddItem.vue] new brand" +
+              JSON.stringify(response.data)
+          );
+          this.addNewItem(categorynumber);
+        })
+        .catch((response: AxiosResponse) => {
+          console.log("[AddItem.vue] brand" + "catch");
+        });
+  }
+
+  addNewItem(categorynumber){
+    if (!this.newItemSalePrice) {
+      this.newItemSalePrice = 0;
+    }
+    axios
+      .post(APIConfig.buildUrl("/newitem"), {
+        name: this.newItemTitle,
+        price: this.newItemPrice,
+        saleprice: this.newItemSalePrice,
+        brandId: this.brandId,
+        categoryId: categorynumber,
+        image: this.newItemImage,
+        delivery: this.newItemShipping,
+        quantity: this.newItemQuantity,
+        description: this.newItemDescription
+      })
+      .then((response: AxiosResponse) => {
+        console.log(this.newItemShipping);
+        console.log("[AddItem.vue]" + JSON.stringify(response.data));
+        this.savedItem = response.data;
+        this.$emit("success");
+        this.goodToast();
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("[AddItem.vue]" + "catch");
+      });
+  }
+
   success() {
     var categorynumber = this.generate();
     // Adding categories of item
@@ -153,32 +216,16 @@ export default class AddItem extends Vue {
           console.log("[AddItem.vue] category" + "catch");
         });
     }
-
-    if (!this.newItemSalePrice) {
-      this.newItemSalePrice = 0;
+    
+    this.brandId = Number(this.brandIdStr);
+    if(this.brandId < 0){
+      this.brandId = Number(this.generate());
+      this.addNewBrand(categorynumber);
+      console.log("New BrandID: " + this.brandId);
     }
-    axios
-      .post(APIConfig.buildUrl("/newitem"), {
-        name: this.newItemTitle,
-        price: this.newItemPrice,
-        saleprice: this.newItemSalePrice,
-        brand: this.newItemBrand,
-        categoryId: categorynumber,
-        image: this.newItemImage,
-        delivery: this.newItemShipping,
-        quantity: this.newItemQuantity,
-        description: this.newItemDescription
-      })
-      .then((response: AxiosResponse) => {
-        console.log(this.newItemShipping);
-        console.log("[AddItem.vue]" + JSON.stringify(response.data));
-        this.savedItem = response.data;
-        this.$emit("success");
-        this.goodToast();
-      })
-      .catch((response: AxiosResponse) => {
-        console.log("[AddItem.vue]" + "catch");
-      });
+    else{
+      this.addNewItem(categorynumber);
+    }
 
     this.$emit("success");
   }

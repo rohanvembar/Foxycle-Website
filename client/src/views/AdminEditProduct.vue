@@ -58,7 +58,7 @@
         </div>
       </div>
     </div>
-    <AddItem v-bind:is-showing="showAddItem" v-on:success="successAdd()" v-on:cancel="cancelAdd()"/>
+    <AddItem :brands = "brands" v-bind:is-showing="showAddItem" v-on:success="successAdd()" v-on:cancel="cancelAdd()"/>
 
     <modal
       v-bind:is-showing="showEditItem"
@@ -72,9 +72,18 @@
         <b-field label="Item Name">
           <b-input type="text" placeholder="item name" v-model="ItemTitle" rounded required></b-input>
         </b-field>
-        <b-field label="Item Brand">
-          <b-input type="text" placeholder="item brand" v-model="ItemBrand" rounded required></b-input>
-        </b-field>
+
+        <div class="field">
+          <label class="label">Item Brand</label>
+          <div class="control">
+            <div class="select">
+              <select v-model="ItemBrand">
+                <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <b-field label="Price">
           <b-input
             type="number"
@@ -148,6 +157,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
+import { iBrand } from "../models/brand.interface";
 import { categoryItem } from "../models/category.interface";
 import AddItem from "@/components/AddItem.vue";
 import Modal from "@/components/Modal.vue";
@@ -171,6 +181,7 @@ export default class AdminEditProduct extends Vue {
   ItemImage: string = "";
   ItemDescription: string = "";
   ItemCategories: string[] = [""];
+  brands: iBrand[] = [];
   ItemBrand: string = "";
   ItemQuantity: number | string = "";
   ItemShipping: boolean = true;
@@ -195,7 +206,7 @@ export default class AdminEditProduct extends Vue {
         price: this.ItemPrice,
         saleprice: this.ItemSalePrice,
         delivery: this.ItemShipping,
-        brand: this.ItemBrand,
+        brandId: this.ItemBrand,
         categoryId: categorynumber,
         image: this.ItemImage,
         quantity: this.ItemQuantity,
@@ -279,7 +290,8 @@ export default class AdminEditProduct extends Vue {
         this.ItemImage = this.items[item].image;
         this.ItemSalePrice = this.items[item].saleprice;
         this.ItemDescription = this.items[item].description;
-        this.ItemBrand = this.items[item].brand;
+        this.ItemBrand = JSON.stringify(this.items[item].brand);
+        console.log("[AdminEditProduct.vue] brand id: " + JSON.stringify(this.items[item]));
         this.ItemQuantity = this.items[item].quantity;
         this.ItemShipping = this.items[item].delivery;
 
@@ -350,6 +362,17 @@ export default class AdminEditProduct extends Vue {
         this.error = res.response && res.response.data.error;
         console.log("[AdminEditProduct.vue]" + this.error);
       });
+
+    axios
+      .get(APIConfig.buildUrl("/brands"))
+      .then((response: AxiosResponse) => {
+        this.brands = response.data;
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        console.log("[AdminEditProduct.vue] Error@@");
+      });
+
   }
 
   goToItemPage() {}

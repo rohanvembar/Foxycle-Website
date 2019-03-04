@@ -7,3 +7,4 @@ export * from "./contact.entity";
 export * from "./ordermanagement.entity";
 export * from "./itempurchased.entity";
 export * from "./category.entity";
+export * from "./brand.entity";

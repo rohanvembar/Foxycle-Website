@@ -10,6 +10,7 @@
       <ShopPageFilterBox
         @priceFilter="onPriceFilter"
         @deliveryFilter="onDeliveryFilter"
+        @brandFilter="onBrandFilter"
         v-if="hasItems()"
       />
     </div>
@@ -81,6 +82,7 @@ export default class ViewShopItems extends Vue {
   saleText: string = "SALE";
   priceFilter: String = "all";
   deliveryFilter: String = "all";
+  brandselect: String = "all";
 
   toast(item: iShopItem) {
     const ele = document.getElementById("toast");
@@ -152,24 +154,35 @@ export default class ViewShopItems extends Vue {
       });
   }
 
+  get brandRefinedItems() {
+    if (this.brandselect == "all") {
+      return this.sortedItems;
+    } else {
+      const brandId = Number(this.brandselect);
+      return this.sortedItems.filter(function(s) {
+        return s.brand == brandId;
+      });
+    }
+  }
+
   get priceRefinedItems() {
     const p = this.priceFilter;
     var priceArr_S = [];
     if (p == "all") {
-      return this.sortedItems;
+      return this.brandRefinedItems;
     } else {
       priceArr_S = p.split("-");
       console.log(priceArr_S);
       if (priceArr_S.length == 1) {
         const price = Number(priceArr_S[0]);
         console.log("price:" + priceArr_S[0]);
-        return this.sortedItems.filter(function(s) {
+        return this.brandRefinedItems.filter(function(s) {
           return s.price >= price;
         });
       } else {
         const low = Number(priceArr_S[0]);
         const high = Number(priceArr_S[1]);
-        return this.sortedItems.filter(function(s) {
+        return this.brandRefinedItems.filter(function(s) {
           return s.price >= low && s.price < high;
         });
       }
@@ -213,6 +226,10 @@ export default class ViewShopItems extends Vue {
   onDeliveryFilter(newFilter) {
     this.deliveryFilter = newFilter;
     console.log("delivery filter: " + newFilter);
+  }
+
+  onBrandFilter(newFilter){
+    this.brandselect = newFilter
   }
 
   goToItemPage() {}

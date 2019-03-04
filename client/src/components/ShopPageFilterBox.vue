@@ -17,10 +17,9 @@
       
       <p>Brand</p>
       <div class = "select">
-        <select name="brand">
-          <option selected="true" value="all">All</option>
-          <option value="trek">Trek</option>
-          <option value="foxycle">Foxycle</option>
+        <select name="brand" v-model="brandselect" v-on:change = "filterBrand">
+          <option value="all">All</option>
+          <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id"> {{brand.name}} </option>
         </select>
       </div>
     
@@ -50,17 +49,45 @@
 </template>
 
 <script lang="ts">
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { iBrand } from "../models/brand.interface";
+
 
 @Component
 export default class ShopPageFilterBox extends Vue {
   //@Prop() private msg!: string;
+  brands : iBrand[] = [];
+  brandselect: string = "all";
+
   filterPrice(e){
     this.$emit('priceFilter', e.target.value);
   }
 
   filterDelivery(e){
     this.$emit('deliveryFilter', e.target.value);
+  }
+
+  filterBrand(){
+    this.$emit('brandFilter', this.brandselect);
+  }
+
+  created() {
+    this.getAllItems();
+  }
+
+  getAllItems() {
+    axios
+      .get(APIConfig.buildUrl("/brands"))
+      .then((response: AxiosResponse) => {
+        this.brands = response.data;
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        console.log("[AdminEditProduct.vue] Error@@");
+      });
+
   }
 }
 </script>

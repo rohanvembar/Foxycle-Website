@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
 import { Category } from "./category.entity";
+import { Brand } from "./brand.entity";
+
 @Entity()
 export class ShopItem {
     @PrimaryGeneratedColumn()
@@ -14,8 +16,9 @@ export class ShopItem {
     @Column({default: 0})
     public saleprice!: number;
 
-    @Column()
-    public brand!: string;
+    @ManyToOne(type => Brand, brand => brand.items, { onDelete: 'CASCADE' })
+    @Column({name: "brandId"})
+    public brand!: number;
 
     @ManyToMany(type => Category)
     @JoinTable()

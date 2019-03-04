@@ -3,7 +3,7 @@ export interface iShopItem {
     name: string,
     price: number,
     saleprice: number,
-    brand: string,
+    brand: number,
     categoryId: number,
     image: string,
     delivery: boolean,

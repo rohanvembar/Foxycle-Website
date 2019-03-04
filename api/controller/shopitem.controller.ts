@@ -18,6 +18,15 @@ export class ShopItemController extends DefaultController {
                     res.status(200).send(items);
                 })
             });
+
+        router.route("/shopitemsbrands/:id")
+            .get((req: Request, res: Response) => {
+                console.log("retrieving all shop items with brandId: " + req.params.id);
+                shopItemRepo.find({brand: req.params.id}).then((items: ShopItem[]) => {
+                    res.status(200).send(items);
+                })
+            });
+
         router.route("/newitem")
             .post((req: Request, res: Response) => {
                 console.log("adding a new shop item");
@@ -25,12 +34,13 @@ export class ShopItemController extends DefaultController {
                 newItem.name = req.body.name;
                 newItem.price = req.body.price;
                 newItem.saleprice = req.body.saleprice;
-                newItem.brand = req.body.brand;
+                newItem.brand = req.body.brandId;
                 newItem.categoryId = req.body.categoryId;
                 newItem.image = req.body.image;
                 newItem.delivery = req.body.delivery;
                 newItem.quantity = req.body.quantity;
                 newItem.description = req.body.description;
+                
                 shopItemRepo.save(newItem).then((savedItem: ShopItem) => {
                     res.status(200).send(savedItem);
                     console.log(savedItem);
@@ -55,7 +65,7 @@ export class ShopItemController extends DefaultController {
                     foundItem.name = req.body.name;
                     foundItem.price = req.body.price;
                     foundItem.saleprice = req.body.saleprice;
-                    foundItem.brand = req.body.brand;
+                    foundItem.brand = req.body.brandId;
                     foundItem.categoryId = req.body.categoryId;
                     foundItem.image = req.body.image;
                     foundItem.delivery = req.body.delivery;
