@@ -11,21 +11,23 @@
       <b-field label="Item Name">
         <b-input type="text" placeholder="item name" v-model="newItemTitle" rounded required></b-input>
       </b-field>
-      
-      <div class="field">
-        <label class="label">Item Brand</label>
-        <div class="control">
-          <div class="select">
-            <select v-model="brandIdStr">
-              <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
-              <option value="-1">Other</option>
-            </select>
-          </div>
-          <b-field label="Brand Name">
-            <b-input :disabled = "brandIdStr != '-1'" type="text" placeholder="item name" v-model="newItemBrand" rounded required></b-input>
-          </b-field>
-        </div>
-      </div>
+
+      <b-field label="Brand">
+        <b-select required v-model="brandIdStr">
+          <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
+          <option value="-1">Other</option>
+        </b-select>
+      </b-field>
+      <b-field label="New Brand Name">
+        <b-input
+          :disabled="brandIdStr != '-1'"
+          type="text"
+          placeholder="new brand"
+          v-model="newItemBrand"
+          rounded
+          required
+        ></b-input>
+      </b-field>
       <b-field label="Price">
         <b-input
           type="number"
@@ -148,25 +150,22 @@ export default class AddItem extends Vue {
     });
   }
 
-  addNewBrand(categorynumber){
+  addNewBrand(categorynumber) {
     axios
-        .post(APIConfig.buildUrl("/newBrand"), {
-          name: this.newItemBrand,
-          id: this.brandId
-        })
-        .then((response: AxiosResponse) => {
-          console.log(
-            "[AddItem.vue] new brand" +
-              JSON.stringify(response.data)
-          );
-          this.addNewItem(categorynumber);
-        })
-        .catch((response: AxiosResponse) => {
-          console.log("[AddItem.vue] brand" + "catch");
-        });
+      .post(APIConfig.buildUrl("/newBrand"), {
+        name: this.newItemBrand,
+        id: this.brandId
+      })
+      .then((response: AxiosResponse) => {
+        console.log("[AddItem.vue] new brand" + JSON.stringify(response.data));
+        this.addNewItem(categorynumber);
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("[AddItem.vue] brand" + "catch");
+      });
   }
 
-  addNewItem(categorynumber){
+  addNewItem(categorynumber) {
     if (!this.newItemSalePrice) {
       this.newItemSalePrice = 0;
     }
@@ -216,14 +215,13 @@ export default class AddItem extends Vue {
           console.log("[AddItem.vue] category" + "catch");
         });
     }
-    
+
     this.brandId = Number(this.brandIdStr);
-    if(this.brandId < 0){
+    if (this.brandId < 0) {
       this.brandId = Number(this.generate());
       this.addNewBrand(categorynumber);
       console.log("New BrandID: " + this.brandId);
-    }
-    else{
+    } else {
       this.addNewItem(categorynumber);
     }
 
