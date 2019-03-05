@@ -50,10 +50,12 @@ export class ShopItemController extends DefaultController {
             .get((req: Request, res: Response) => {
                 shopItemRepo.findOne(req.params.id).then(
                     (item: ShopItem | undefined) => {
-                        res.send(item);
-                    },
-                    () => {
-                        res.status(404);
+                        if (item) {
+                            res.send(item);
+                        } else {
+                            res.status(404);
+                            res.sendStatus(404);
+                        }
                     }
                 );
             })

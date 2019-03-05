@@ -97,5 +97,13 @@ describe("/shopitem", () => {
                 });
             });
         });
+        test("should return 404", done => {
+            request(myApp)
+            .get("/shopitem/1")
+            .then((response: request.Response) => {
+              expect(404);
+              done();
+            });
+        });
     });
 });
