@@ -62,23 +62,6 @@ export class UserController extends DefaultController {
       );
     });
 
-    router.route("/users/:id/profile_photo").post(
-      this.isAuthenticated(true),
-      multer({
-        dest: Path.join(__dirname, "..", "public", "profilePhotos")
-      }).single(),
-      (req: Request, res: Response) => {
-        userRepo.findOne(req.params.id).then((user: User | undefined) => {
-          if (user) {
-            user.profileUrl = Path.join(req.file.path, req.file.filename);
-            userRepo.save(user).then((savedUser: User) => {
-              res.send({ savedUser });
-            });
-          }
-        });
-      }
-    );
-
     router.route("/employees/:id")
       .delete((req: Request, res: Response) => {
         userRepo.findOne(req.params.id).then((foundUser: User | undefined) => {
