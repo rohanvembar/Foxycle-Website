@@ -53,8 +53,8 @@ import { APIConfig } from "../utils/api.utils";
 
 @Component
 export default class ManageOrderItems extends Vue {
-  @Prop() refinelist: String[];
-  @Prop() sortVal: String;
+  @Prop() refinelist: String[] | undefined;
+  @Prop() sortVal: String | undefined;
 
   error: string | boolean = false;
   orders: iOrder[] = [];
@@ -125,6 +125,9 @@ export default class ManageOrderItems extends Vue {
   }
 
   get refinedOrders() {
+    if (!this.refinelist) {
+      return;
+    }
     const l = this.refinelist;
     return this.sortedOrders.filter(function(s) {
       const stat = s.status.toString();
