@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="center">
     <div class="sort-by select">
       <select name="Sort By" v-on:change="updateSort($event)">
         <option selected="true" disabled="disabled" value="sortby">Sort By</option>

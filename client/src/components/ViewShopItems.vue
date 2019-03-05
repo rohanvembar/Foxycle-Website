@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="columns">
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
       crossorigin="anonymous"
     >
-    <div class="filter">
+    <div class="column is-narrow filter">
       <ShopPageFilterBox
         @priceFilter="onPriceFilter"
         @deliveryFilter="onDeliveryFilter"
@@ -14,6 +14,8 @@
         v-if="hasItems()"
       />
     </div>
+
+    <div class="column">
 
     <div id="wrap">
       <div id="columns" class="columns_4" v-if="hasItems()">
@@ -42,6 +44,8 @@
         </figure>
       </div>
     </div>
+        </div>
+
     <div v-if="!hasItems()">
       <center>
         <h1>the store has no items :(</h1>
@@ -422,8 +426,7 @@ export default class ViewShopItems extends Vue {
 }
 
 #wrap {
-  width: 90%;
-  margin: auto;
+  margin:auto;
   max-width: 1100px;
   padding-bottom: 50px;
 }
@@ -524,7 +527,6 @@ div#columns figure figcaption {
 }
 
 .filter {
-  position: fixed;
   height: 100%;
   margin-left: 20px;
 }
