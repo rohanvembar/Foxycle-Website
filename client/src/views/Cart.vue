@@ -56,7 +56,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td v-if="itemsInCart">${{shipping}}</td>
+            <td v-if="itemsInCart">${{isShippable()}}</td>
             <td v-if="!itemsInCart">-</td>
           </tr>
           <tr class="tot-bord">
@@ -110,6 +110,16 @@ export default class Cart extends Vue {
   shipping: number = 10;
   total: number = 0;
 
+  isShippable() {
+    for (var i in this.items) {
+      console.log(this.items[i].delivery);
+      if (!this.items[i].delivery) {
+        return 0;
+      }
+    }
+    return 10;
+  }
+
   computeSubtotal() {
     for (var i in this.items) {
       if (this.items[i].saleprice) {
@@ -121,7 +131,7 @@ export default class Cart extends Vue {
   }
 
   computeTotal() {
-    this.total = this.subtotal + this.shipping;
+    this.total = this.subtotal + this.isShippable();
   }
 
   removeItem(item) {

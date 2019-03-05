@@ -319,7 +319,7 @@ export default class Checkout extends Vue {
   items: iShopItem[] = this.$store.state.items;
   cart: iCart[] = [];
   subtotal: number = 0;
-  shipping: number = 10;
+  shipping: number = 0;
   total: number = 0;
   ordernumber: string = "";
   address: string = "";
@@ -353,9 +353,11 @@ export default class Checkout extends Vue {
     for (var i in this.items) {
       console.log(this.items[i].delivery);
       if (!this.items[i].delivery) {
+        this.shipping = 0;
         return false;
       }
     }
+    this.shipping = 10;
     return true;
   }
 
