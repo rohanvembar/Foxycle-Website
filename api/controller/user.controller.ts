@@ -19,6 +19,30 @@ export class UserController extends DefaultController {
         });
       });
 
+    router.route("/employees")
+      .get((req: Request, res: Response) => {
+        userRepo.find().then((employees: User[]) => {
+          employees = employees.reverse();
+          res.status(200).send(employees);
+        })
+      });
+
+      router.route("/users/:id").get((req: Request, res: Response) => {
+        userRepo.findOne(req.params.id).then(
+          (user: User | undefined) => {
+            if (user) {
+              res.send({ user });
+            } else {
+              res.status(404).send({reason: "no user with that id exists"});
+              return;
+            }
+          },
+          () => {
+            res.status(404);
+          }
+        );
+      });
+
     router.route("/users").post((req: Request, res: Response) => {
       const { firstName, lastName, emailAddress, password, role } = req.body;
       const user = new User();
@@ -54,30 +78,6 @@ export class UserController extends DefaultController {
         });
       }
     );
-
-    router.route("/users/:id").get((req: Request, res: Response) => {
-      userRepo.findOne(req.params.id).then(
-        (user: User | undefined) => {
-          if (user) {
-            res.send({ user });
-          } else {
-            res.status(404).send({reason: "no user with that id exists"});
-            return;
-          }
-        },
-        () => {
-          res.status(404);
-        }
-      );
-    });
-
-    router.route("/employees")
-      .get((req: Request, res: Response) => {
-        userRepo.find().then((employees: User[]) => {
-          employees = employees.reverse();
-          res.status(200).send(employees);
-        })
-      });
 
     router.route("/employees/:id")
       .delete((req: Request, res: Response) => {
