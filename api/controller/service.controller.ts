@@ -73,6 +73,7 @@ export class ServiceController extends DefaultController {
       .delete((req: Request, res: Response) => {
         serviceRepo.findOne(req.params.id).then((foundService: Service | undefined) => {
           if (foundService == undefined) {
+            res.sendStatus(404);
             return;
           }
           serviceRepo.delete(foundService).then(x => {

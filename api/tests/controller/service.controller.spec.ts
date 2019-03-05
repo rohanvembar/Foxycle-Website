@@ -130,6 +130,16 @@ describe("/service", () => {
                   })
               });
             });
+            test("should get 404", done => {
+              return createService("installations", connection).then((createdService: Service) => {
+                request(myApp)
+                  .delete("/services/3")
+                  .then((response: request.Response) => {
+                    expect(404);
+                    done();
+                  })
+              });
+            });
           }) 
       }); 
   });
