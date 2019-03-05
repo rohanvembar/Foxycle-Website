@@ -43,9 +43,9 @@
       </div>
     </div>
     <div v-if="!hasItems()">
-      <h1>the store has no items :(</h1>
-      <br>
       <center>
+        <h1>the store has no items :(</h1>
+        <br>
         <img
           src="https://media1.tenor.com/images/077ec9cadfa41dc224276e4026175f4c/tenor.gif?itemid=5510092"
         >
