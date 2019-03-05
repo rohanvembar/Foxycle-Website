@@ -31,13 +31,22 @@ describe("/login", () => {
   afterAll(async () => {
     await DBConnection.closeConnection();
   });
-  
+
   test("should logout successfully", done => {
     return request(app)
       .post("/logout")
       .expect(200)
       .then((res: request.Response) => {
-        expect({loggedout : true});
+        expect({ loggedout: true });
+        done();
+      });
+  });
+  test("should login unsuccessfully", done => {
+    request(app)
+      .post("/login")
+      .send({ emailAddress: "test@test.com", password: "password" })
+      .then((res: request.Response) => {
+        expect(401);
         done();
       });
   });
@@ -65,7 +74,7 @@ describe("/login", () => {
         .post("/logout")
         .expect(200)
         .then((res: request.Response) => {
-          expect({loggedout : true});
+          expect({ loggedout: true });
           done();
         });
     });
