@@ -128,12 +128,12 @@
           <div class="control">
             <div class="select is-multiple">
               <span>{{ItemCategories}}</span>
-              <select multiple v-model="ItemCategories">
+              <b-select required multiple v-model="ItemCategories">
                 <option value="apparel">Apparel</option>
                 <option value="roadbike">Road Bike</option>
                 <option value="mountainbike">Mountain Bike</option>
                 <option value="other">Other</option>
-              </select>
+              </b-select>
             </div>
           </div>
         </div>
