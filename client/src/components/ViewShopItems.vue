@@ -80,7 +80,7 @@ import ShopPageFilterBox from "@/components/ShopPageFilterBox.vue";
   }
 })
 export default class ViewShopItems extends Vue {
-  @Prop() sortVal: String;
+  @Prop() sortVal: String = "";
   error: string | boolean = false;
   items: iShopItem[] = [];
   saleText: string = "SALE";
@@ -171,7 +171,7 @@ export default class ViewShopItems extends Vue {
 
   get priceRefinedItems() {
     const p = this.priceFilter;
-    var priceArr_S = [];
+    var priceArr_S: string[] = [];
     if (p == "all") {
       return this.brandRefinedItems;
     } else {
