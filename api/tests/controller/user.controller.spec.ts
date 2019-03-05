@@ -62,6 +62,29 @@ describe("/users", () => {
           });
       });
     });
+    test("should return an empty list because there isn't anything in the database", done => {
+      request(myApp)
+        .get("/employees")
+        .then((response: request.Response) => {
+          expect(response.body).toEqual([]);
+          done();
+        });
+    });
+    test("should return one user", done => {
+      const email = "test@test.com";
+      return createUser(email, connection).then((createdUser: User) => {
+        return request(myApp)
+          .get("/employees")
+          .expect(200)
+          .then((response: request.Response) => {
+            expect(
+              response.body && response.body.length
+            ).toEqual(1);
+            expect(response.body[0].emailAddress).toEqual(email);
+            done();
+          });
+      });
+    });
     var id = 1;
     test("should return a 404 status because there isn't anything in the database", done => {
       request(myApp)

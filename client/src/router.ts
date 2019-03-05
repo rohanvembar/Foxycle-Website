@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-import MyProfile from "./views/MyProfile.vue";
 
 Vue.use(Router);
 
@@ -87,11 +86,6 @@ export default new Router({
       path: "/vieworder/:ordernumber",
       name: "vieworder",
       component: () => import("./views/ViewOrder.vue")
-    },
-    {
-      path: "/my-profile",
-      name: "myProfile",
-      component: MyProfile
     },
     {
       path: "/editinfo",
