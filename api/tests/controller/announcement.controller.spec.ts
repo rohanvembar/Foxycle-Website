@@ -91,6 +91,16 @@ describe("/announcements", () => {
               })
           });
         });
+        test("should get 404", done => {
+          return createAnnouncement(connection).then((createdUser: Announcement) => {
+            request(myApp)
+              .delete("/announcements/2")
+              .then((response: request.Response) => {
+                expect(404);
+                done();
+              })
+          });
+        });
       })      
   });
   

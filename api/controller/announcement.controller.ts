@@ -35,6 +35,7 @@ export class AnnouncementController extends DefaultController {
       .delete((req: Request, res: Response) => {
         announcementRepo.findOne(req.params.id).then((foundAnnouncement: Announcement | undefined) => {
           if (foundAnnouncement == undefined) {
+            res.sendStatus(404);
             return;
           }
           announcementRepo.delete(foundAnnouncement).then(x => {
