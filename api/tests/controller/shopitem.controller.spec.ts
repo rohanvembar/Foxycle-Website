@@ -105,5 +105,18 @@ describe("/shopitem", () => {
               done();
             });
         });
+        test("should return item with given id", done => {
+            return createBrand(connection).then((createdBrand: Brand) => {
+                return createItem(connection).then((createdItem: ShopItem) => {
+                    return request(myApp)
+                        .get("/shopitem/1")
+                        .expect(200)
+                        .then((response: request.Response) => {
+                            expect(response.body.name).toEqual("Bike");
+                            done();
+                        });
+                });
+            });
+        });
     });
 });
