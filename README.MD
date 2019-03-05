@@ -17,7 +17,7 @@ Team Members + Roles:
 2. `cd` into that directory.
 3. Create a file called `config.json` in `/api` with this content:
 
- `{
+ ```{
   "dev": {
     "host": "localhost",
     "port": 3306,
@@ -33,7 +33,7 @@ Team Members + Roles:
     "password": "password",
     "database": "test"
   }
-}`
+}```
 
 4. Run a SQL query to create a database `dev` and `test`
  * `create database dev`, `create database test`
