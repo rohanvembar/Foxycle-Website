@@ -12,11 +12,12 @@ describe("/category", () => {
 
   const createCategory = (
     name: string,
+    num: number,
     conn: Connection
   ): Promise<Category> => {
     const category = new Category();
     category.id = 1
-    category.categoryId = 12345678
+    category.categoryId = num
     category.category = name
     return conn.getRepository(Category).save(category);
   };
@@ -45,7 +46,7 @@ describe("/category", () => {
         });
     });
     test("should return a list of categories", done => {
-      return createCategory("bikes", connection).then((createdCategory: Category) => {
+      return createCategory("bikes", 1, connection).then((createdCategory: Category) => {
         return request(myApp)
           .get("/itemscategory")
           .expect(200)
@@ -65,7 +66,7 @@ describe("/category", () => {
         });
     });
     test("should return a list of categories", done => {
-      return createCategory("bikes", connection).then((createdCategory: Category) => {
+      return createCategory("bikes", 12345678, connection).then((createdCategory: Category) => {
         return request(myApp)
           .get("/itemscategory/12345678")
           .expect(200)
@@ -101,7 +102,7 @@ describe("/category", () => {
     });
     describe("DELETE '/", () => {
       test("should delete given category from table", done => {
-        return createCategory("bikes", connection).then((createdCategory: Category) => {
+        return createCategory("bikes", 12345678, connection).then((createdCategory: Category) => {
           request(myApp)
             .delete("/deletecategory/12345678")
             .expect(200)
