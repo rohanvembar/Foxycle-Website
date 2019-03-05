@@ -143,6 +143,29 @@ describe("/shopitem", () => {
                     });
                 });
             });
+            test("should update shop item", done => {
+                return createBrand(connection).then((createdBrand: Brand) => {
+                    return createItem(connection).then((item: ShopItem) => {
+                        return request(myApp)
+                            .put("/shopitem/3")
+                            .send({
+                                name: "new name",
+                                price: 300,
+                                saleprice: 1,
+                                brand: 3,
+                                categoryId: 4,
+                                image: "new",
+                                delivery: true,
+                                quantity: 5,
+                                description: "new"
+                            })
+                            .then((response: request.Response) => {
+                                expect(404);
+                                done();
+                            });
+                    });
+                });
+            });
         });
         describe("DELETE '/", () => {
             test("should delete given shop item from table", done => {
@@ -159,27 +182,42 @@ describe("/shopitem", () => {
                     });
                 });
             });
-        });
-        test("should create a new shop item", done => {
-            return createBrand(connection).then((createdBrand: Brand) => {
-                return request(myApp)
-                    .post("/newitem")
-                    .send({
-                        name: "new name",
-                        price: 300,
-                        saleprice: 1,
-                        brandId: 3,
-                        categoryId: 4,
-                        image: "new",
-                        delivery: true,
-                        quantity: 5,
-                        description: "new"
-                    })
-                    .expect(200)
-                    .then((response: request.Response) => {
-                        expect(response.body.name).toEqual("new name");
-                        done();
+            test("should get 404", done => {
+                return createBrand(connection).then((createdBrand: Brand) => {
+                    return createItem(connection).then((createdItem: ShopItem) => {
+                        request(myApp)
+                            .delete("/deleteitem/3")
+                            .then((response: request.Response) => {
+                                console.log(response.body)
+                                expect(404);
+                                done();
+                            })
                     });
+                });
+            });
+        });
+        describe("POST '/", () => {
+            test("should create a new shop item", done => {
+                return createBrand(connection).then((createdBrand: Brand) => {
+                    return request(myApp)
+                        .post("/newitem")
+                        .send({
+                            name: "new name",
+                            price: 300,
+                            saleprice: 1,
+                            brandId: 3,
+                            categoryId: 4,
+                            image: "new",
+                            delivery: true,
+                            quantity: 5,
+                            description: "new"
+                        })
+                        .expect(200)
+                        .then((response: request.Response) => {
+                            expect(response.body.name).toEqual("new name");
+                            done();
+                        });
+                });
             });
         });
     });

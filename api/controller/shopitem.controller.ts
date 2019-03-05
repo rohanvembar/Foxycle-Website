@@ -62,6 +62,7 @@ export class ShopItemController extends DefaultController {
             .put((req: Request, res: Response) => {
                 shopItemRepo.findOne(req.params.id).then((foundItem: ShopItem | undefined) => {
                     if (foundItem == undefined) {
+                        res.sendStatus(404);
                         return;
                     }
                     foundItem.name = req.body.name;
@@ -82,6 +83,7 @@ export class ShopItemController extends DefaultController {
             .delete((req: Request, res: Response) => {
                 shopItemRepo.findOne(req.params.id).then((foundItem: ShopItem | undefined) => {
                 if (foundItem == undefined) {
+                    res.sendStatus(404);
                     return;
                 }
                 shopItemRepo.delete(foundItem).then(x => {
