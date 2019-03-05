@@ -99,11 +99,11 @@ describe("/shopitem", () => {
         });
         test("should return 404", done => {
             request(myApp)
-            .get("/shopitem/1")
-            .then((response: request.Response) => {
-              expect(404);
-              done();
-            });
+                .get("/shopitem/1")
+                .then((response: request.Response) => {
+                    expect(404);
+                    done();
+                });
         });
         test("should return item with given id", done => {
             return createBrand(connection).then((createdBrand: Brand) => {
@@ -115,6 +115,32 @@ describe("/shopitem", () => {
                             expect(response.body.name).toEqual("Bike");
                             done();
                         });
+                });
+            });
+        });
+        describe("PUT '/", () => {
+            test("should update shop item", done => {
+                return createBrand(connection).then((createdBrand: Brand) => {
+                    return createItem(connection).then((item: ShopItem) => {
+                        return request(myApp)
+                            .put("/shopitem/1")
+                            .send({
+                                name: "new name",
+                                price: 300,
+                                saleprice: 1,
+                                brand: 3,
+                                categoryId: 4,
+                                image: "new",
+                                delivery: true,
+                                quantity: 5,
+                                description: "new"
+                            })
+                            .expect(200)
+                            .then((response: request.Response) => {
+                                expect(response.body.name).toEqual("new name");
+                                done();
+                            });
+                    });
                 });
             });
         });
