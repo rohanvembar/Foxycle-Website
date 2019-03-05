@@ -193,7 +193,7 @@ export default class AdminEditProduct extends Vue {
   ItemBrand: string = "";
   ItemQuantity: number | string = "";
   ItemShipping: boolean = true;
-  CategoryId: number;
+  CategoryId: number = 0;
   brandId: number = -1;
   brandIdStr: string = "";
 
@@ -215,7 +215,6 @@ export default class AdminEditProduct extends Vue {
   }
 
   successEdit() {
-
     this.brandId = Number(this.brandIdStr);
     if (this.brandId < 0) {
       this.brandId = Number(this.generate());
