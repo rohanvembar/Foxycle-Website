@@ -25,7 +25,7 @@ export class ShopItem {
     @Column()
     public categoryId!: number;
 
-    @Column()
+    @Column({type: "mediumtext"})
     public image!: string;
 
     @Column({default: 0})
