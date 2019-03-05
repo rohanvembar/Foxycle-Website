@@ -48,17 +48,6 @@ export class BrandController extends DefaultController {
                             res.status(404);
                         }
                     });
-            })
-            .put((req: Request, res: Response) => {
-                brandRepo.findOne(req.params.id).then((foundBrand: Brand | undefined) => {
-                    if (foundBrand == undefined) {
-                        return;
-                    }
-                    foundBrand.name = req.body.name;
-                    brandRepo.save(foundBrand).then((updatedBrand: Brand) => {
-                        res.status(200).send(updatedBrand);
-                    });
-                });
             });
 
         

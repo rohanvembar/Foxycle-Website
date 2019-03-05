@@ -5,7 +5,7 @@
         title="Something went wrong"
         type="is-danger"
         has-icon
-        closable="false"
+        v-on:close="goBack()"
       >That order number doesn't have a valid order :(</b-message>
     </div>
     <div v-else>
@@ -108,6 +108,9 @@ export default class ViewOrder extends Vue {
     }
   }
 
+  goBack() {
+    this.$router.go(-1);
+  }
   getPurchasedItems() {
     this.error = false;
     axios
