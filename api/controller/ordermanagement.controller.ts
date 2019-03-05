@@ -51,8 +51,9 @@ export class OrderManagementController extends DefaultController {
             });
         router.route("/updatestatus/:id/:status")
             .put((req: Request, res: Response) => {
-                orderRepo.findOneOrFail(req.params.id).then((foundOrder: OrderManagement) => {
+                orderRepo.findOne(req.params.id).then((foundOrder: OrderManagement | undefined) => {
                     if (foundOrder == undefined) {
+                        res.sendStatus(404);
                         return;
                     }
                     foundOrder.status = req.params.status;
