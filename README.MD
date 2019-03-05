@@ -43,3 +43,13 @@ Team Members + Roles:
 8. In the `/client` directory, run `npm run serve`.
 9. Query the `dev` database with the contents of `data.sql` 
 10. In your browser, navigate to `localhost:8080`
+
+---
+
+## Login Info
+#### Admin
+* username: owner
+* password: owner
+#### Employee
+* username: empl 
+* password: empl
