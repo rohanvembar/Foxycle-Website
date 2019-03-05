@@ -159,6 +159,28 @@ describe("/shopitem", () => {
                     });
                 });
             });
-        })
+        });
+        test("should create a new shop item", done => {
+            return createBrand(connection).then((createdBrand: Brand) => {
+                return request(myApp)
+                    .post("/newitem")
+                    .send({
+                        name: "new name",
+                        price: 300,
+                        saleprice: 1,
+                        brandId: 3,
+                        categoryId: 4,
+                        image: "new",
+                        delivery: true,
+                        quantity: 5,
+                        description: "new"
+                    })
+                    .expect(200)
+                    .then((response: request.Response) => {
+                        expect(response.body.name).toEqual("new name");
+                        done();
+                    });
+            });
+        });
     });
 });
