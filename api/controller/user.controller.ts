@@ -63,6 +63,7 @@ export class UserController extends DefaultController {
       .delete((req: Request, res: Response) => {
         userRepo.findOne(req.params.id).then((foundUser: User | undefined) => {
           if (foundUser == undefined) {
+            res.sendStatus(404);
             return;
           }
           userRepo.delete(foundUser).then(x => {
@@ -74,8 +75,9 @@ export class UserController extends DefaultController {
 
     router.route("/employees/:id")
       .put((req: Request, res: Response) => {
-        userRepo.findOneOrFail(req.params.id).then((foundUser: User) => {
+        userRepo.findOne(req.params.id).then((foundUser: User | undefined) => {
           if (foundUser == undefined) {
+            res.sendStatus(404);
             return;
           }
           foundUser.role = (foundUser.role == 0) ? 1 : 0;

@@ -12,6 +12,7 @@ describe("/users", () => {
 
   const createUser = (
     emailAddress: string,
+    role: number,
     conn: Connection
   ): Promise<User> => {
     const user = new User();
@@ -20,7 +21,7 @@ describe("/users", () => {
     user.firstName = "testUser";
     user.lastName = "testUser";
     user.password = "password";
-    user.role = 1;
+    user.role = role;
     return conn.getRepository(User).save(user);
   };
 
@@ -49,7 +50,7 @@ describe("/users", () => {
     });
     test("should return one user", done => {
       const email = "test@test.com";
-      return createUser(email, connection).then((createdUser: User) => {
+      return createUser(email, 0, connection).then((createdUser: User) => {
         return request(myApp)
           .get("/users")
           .expect(200)
@@ -72,7 +73,7 @@ describe("/users", () => {
     });
     test("should return one user", done => {
       const email = "test@test.com";
-      return createUser(email, connection).then((createdUser: User) => {
+      return createUser(email, 0, connection).then((createdUser: User) => {
         return request(myApp)
           .get("/employees")
           .expect(200)
@@ -96,7 +97,7 @@ describe("/users", () => {
     });
     test("should return the user with the given id", done => {
       const email = "test@test.com";
-      return createUser(email, connection).then((createdUser: User) => {
+      return createUser(email, 0, connection).then((createdUser: User) => {
         return request(myApp)
           .get("/users/" + id)
           .expect(200)
@@ -124,11 +125,41 @@ describe("/users", () => {
           done();
         });
     });
+    test("should error because of duplicate email", done => {
+      const email = `test${new Date().getTime()}@test.com`;
+      return createUser(email, 0, connection).then((createdUser: User) => {
+        return request(myApp)
+          .post("/users")
+          .send({
+            emailAddress: email,
+            firstName: "test",
+            lastName: "test",
+            password: "password",
+            role: 1
+          })
+          .then((response: request.Response) => {
+            expect(500);
+            done();
+          });
+      });
+    });
   });
   describe("PUT '/", () => {
     test("should change user's role", done => {
       const email = "test@test.com";
-      return createUser(email, connection).then((createdUser: User) => {
+      return createUser(email, 0, connection).then((createdUser: User) => {
+        return request(myApp)
+          .put("/employees/1")
+          .expect(200)
+          .then((response: request.Response) => {
+            expect(response.body.role).toEqual(1);
+            done();
+          });
+      });
+    });
+    test("should change user's role", done => {
+      const email = "test@test.com";
+      return createUser(email, 1, connection).then((createdUser: User) => {
         return request(myApp)
           .put("/employees/1")
           .expect(200)
@@ -138,17 +169,40 @@ describe("/users", () => {
           });
       });
     });
+    test("should get 404", done => {
+      const email = "test@test.com";
+      return createUser(email, 0, connection).then((createdUser: User) => {
+        return request(myApp)
+          .put("/employees/2")
+          .then((response: request.Response) => {
+            expect(404);
+            done();
+          });
+      });
+    });
   })
   describe("DELETE '/", () => {
     test("should delete given user from table", done => {
       const email = "test@test.com";
-      return createUser(email, connection).then((createdUser: User) => {
+      return createUser(email, 0, connection).then((createdUser: User) => {
         request(myApp)
           .delete("/employees/1")
           .expect(200)
           .then((response: request.Response) => {
             console.log(response.body)
             expect(response.body.emailAddress).toEqual(email);
+            done();
+          })
+      });
+    });
+    test("should get 404", done => {
+      const email = "test@test.com";
+      return createUser(email, 0, connection).then((createdUser: User) => {
+        request(myApp)
+          .delete("/employees/2")
+          .then((response: request.Response) => {
+            console.log(response.body)
+            expect(404);
             done();
           })
       });
