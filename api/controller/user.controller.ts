@@ -36,9 +36,6 @@ export class UserController extends DefaultController {
               res.status(404).send({reason: "no user with that id exists"});
               return;
             }
-          },
-          () => {
-            res.status(404);
           }
         );
       });
@@ -89,29 +86,6 @@ export class UserController extends DefaultController {
         });
       })
     return router;
-  }
-
-  protected isAuthenticated(checkSameUser: boolean = false) {
-    return (req: Request, res: Response, next: NextFunction) => {
-      const token: string | undefined = req.get("token");
-      if (token) {
-        const sessionRepo = getRepository(Session);
-        sessionRepo.findOne(token).then((foundSession: Session | undefined) => {
-          if (
-            foundSession &&
-            ((checkSameUser && foundSession.user.id === req.params.id) ||
-              !checkSameUser) &&
-            foundSession.expiresAt.getTime() > new Date().getTime()
-          ) {
-            next();
-          } else {
-            res.status(403);
-          }
-        });
-      } else {
-        res.status(401);
-      }
-    };
   }
 }
 
