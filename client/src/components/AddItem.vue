@@ -229,14 +229,14 @@ export default class AddItem extends Vue {
   }
 
   cancel() {
-    this.newItemTitle = null;
-    this.newItemPrice = null;
-    this.newItemSalePrice = null;
-    this.brandId = null;
-    this.newItemImage = null;
-    this.newItemShipping = null;
-    this.newItemQuantity = null;
-    this.newItemDescription = null;
+    this.newItemTitle = "";
+    this.newItemPrice = "";
+    this.newItemSalePrice = "";
+    this.brandId = -1;
+    this.newItemImage = "";
+    this.newItemShipping = false;
+    this.newItemQuantity = "";
+    this.newItemDescription = "";
     this.$emit("cancel");
   }
 }

@@ -320,7 +320,6 @@ export default class App extends Vue {
       .catch((error: AxiosError) => {
         this.loginFailed = true;
         console.log("error");
-        this.error = error.code;
       });
   }
   logout() {
