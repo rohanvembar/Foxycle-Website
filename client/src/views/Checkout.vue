@@ -331,10 +331,10 @@ export default class Checkout extends Vue {
   firstName: string = "";
   lastName: string = "";
 
-  name: "Card";
-  components: {
-    card;
-  };
+  // name: "Card";
+  // components: {
+  //   card;
+  // };
   data() {
     return {
       cardDetail: defaultProps
