@@ -185,18 +185,28 @@ export default class AdminEditProduct extends Vue {
   ItemBrand: string = "";
   ItemQuantity: number | string = "";
   ItemShipping: boolean = true;
+  CategoryId: number;
 
   successEdit() {
     this.showEditItem = false;
     if (!this.ItemSalePrice) {
       this.ItemSalePrice = 0;
     }
+    axios
+      .delete(APIConfig.buildUrl("/deletecategory/" + this.CategoryId))
+      .then((response: AxiosResponse) => {
+        this.$emit("success");
+        this.badToast();
+      })
+      .catch((response: AxiosResponse) => {
+        this.error = "bad";
+      });
+
     console.log("[AdminEditProduct.vue] shipping? " + this.ItemShipping);
-    var categorynumber = this.generate();
     // Adding categories of item
     for (var i = 0; i < this.ItemCategories.length; i++) {
       axios.post(APIConfig.buildUrl("/newitemcategory"), {
-        categoryId: categorynumber,
+        categoryId: this.CategoryId,
         category: this.ItemCategories[i]
       });
     }
@@ -207,7 +217,7 @@ export default class AdminEditProduct extends Vue {
         saleprice: this.ItemSalePrice,
         delivery: this.ItemShipping,
         brandId: this.ItemBrand,
-        categoryId: categorynumber,
+        categoryId: this.CategoryId,
         image: this.ItemImage,
         quantity: this.ItemQuantity,
         description: this.ItemDescription
@@ -294,6 +304,7 @@ export default class AdminEditProduct extends Vue {
         console.log("[AdminEditProduct.vue] brand id: " + JSON.stringify(this.items[item]));
         this.ItemQuantity = this.items[item].quantity;
         this.ItemShipping = this.items[item].delivery;
+        this.CategoryId = this.items[item].categoryId;
 
         // Clearing array (clicking edit on multiple items fills it up)
         this.ItemCategories = [];
