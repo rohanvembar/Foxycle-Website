@@ -74,14 +74,22 @@
         </b-field>
 
         <div class="field">
-          <label class="label">Item Brand</label>
-          <div class="control">
-            <div class="select">
-              <select v-model="ItemBrand">
-                <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
-              </select>
-            </div>
-          </div>
+          <b-field label="Brand">
+          <b-select required v-model="brandIdStr">
+          <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
+          <option value="-1">Other</option>
+        </b-select>
+      </b-field>
+      <b-field label="New Brand Name">
+        <b-input
+          :disabled="brandIdStr != '-1'"
+          type="text"
+          placeholder="new brand"
+          v-model="newItemBrand"
+          rounded
+          required
+        ></b-input>
+      </b-field>
         </div>
 
         <b-field label="Price">
@@ -186,8 +194,35 @@ export default class AdminEditProduct extends Vue {
   ItemQuantity: number | string = "";
   ItemShipping: boolean = true;
   CategoryId: number;
+  brandId: number = -1;
+  brandIdStr: string = "";
+
+
+
+// Work in progress
+  addNewBrand() {
+    axios
+      .post(APIConfig.buildUrl("/newBrand"), {
+        name: this.ItemBrand,
+        id: this.brandId
+      })
+      .then((response: AxiosResponse) => {
+        console.log("[AddItem.vue] new brand" + JSON.stringify(response.data));
+      })
+      .catch((response: AxiosResponse) => {
+        console.log("[AddItem.vue] brand" + "catch");
+      });
+  }
 
   successEdit() {
+
+    this.brandId = Number(this.brandIdStr);
+    if (this.brandId < 0) {
+      this.brandId = Number(this.generate());
+      this.addNewBrand();
+      console.log("New BrandID: " + this.brandId);
+    }
+
     this.showEditItem = false;
     if (!this.ItemSalePrice) {
       this.ItemSalePrice = 0;
@@ -216,7 +251,7 @@ export default class AdminEditProduct extends Vue {
         price: this.ItemPrice,
         saleprice: this.ItemSalePrice,
         delivery: this.ItemShipping,
-        brandId: this.ItemBrand,
+        brandId: this.brandId,
         categoryId: this.CategoryId,
         image: this.ItemImage,
         quantity: this.ItemQuantity,
@@ -300,8 +335,9 @@ export default class AdminEditProduct extends Vue {
         this.ItemImage = this.items[item].image;
         this.ItemSalePrice = this.items[item].saleprice;
         this.ItemDescription = this.items[item].description;
-        this.ItemBrand = JSON.stringify(this.items[item].brand);
-        console.log("[AdminEditProduct.vue] brand id: " + JSON.stringify(this.items[item]));
+        this.ItemBrand = String(this.items[item].brand);
+        console.log("[AdminEditProduct.vue] brand id: " + this.ItemBrand);
+        this.setItemBrand();
         this.ItemQuantity = this.items[item].quantity;
         this.ItemShipping = this.items[item].delivery;
         this.CategoryId = this.items[item].categoryId;
@@ -323,6 +359,15 @@ export default class AdminEditProduct extends Vue {
 
     if (!this.items[item].saleprice) {
       this.ItemSalePrice = "";
+    }
+  }
+
+  setItemBrand() {
+    for (var i in this.brands) {
+      if (this.brands[i].id == Number(this.ItemBrand)) {
+        this.ItemBrand = this.brands[i].name;
+        console.log("Item brand matched and name: " + this.ItemBrand);
+      }
     }
   }
 
