@@ -36,6 +36,25 @@ export class CategoryController extends DefaultController {
                     res.status(200).send(refined_categories);
                 })
             });
+        router.route("/deletecategory/:id")
+            .delete((req: Request, res: Response) => {
+                var id = req.params.id;
+                console.log("deleting all entries for item with category id of " + id);
+                itemCategoryRepo.find(id).then((categories: Category[]) => {
+                    if (categories == undefined) {
+                        return;
+                    }
+                    var refined_categories: Category[] = [];
+                    for (var i in categories) {
+                        if (categories[i].categoryId == id) {
+                            itemCategoryRepo.delete(categories[i]).then(x => {
+                                res.status(200).send(categories[i]);
+                                console.log(categories[i]);
+                              });
+                        }
+                    }
+                })
+            })
         router.route("/newitemcategory")
             .post((req: Request, res: Response) => {
                 console.log("adding a new item category");
