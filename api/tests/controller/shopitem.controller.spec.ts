@@ -144,5 +144,21 @@ describe("/shopitem", () => {
                 });
             });
         });
+        describe("DELETE '/", () => {
+            test("should delete given shop item from table", done => {
+                return createBrand(connection).then((createdBrand: Brand) => {
+                    return createItem(connection).then((createdItem: ShopItem) => {
+                        request(myApp)
+                            .delete("/deleteitem/1")
+                            .expect(200)
+                            .then((response: request.Response) => {
+                                console.log(response.body)
+                                expect(response.body.name).toEqual("Bike");
+                                done();
+                            })
+                    });
+                });
+            });
+        })
     });
 });
