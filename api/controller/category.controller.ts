@@ -23,9 +23,6 @@ export class CategoryController extends DefaultController {
                 var id = req.params.id;
                 console.log("retrieving item categories with id of " + id);
                 itemCategoryRepo.find(id).then((categories: Category[]) => {
-                    if (categories == undefined) {
-                        return;
-                    }
                     var refined_categories: Category[] = [];
                     for (var i in categories) {
                         if (categories[i].categoryId == id) {
@@ -41,9 +38,6 @@ export class CategoryController extends DefaultController {
                 var id = req.params.id;
                 console.log("deleting all entries for item with category id of " + id);
                 itemCategoryRepo.find(id).then((categories: Category[]) => {
-                    if (categories == undefined) {
-                        return;
-                    }
                     var refined_categories: Category[] = [];
                     for (var i in categories) {
                         if (categories[i].categoryId == id) {

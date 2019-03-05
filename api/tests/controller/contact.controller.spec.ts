@@ -89,6 +89,28 @@ describe("/contact", () => {
               });
           });
         });
+        test("should get 404", done => {
+          return createContact(connection).then((createdContact: Contact) => {
+            return request(myApp)
+              .put("/contacts/3")
+              .send({
+                monHours: "new",
+                tueHours: "new",
+                wedHours: "new",
+                thuHours: "new",
+                friHours: "new",
+                satHours: "new",
+                sunHours: "new",
+                phoneNumber: "new",
+                address: "new",
+                email: "new"
+              })
+              .then((response: request.Response) => {
+                expect(404);
+                done();
+              });
+          });
+        });
       }) 
   });
   

@@ -23,6 +23,7 @@ export class ContactController extends DefaultController {
       .put((req: Request, res: Response) => {
         contactRepo.findOne(req.params.id).then((foundContact: Contact | undefined) => {
           if (foundContact == undefined) {
+            res.sendStatus(404);
             return;
           }
 
