@@ -239,7 +239,8 @@
                     </td>
                     <td class="iName">{{cartitem.item.name}}</td>
                     <td class="iName">{{cartitem.quantity}}</td>
-                    <td>${{cartitem.item.price}}</td>
+                    <td v-if="!cartitem.item.saleprice">${{cartitem.item.price}}</td>
+                    <td v-if="cartitem.item.saleprice">${{cartitem.item.saleprice}}</td>
                   </tr>
                 </tbody>
                 <tr class="bot-bord">
@@ -341,7 +342,7 @@ export default class Checkout extends Vue {
   }
   computeSubtotal() {
     for (var i in this.items) {
-      if (this.items[i].saleprice) {
+      if (this.items[i].saleprice != 0) {
         this.subtotal += this.items[i].saleprice;
       } else {
         this.subtotal += this.items[i].price;
