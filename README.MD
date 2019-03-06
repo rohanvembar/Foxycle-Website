@@ -40,7 +40,9 @@ Team Members + Roles:
 4. Run a SQL query to create a database `dev` and `test`
 
   ``` 
-  create database dev`, `create database test 
+  create database dev
+  
+  create database test 
   ```
 
 5. Run `npm install` in the `/client` and `/api` directory.
