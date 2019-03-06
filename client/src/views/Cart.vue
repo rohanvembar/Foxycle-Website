@@ -88,6 +88,15 @@
             src="https://media1.tenor.com/images/077ec9cadfa41dc224276e4026175f4c/tenor.gif?itemid=5510092"
           >
         </center>
+        <center>
+          <br>
+          <button
+            class="button is-info is-rounded is-focused"
+            v-on:click="$router.push('/shop')"
+            exact-active-class="is-active"
+            style="margin:auto;width:300px"
+          >continue shopping</button>
+        </center>
       </div>
     </div>
   </div>
@@ -109,7 +118,7 @@ export default class Cart extends Vue {
   shipping: number = 10;
   total: number = 0;
 
-  get isCartEmpty():boolean{
+  get isCartEmpty(): boolean {
     return !!(this.$store.state.items.length == 0);
   }
 
