@@ -31,24 +31,19 @@ REPLACE INTO `brand` (`id`, `name`) VALUES
 	(83515711, 'Diamondback');
 /*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 
--- Dumping data for table dev.category: ~12 rows (approximately)
+-- Dumping data for table dev.category: ~7 rows (approximately)
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
 REPLACE INTO `category` (`id`, `categoryId`, `category`) VALUES
-	(1, 55005547, 'roadbike'),
-	(2, 14517551, 'roadbike'),
-	(3, 17551539, 'apparel'),
-	(4, 23003764, 'roadbike'),
-	(5, 91551511, 'roadbike'),
-	(6, 25777184, 'roadbike'),
-	(7, 35155851, 'roadbike'),
-	(8, 75184111, 'apparel'),
-	(9, 92561277, 'apparel'),
-	(10, 63717143, 'apparel'),
-	(11, 47348404, 'roadbike'),
-	(12, 43315544, 'roadbike');
+	(21, 43315544, 'Road Bike'),
+	(24, 23003764, 'Hybrid Bike'),
+	(25, 91551511, 'Hybrid Bike'),
+	(26, 35155851, 'Hybrid Bike'),
+	(29, 75184111, 'Accessories'),
+	(30, 92561277, 'Accessories'),
+	(32, 63717143, 'Apparel');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 
--- Dumping data for table dev.contact: ~1 rows (approximately)
+-- Dumping data for table dev.contact: ~0 rows (approximately)
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
 REPLACE INTO `contact` (`id`, `monHours`, `tueHours`, `wedHours`, `thuHours`, `friHours`, `satHours`, `sunHours`, `phoneNumber`, `address`, `email`, `map`) VALUES
 	(1, '10 AM - 6 PM', '10 AM - 6 PM', '10 AM - 6 PM', '10 AM - 6 PM', '10 AM - 6 PM', '10 AM - 5 PM', '12 AM - 5 PM', '(805) 111-1111', '1 Grand Avenue San Luis Obispo, CA 93407', 'info@foxycle.com', '"https://maps.google.com/maps?q=slodoco&t=&z=13&ie=UTF8&iwloc=&output=embed"');
@@ -88,10 +83,10 @@ REPLACE INTO `service` (`id`, `title`, `price`, `description`, `category`) VALUE
 	(9, 'Brake System Tune-Up', 45, 'Includes brake pad installation, brake inspection and adjustments and inspection of \ncables and housing.', 'installations');
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 
--- Dumping data for table dev.session: ~1 rows (approximately)
+-- Dumping data for table dev.session: ~0 rows (approximately)
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
 REPLACE INTO `session` (`id`, `expiresAt`, `userId`) VALUES
-	(4, '2019-03-04 16:24:33', 3);
+	(4, '2019-03-06 16:10:38', 3);
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 
 -- Dumping data for table dev.shop_item: ~8 rows (approximately)
