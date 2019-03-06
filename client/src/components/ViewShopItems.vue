@@ -1,50 +1,51 @@
 <template>
-  <div class="columns">
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-      crossorigin="anonymous"
-    >
-    <div class="column is-narrow filter">
-      <ShopPageFilterBox
-        @priceFilter="onPriceFilter"
-        @deliveryFilter="onDeliveryFilter"
-        @brandFilter="onBrandFilter"
-        v-if="hasItems()"
-      />
-    </div>
-
-    <div class="column">
-      <div id="wrap">
-        <div id="columns" class="columns_4" v-if="hasItems()">
-          <figure
-            class="has-ribbon"
-            v-for="(item, index) in deliveryRefinedItems"
-            v-bind:key="index"
-          >
-            <!-- change indexof to whatever category you want to show the ribbon on -->
-            <div class="ribbon is-danger" v-if="item.saleprice">{{ saleText }}</div>
-            <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
-              <div class="imagediv">
-                <img :src="item.image" class="image">
-              </div>
-            </router-link>
-            <figcaption>{{item.name}}</figcaption>
-            <span class="price" v-if="item.saleprice">
-              Original price:
-              <del>${{item.price}}</del>
-            </span>
-            <br>
-            <span class="price" v-if="!item.saleprice">${{item.price}}</span>
-            <span class="price" v-if="item.saleprice">
-              <b>Sale: ${{item.saleprice}}</b>
-            </span>
-            <div
-              class="buttonadd button is-rounded is-info is-focused"
-              v-on:click="toast(item)"
-            >add to cart</div>
-          </figure>
+  <div>
+    <div class="columns">
+      <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+        crossorigin="anonymous"
+      >
+      <div class="column is-narrow filter">
+        <ShopPageFilterBox
+          @priceFilter="onPriceFilter"
+          @deliveryFilter="onDeliveryFilter"
+          @brandFilter="onBrandFilter"
+          v-if="hasItems()"
+        />
+      </div>
+      <div class="column">
+        <div id="wrap">
+          <div id="columns" class="columns_4" v-if="hasItems()">
+            <figure
+              class="has-ribbon"
+              v-for="(item, index) in deliveryRefinedItems"
+              v-bind:key="index"
+            >
+              <!-- change indexof to whatever category you want to show the ribbon on -->
+              <div class="ribbon is-danger" v-if="item.saleprice">{{ saleText }}</div>
+              <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
+                <div class="imagediv">
+                  <img :src="item.image" class="image">
+                </div>
+              </router-link>
+              <figcaption>{{item.name}}</figcaption>
+              <span class="price" v-if="item.saleprice">
+                Original price:
+                <del>${{item.price}}</del>
+              </span>
+              <br>
+              <span class="price" v-if="!item.saleprice">${{item.price}}</span>
+              <span class="price" v-if="item.saleprice">
+                <b>Sale: ${{item.saleprice}}</b>
+              </span>
+              <div
+                class="buttonadd button is-rounded is-info is-focused"
+                v-on:click="toast(item)"
+              >add to cart</div>
+            </figure>
+          </div>
         </div>
       </div>
     </div>
@@ -250,7 +251,6 @@ export default class ViewShopItems extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
 .ribbon {
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   border-radius: 1px;
