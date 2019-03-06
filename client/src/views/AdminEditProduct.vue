@@ -209,8 +209,6 @@ export default class AdminEditProduct extends Vue {
   categorynames: Category[] = [];
   newItemCategory: string = "";
 
-
-
 // Work in progress
   addNewBrand() {
     axios

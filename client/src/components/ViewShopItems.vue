@@ -10,7 +10,6 @@
       <div class="column is-narrow filter">
         <ShopPageFilterBox
           :existingBrands = "brands"
-          :categories = "categorynames"
           @priceFilter="onPriceFilter"
           @deliveryFilter="onDeliveryFilter"
           @brandFilter="onBrandFilter"
@@ -89,7 +88,6 @@ export default class ViewShopItems extends Vue {
   deliveryFilter: String = "all";
   brandselect: String = "all";
   brands: iBrand[] = [];
-  categorynames: Category[] = [];
 
   toast(item: iShopItem) {
     if (this.addToCart(item) == true) {
@@ -146,18 +144,6 @@ export default class ViewShopItems extends Vue {
   // get unique category names => send to filterbox as prop
   getAllItems() {
     this.error = false;
-
-    axios
-      .get(APIConfig.buildUrl("/uniqueitemcategories"))
-      .then((response: AxiosResponse) => {
-        this.categorynames = response.data;
-        //console.log("loaded categories" + JSON.stringify(this.categorynames));
-        this.$emit("success");
-      })
-      .catch((res: AxiosError) => {
-        console.log("[AdminEditProduct.vue] Error@@");
-      });
-
     var existingBrandIds: number[] = [];
     axios
       .get(APIConfig.buildUrl("/shopitems"))
