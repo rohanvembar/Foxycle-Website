@@ -18,7 +18,9 @@ export class CategoryController extends DefaultController {
                     res.status(200).send(categories);
                 })
             });
-
+        
+        // returns unique_categories array (Category [])
+        // uses unique_names array to keep track of unique names
         router.route("/uniqueitemcategories")
             .get((req: Request, res: Response) => {
                 console.log("retrieving all unique item category names");

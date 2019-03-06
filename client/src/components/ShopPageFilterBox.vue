@@ -95,9 +95,6 @@ export default class ShopPageFilterBox extends Vue {
     
     return categories;
   }
-
-  
-  
 }
 </script>
 
