@@ -3,11 +3,7 @@
     <div class="box">
       <div class="columns">
         <div class="column">
-          <img
-            class="itempage-image"
-            style="max-height:300px"
-            :src="shopItem.image"
-          >
+          <img class="itempage-image" style="max-height:300px" :src="shopItem.image">
         </div>
         <div class="column is-one-fifth"></div>
         <div class="column">
@@ -44,9 +40,6 @@
       <p class="title is-4">Description</p>
       <div class="description">{{shopItem.description}}</div>
     </div>
-    <div id="toast">
-      <div id="desc">Only have {{shopItem.quantity}} in stock</div>
-    </div>
   </div>
 </template>
 
@@ -55,7 +48,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
-import { iCart } from '@/models/cart.interface';
+import { iCart } from "@/models/cart.interface";
 
 @Component
 export default class ItemPage extends Vue {
@@ -69,13 +62,13 @@ export default class ItemPage extends Vue {
   }
 
   toast() {
-    const ele = document.getElementById("toast");
-    if (ele) {
-      ele.className = "show";
-      setTimeout(function() {
-        ele.className = ele.className.replace("show", "");
-      }, 3000);
-    }
+    this.$toast.open({
+      queue: false,
+      duration: 2000,
+      message: `max quantity already added to cart`,
+      position: "is-bottom",
+      type: "is-danger"
+    });
   }
 
   addToCart() {
@@ -87,17 +80,23 @@ export default class ItemPage extends Vue {
           quan++;
         }
       }
-      
+
       var totalquan = +this.quantity + +quan;
-      console.log(totalquan)
+      console.log(totalquan);
       if (totalquan > this.shopItem.quantity) {
-        console.log("out of stock" + totalquan)
+        console.log("out of stock" + totalquan);
         this.toast();
       } else {
         for (var k = 0; k < this.quantity; k++) {
           this.$store.commit("cart", this.shopItem);
+          this.$toast.open({
+            queue: false,
+            duration: 2000,
+            message: `item successfuly added to cart`,
+            position: "is-bottom",
+            type: "is-primary"
+          });
         }
-        this.$router.push({ name: "cart" });
       }
     }
   }
@@ -120,9 +119,6 @@ export default class ItemPage extends Vue {
   }
 }
 </script>
-
-
-
 
 <style lang="scss" scoped>
 .main {
@@ -159,137 +155,5 @@ export default class ItemPage extends Vue {
 }
 .button:hover {
   background: hsl(171, 100%, 41%);
-}
-
-#toast {
-  visibility: hidden;
-  max-width: 50px;
-  height: 55px;
-  margin: auto;
-  background-color: rgb(212, 49, 63);
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-
-  position: fixed;
-  z-index: 5;
-  left: 0;
-  right: 0;
-  bottom: 50px;
-  font-size: 17px;
-  white-space: nowrap;
-}
-
-#toast #desc {
-  color: #fff;
-
-  padding: 16px;
-
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-#toast.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,
-    fadeout 0.5s 2s;
-  animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s,
-    fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 50px;
-    opacity: 1;
-  }
-}
-
-@keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 50px;
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes expand {
-  from {
-    min-width: 50px;
-  }
-  to {
-    min-width: 350px;
-  }
-}
-
-@keyframes expand {
-  from {
-    min-width: 50px;
-  }
-  to {
-    min-width: 350px;
-  }
-}
-@-webkit-keyframes stay {
-  from {
-    min-width: 350px;
-  }
-  to {
-    min-width: 350px;
-  }
-}
-
-@keyframes stay {
-  from {
-    min-width: 350px;
-  }
-  to {
-    min-width: 350px;
-  }
-}
-@-webkit-keyframes shrink {
-  from {
-    min-width: 350px;
-  }
-  to {
-    min-width: 50px;
-  }
-}
-
-@keyframes shrink {
-  from {
-    min-width: 350px;
-  }
-  to {
-    min-width: 50px;
-  }
-}
-
-@-webkit-keyframes fadeout {
-  from {
-    bottom: 50px;
-    opacity: 1;
-  }
-  to {
-    bottom: 60px;
-    opacity: 0;
-  }
-}
-
-@keyframes fadeout {
-  from {
-    bottom: 50px;
-    opacity: 1;
-  }
-  to {
-    bottom: 60px;
-    opacity: 0;
-  }
 }
 </style>

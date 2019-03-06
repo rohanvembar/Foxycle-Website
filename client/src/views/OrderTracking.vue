@@ -5,7 +5,7 @@
     <b-field grouped>
       <b-input placeholder="Order Number" type="number" v-model="ordernum" @keyup.enter.native="success(ordernum)" rounded></b-input>
       <p class="control">
-          <button v-on:click="success(ordernum)" class="button is-info is-rounded">Search</button>
+          <button v-on:click="success(ordernum)" class="button is-info is-rounded is-focused">Track</button>
       </p>
     </b-field>
     </div>

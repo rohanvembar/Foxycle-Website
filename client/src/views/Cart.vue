@@ -6,7 +6,7 @@
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
       crossorigin="anonymous"
     >
-    <div class="container" v-if="itemsInCart">
+    <div class="container" v-if="!isCartEmpty">
       <div class="cart-table">
         <table class="table is-hoverable">
           <thead>
@@ -48,28 +48,28 @@
             <td></td>
             <td></td>
             <td></td>
-            <td v-if="itemsInCart">${{subtotal}}</td>
-            <td v-if="!itemsInCart">-</td>
+            <td v-if="!isCartEmpty">${{subtotal}}</td>
+            <td v-if="isCartEmpty">-</td>
           </tr>
           <tr>
             <td>Shipping</td>
             <td></td>
             <td></td>
             <td></td>
-            <td v-if="itemsInCart">${{isShippable()}}</td>
-            <td v-if="!itemsInCart">-</td>
+            <td v-if="!isCartEmpty">${{isShippable()}}</td>
+            <td v-if="isCartEmpty">-</td>
           </tr>
           <tr class="tot-bord">
             <td>Total</td>
             <td></td>
             <td></td>
             <td></td>
-            <td v-if="itemsInCart">${{total}}</td>
-            <td v-if="!itemsInCart">-</td>
+            <td v-if="!isCartEmpty">${{total}}</td>
+            <td v-if="isCartEmpty">-</td>
           </tr>
         </table>
         <router-link
-          v-if="itemsInCart"
+          v-if="!isCartEmpty"
           class="button is-primary is-rounded checkout-btn is-focused"
           to="/checkout"
           exact-active-class="is-active"
@@ -88,6 +88,15 @@
             src="https://media1.tenor.com/images/077ec9cadfa41dc224276e4026175f4c/tenor.gif?itemid=5510092"
           >
         </center>
+        <center>
+          <br>
+          <button
+            class="button is-info is-rounded is-focused"
+            v-on:click="$router.push('/shop')"
+            exact-active-class="is-active"
+            style="margin:auto;width:300px"
+          >continue shopping</button>
+        </center>
       </div>
     </div>
   </div>
@@ -105,10 +114,13 @@ export default class Cart extends Vue {
   error: string | boolean = false;
   items: iShopItem[] = this.$store.state.items;
   cart: iCart[] = [];
-  itemsInCart: boolean = this.items.length != 0;
   subtotal: number = 0;
   shipping: number = 10;
   total: number = 0;
+
+  get isCartEmpty(): boolean {
+    return !!(this.$store.state.items.length == 0);
+  }
 
   isShippable() {
     for (var i in this.items) {
