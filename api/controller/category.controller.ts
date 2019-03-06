@@ -39,6 +39,23 @@ export class CategoryController extends DefaultController {
                     res.status(200).send(unique_categories);
                 })
             });
+
+        router.route("/itemscategory/:name")
+            .get((req: Request, res: Response) => {
+                var name = req.params.name;
+                console.log("retrieving item categories with name of " + name);
+                itemCategoryRepo.find().then((categories: Category[]) => {
+                    var refined_categories: Category[] = [];
+                    for (var i in categories) {
+                        if (categories[i].category == name) {
+                            refined_categories.push(categories[i]);
+                        }
+                    }
+                    console.log(refined_categories)
+                    res.status(200).send(refined_categories);
+                })
+            });
+
         router.route("/itemscategory/:id")
             .get((req: Request, res: Response) => {
                 var id = req.params.id;

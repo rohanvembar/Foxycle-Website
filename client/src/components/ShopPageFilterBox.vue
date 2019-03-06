@@ -7,11 +7,11 @@
     <div class="filters">
       <p>Category</p>
       <div class="select">
-        <select name="category">
-          <option selected="true" value="all">All</option>
+        <select name="category" v-model="categoryselect" v-on:change="filterCategory" >
+          <option value="all">All</option>
           <option
             v-for="category in categorynames"
-            v-bind:key="category.id"
+            v-bind:key="category.category"
             :value="category.category"
           >{{category.category}}</option>
         </select>
@@ -65,6 +65,7 @@ export default class ShopPageFilterBox extends Vue {
   error: string | boolean = false;
   brandselect: string = "all";
   categorynames: Category[] = [];
+  categoryselect : string = "all";
 
   filterPrice(e) {
     this.$emit("priceFilter", e.target.value);
@@ -78,12 +79,41 @@ export default class ShopPageFilterBox extends Vue {
     this.$emit("brandFilter", this.brandselect);
   }
 
+  filterCategory(){
+    console.log("from filter - category: " + this.categoryselect);
+    var categories_: Category[] = [];
+    var categoryIds: number[] = [];
+    // get categories with the given category name
+    if(this.categoryselect == "all"){
+      categoryIds.push(0);
+      this.$emit("categoryFilter", categoryIds); 
+    }
+    axios
+      .get(APIConfig.buildUrl("/itemscategory/" + this.categoryselect))
+      .then((response: AxiosResponse) => {
+          categories_ = response.data;
+          console.log("retrieved categories: " + JSON.stringify(response.data));
+          this.$emit("success");
+            
+          var i;
+          for(i = 0; i < categories_.length; i++){
+            console.log("pushing category ids: " + categories_[i].categoryId);
+            categoryIds.push(categories_[i].categoryId);
+          }
+          console.log("category Ids: " + categoryIds);
+      })
+      .catch((res: AxiosError) => {
+        console.log("[ViewShopItems.vue] Error@@");
+      });
+    this.$emit("categoryFilter", categoryIds);
+  }
+
   get retrievedBrands(){
     var brands: iBrand[] = [];
     if(this.existingBrands.length > 0){
       brands = this.existingBrands;
     }
-    console.log("loaded brands" + JSON.stringify(brands));
+    //console.log("loaded brands" + JSON.stringify(brands));
     return brands;
   }
 
@@ -96,7 +126,7 @@ export default class ShopPageFilterBox extends Vue {
       .get(APIConfig.buildUrl("/uniqueitemcategories"))
       .then((response: AxiosResponse) => {
         this.categorynames = response.data;
-        console.log("loaded categories" + JSON.stringify(this.categorynames));
+        //console.log("loaded categories" + JSON.stringify(this.categorynames));
         this.$emit("success");
       })
       .catch((res: AxiosError) => {

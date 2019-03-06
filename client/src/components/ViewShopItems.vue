@@ -13,6 +13,7 @@
           @priceFilter="onPriceFilter"
           @deliveryFilter="onDeliveryFilter"
           @brandFilter="onBrandFilter"
+          @categoryFilter="onCategoryFilter"
           v-if="hasItems()"
         />
       </div>
@@ -88,6 +89,7 @@ export default class ViewShopItems extends Vue {
   deliveryFilter: String = "all";
   brandselect: String = "all";
   brands: iBrand[] = [];
+  category_Ids: number[] = [];
 
   toast(item: iShopItem) {
     if (this.addToCart(item) == true) {
@@ -141,7 +143,6 @@ export default class ViewShopItems extends Vue {
   }
 
   // get items => get their brandIds => use brandIds to get corresponding Brand objects => send to filterbox as prop
-  // get unique category names => send to filterbox as prop
   getAllItems() {
     this.error = false;
     var existingBrandIds: number[] = [];
@@ -152,7 +153,9 @@ export default class ViewShopItems extends Vue {
         for (var item in allItems) {
           if (allItems[item].quantity > 0) {
             this.items.push(allItems[item]);
-            existingBrandIds.push(allItems[item].brand);
+            // retrieve non-duplicate brandIds.
+            if(existingBrandIds.indexOf(allItems[item].brand) == -1)
+              existingBrandIds.push(allItems[item].brand);
           }
         }
         console.log("brandIds: " + JSON.stringify(existingBrandIds));
@@ -164,7 +167,9 @@ export default class ViewShopItems extends Vue {
             .get(APIConfig.buildUrl("/brands/" + brandId))
             .then((response: AxiosResponse) => {
               this.brands.push(response.data);
-              //console.log("retrieved brand: " + JSON.stringify(response.data));
+              console.log("retrieved brand: " + JSON.stringify(response.data));
+  
+                
               //console.log("brands so far: " + JSON.stringify(this.brands));
               this.$emit("success");
             })
@@ -182,12 +187,31 @@ export default class ViewShopItems extends Vue {
       });
   }
 
+  get categoryRefinedItems() {
+    console.log("categoryIds: " + this.category_Ids);
+    if(this.category_Ids == undefined){
+      console.log("this.category_Ids is undefined.. value: " + this.category_Ids);
+      return this.sortedItems;
+    }
+    else{
+      if (this.category_Ids.length == 0) {
+        return this.sortedItems;
+      } 
+      else {
+        return this.sortedItems.filter(function(s) {
+          return this.category_Ids.includes(s.categoryId);
+        });
+      }
+    }
+    
+  }
+
   get brandRefinedItems() {
     if (this.brandselect == "all") {
-      return this.sortedItems;
+      return this.categoryRefinedItems;
     } else {
       const brandId = Number(this.brandselect);
-      return this.sortedItems.filter(function(s) {
+      return this.categoryRefinedItems.filter(function(s) {
         return s.brand == brandId;
       });
     }
@@ -272,6 +296,10 @@ export default class ViewShopItems extends Vue {
 
   onBrandFilter(newFilter) {
     this.brandselect = newFilter;
+  }
+
+  onCategoryFilter(newFilter) {
+    this.category_Ids = newFilter;
   }
 
   goToItemPage() {}
