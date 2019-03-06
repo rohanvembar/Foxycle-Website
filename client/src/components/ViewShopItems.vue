@@ -213,8 +213,24 @@ export default class ViewShopItems extends Vue {
       return 0;
     }
     function comparePrice(a, b) {
-      if (a.price < b.price) return -1;
-      if (a.price > b.price) return 1;
+      var a_price;
+      var b_price;
+      if(a.saleprice > 0){
+        a_price = a.saleprice;
+      }
+      else{
+        a_price = a.price;
+      }
+
+      if(b.saleprice > 0){
+        b_price = b.saleprice;
+      }
+      else{
+        b_price = b.price;
+      }
+        
+      if (a_price < b_price) return -1;
+      if (a_price > b_price) return 1;
       return 0;
     }
 
