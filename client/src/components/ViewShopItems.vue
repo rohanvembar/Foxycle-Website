@@ -16,35 +16,38 @@
     </div>
 
     <div class="column">
-
-    <div id="wrap">
-      <div id="columns" class="columns_4" v-if="hasItems()">
-        <figure class="has-ribbon" v-for="(item, index) in deliveryRefinedItems" v-bind:key="index">
-          <!-- change indexof to whatever category you want to show the ribbon on -->
-          <div class="ribbon is-danger" v-if="item.saleprice">{{ saleText }}</div>
-          <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
-            <div class="imagediv">
-              <img :src="item.image" class="image">
-            </div>
-          </router-link>
-          <figcaption>{{item.name}}</figcaption>
-          <span class="price" v-if="item.saleprice">
-            Original price:
-            <del>${{item.price}}</del>
-          </span>
-          <br>
-          <span class="price" v-if="!item.saleprice">${{item.price}}</span>
-          <span class="price" v-if="item.saleprice">
-            <b>Sale: ${{item.saleprice}}</b>
-          </span>
-          <div
-            class="buttonadd button is-rounded is-info is-focused"
-            v-on:click="toast(item)"
-          >add to cart</div>
-        </figure>
+      <div id="wrap">
+        <div id="columns" class="columns_4" v-if="hasItems()">
+          <figure
+            class="has-ribbon"
+            v-for="(item, index) in deliveryRefinedItems"
+            v-bind:key="index"
+          >
+            <!-- change indexof to whatever category you want to show the ribbon on -->
+            <div class="ribbon is-danger" v-if="item.saleprice">{{ saleText }}</div>
+            <router-link :to="{ name: 'itempage', params: { itemid: item.id } }">
+              <div class="imagediv">
+                <img :src="item.image" class="image">
+              </div>
+            </router-link>
+            <figcaption>{{item.name}}</figcaption>
+            <span class="price" v-if="item.saleprice">
+              Original price:
+              <del>${{item.price}}</del>
+            </span>
+            <br>
+            <span class="price" v-if="!item.saleprice">${{item.price}}</span>
+            <span class="price" v-if="item.saleprice">
+              <b>Sale: ${{item.saleprice}}</b>
+            </span>
+            <div
+              class="buttonadd button is-rounded is-info is-focused"
+              v-on:click="toast(item)"
+            >add to cart</div>
+          </figure>
+        </div>
       </div>
     </div>
-        </div>
 
     <div v-if="!hasItems()">
       <center>
@@ -89,27 +92,27 @@ export default class ViewShopItems extends Vue {
   brandselect: String = "all";
 
   toast(item: iShopItem) {
-    this.$toast.open({
-      duration: 3000,
-      message: `item added to cart successfully`,
-      position: "is-bottom",
-      type: "is-primary"
-    });
-    this.addToCart(item);
+    if (this.addToCart(item) == true) {
+      this.$toast.open({
+        queue: false,
+        duration: 2000,
+        message: `item added to cart successfully`,
+        position: "is-bottom",
+        type: "is-primary"
+      });
+    } else {
+      this.$toast.open({
+        queue: false,
+        duration: 2000,
+        message: `max quantity already added to cart`,
+        position: "is-bottom",
+        type: "is-danger"
+      });
+    }
   }
 
   hasItems() {
     return this.items.length > 0;
-  }
-
-  badtoast() {
-    const ele = document.getElementById("badtoast");
-    if (ele) {
-      ele.className = "show";
-      setTimeout(function() {
-        ele.className = ele.className.replace("show", "");
-      }, 3000);
-    }
   }
 
   addToCart(item: iShopItem) {
@@ -125,12 +128,13 @@ export default class ViewShopItems extends Vue {
     console.log(totalquan);
     if (totalquan > item.quantity) {
       console.log("out of stock" + totalquan);
-      this.badtoast();
+      return false;
     } else {
       this.$store.commit("cart", item);
       console.log(
         "[ViewShopItems.vue]" + JSON.stringify(this.$store.state.items)
       );
+      return true;
     }
   }
 
@@ -214,20 +218,18 @@ export default class ViewShopItems extends Vue {
     function comparePrice(a, b) {
       var a_price;
       var b_price;
-      if(a.saleprice > 0){
+      if (a.saleprice > 0) {
         a_price = a.saleprice;
-      }
-      else{
+      } else {
         a_price = a.price;
       }
 
-      if(b.saleprice > 0){
+      if (b.saleprice > 0) {
         b_price = b.saleprice;
-      }
-      else{
+      } else {
         b_price = b.price;
       }
-        
+
       if (a_price < b_price) return -1;
       if (a_price > b_price) return 1;
       return 0;
@@ -441,7 +443,7 @@ export default class ViewShopItems extends Vue {
 }
 
 #wrap {
-  margin:auto;
+  margin: auto;
   max-width: 1100px;
   padding-bottom: 50px;
 }
