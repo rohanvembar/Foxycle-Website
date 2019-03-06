@@ -89,13 +89,12 @@ export default class ViewShopItems extends Vue {
   brandselect: String = "all";
 
   toast(item: iShopItem) {
-    const ele = document.getElementById("toast");
-    if (ele) {
-      ele.className = "show";
-      setTimeout(function() {
-        ele.className = ele.className.replace("show", "");
-      }, 3000);
-    }
+    this.$toast.open({
+      duration: 3000,
+      message: `item added to cart successfully`,
+      position: "is-bottom",
+      type: "is-primary"
+    });
     this.addToCart(item);
   }
 
