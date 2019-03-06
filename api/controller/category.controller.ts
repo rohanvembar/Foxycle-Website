@@ -21,7 +21,7 @@ export class CategoryController extends DefaultController {
 
         router.route("/uniqueitemcategories")
             .get((req: Request, res: Response) => {
-                console.log("retrieving all item category names");
+                console.log("retrieving all unique item category names");
                 itemCategoryRepo.find().then((categories: Category[]) => {
                     var unique_names: string[] = [];
                     var unique_categories: Category[] = [];

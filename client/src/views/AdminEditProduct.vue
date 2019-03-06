@@ -146,6 +146,14 @@
             </div>
           </div>
         </div>
+        <b-input
+        :disabled="!ItemCategories.includes('other')"
+        type="text"
+        placeholder="new category"
+        v-model="newItemCategory"
+        rounded
+        required
+      ></b-input>
         <b-field label="Item Description">
           <b-input
             type="textarea"
@@ -199,6 +207,7 @@ export default class AdminEditProduct extends Vue {
   brandId: number = -1;
   brandIdStr: string = "";
   categorynames: Category[] = [];
+  newItemCategory: string = "";
 
 
 
@@ -243,6 +252,11 @@ export default class AdminEditProduct extends Vue {
 
     console.log("[AdminEditProduct.vue] shipping? " + this.ItemShipping);
     // Adding categories of item
+    if(this.newItemCategory != ""){
+      var newCatInd = this.ItemCategories.indexOf('other');
+      this.ItemCategories[newCatInd] = this.newItemCategory;
+      this.newItemCategory = "";
+    }
     for (var i = 0; i < this.ItemCategories.length; i++) {
       axios.post(APIConfig.buildUrl("/newitemcategory"), {
         categoryId: this.CategoryId,
@@ -424,6 +438,8 @@ export default class AdminEditProduct extends Vue {
         this.error = res.response && res.response.data.error;
         console.log("[AdminEditProduct.vue]" + this.error);
       });
+    
+    console.log("items: " + JSON.stringify(this.items));
 
     axios
       .get(APIConfig.buildUrl("/brands"))

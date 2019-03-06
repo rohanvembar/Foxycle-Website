@@ -8,6 +8,8 @@
     >
     <div class="column is-narrow filter">
       <ShopPageFilterBox
+        :existingBrands = "brands"
+        :categories = "categorynames"
         @priceFilter="onPriceFilter"
         @deliveryFilter="onDeliveryFilter"
         @brandFilter="onBrandFilter"
@@ -73,6 +75,10 @@ import { iShopItem } from "../models/shopitem.interface";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import ShopPageFilterBox from "@/components/ShopPageFilterBox.vue";
+import { iBrand } from "../models/brand.interface";
+import { exists } from "fs";
+import { Category } from "../../../api/entity";
+
 
 @Component({
   components: {
@@ -87,6 +93,8 @@ export default class ViewShopItems extends Vue {
   priceFilter: String = "all";
   deliveryFilter: String = "all";
   brandselect: String = "all";
+  brands: iBrand[] = [];
+  categorynames: Category[] = [];
 
   toast(item: iShopItem) {
     const ele = document.getElementById("toast");
@@ -139,8 +147,23 @@ export default class ViewShopItems extends Vue {
     this.getAllItems();
   }
 
+  // get items => get their brandIds => use brandIds to get corresponding Brand objects => send to filterbox as prop
+  // get unique category names => send to filterbox as prop
   getAllItems() {
     this.error = false;
+
+    axios
+      .get(APIConfig.buildUrl("/uniqueitemcategories"))
+      .then((response: AxiosResponse) => {
+        this.categorynames = response.data;
+        //console.log("loaded categories" + JSON.stringify(this.categorynames));
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        console.log("[AdminEditProduct.vue] Error@@");
+      });
+
+    var existingBrandIds: number[] = [];
     axios
       .get(APIConfig.buildUrl("/shopitems"))
       .then((response: AxiosResponse) => {
@@ -148,8 +171,28 @@ export default class ViewShopItems extends Vue {
         for (var item in allItems) {
           if (allItems[item].quantity > 0) {
             this.items.push(allItems[item]);
+            existingBrandIds.push(allItems[item].brand);
           }
         }
+        console.log("brandIds: " + JSON.stringify(existingBrandIds));
+        
+        var i;
+        for(i = 0; i< existingBrandIds.length; i++){
+          var brandId = existingBrandIds[i];
+          axios
+            .get(APIConfig.buildUrl("/brands/" + brandId))
+            .then((response: AxiosResponse) => {
+              this.brands.push(response.data);
+              //console.log("retrieved brand: " + JSON.stringify(response.data));
+              //console.log("brands so far: " + JSON.stringify(this.brands));
+              this.$emit("success");
+            })
+            .catch((res: AxiosError) => {
+              console.log("[AdminEditProduct.vue] Error@@");
+            });
+          
+        }
+
         this.$emit("success");
       })
       .catch((res: AxiosError) => {

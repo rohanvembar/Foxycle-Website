@@ -9,9 +9,8 @@
       <div class = "select">
         <select name="category">
           <option selected="true" value="all">All</option>
-          <option value="bikes">Bikes</option>
-          <option value="apparel">Apparel</option>
-          <option value="parts">Parts</option>
+          <option v-for="category in retrievedCategories" v-bind:key="category.id" :value="category.category">{{category.category}}</option>
+         
         </select>
       </div>
       
@@ -19,7 +18,7 @@
       <div class = "select">
         <select name="brand" v-model="brandselect" v-on:change = "filterBrand">
           <option value="all">All</option>
-          <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id"> {{brand.name}} </option>
+          <option v-for="brand in retrievedBrands" v-bind:key="brand.id" :value="brand.id"> {{brand.name}} </option>
         </select>
       </div>
     
@@ -53,13 +52,19 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iBrand } from "../models/brand.interface";
+import { iShopItem } from "../models/shopitem.interface";
+import { Category } from "../../../api/entity";
 
 
 @Component
 export default class ShopPageFilterBox extends Vue {
   //@Prop() private msg!: string;
-  brands : iBrand[] = [];
+  @Prop() existingBrands : iBrand[] = [];
+  @Prop() categories : Category[] = [];
+  error: string | boolean = false;
   brandselect: string = "all";
+  items: iShopItem[] = [];
+
 
   filterPrice(e){
     this.$emit('priceFilter', e.target.value);
@@ -70,25 +75,29 @@ export default class ShopPageFilterBox extends Vue {
   }
 
   filterBrand(){
+    console.log(this.brandselect);
     this.$emit('brandFilter', this.brandselect);
   }
 
-  created() {
-    this.getAllItems();
+  get retrievedBrands(){
+    var brands: iBrand[] = [];
+    if(this.existingBrands.length > 0){
+      brands = this.existingBrands;
+    }
+    console.log("loaded brands" + JSON.stringify(brands));
+    return brands;
   }
 
-  getAllItems() {
-    axios
-      .get(APIConfig.buildUrl("/brands"))
-      .then((response: AxiosResponse) => {
-        this.brands = response.data;
-        this.$emit("success");
-      })
-      .catch((res: AxiosError) => {
-        console.log("[AdminEditProduct.vue] Error@@");
-      });
-
+  get retrievedCategories(){
+    var categories: Category[] = [];
+    categories = this.categories;
+    console.log("loaded categories" + JSON.stringify(categories));
+    
+    return categories;
   }
+
+  
+  
 }
 </script>
 

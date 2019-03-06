@@ -19,7 +19,6 @@ export class BrandController extends DefaultController {
                 })
             });
 
-
         router.route("/newBrand")
             .post((req: Request, res: Response) => {
                 console.log("adding a new brand");
@@ -49,6 +48,7 @@ export class BrandController extends DefaultController {
                         }
                     });
             });
+        
 
         
         return router;
