@@ -40,9 +40,6 @@
       <p class="title is-4">Description</p>
       <div class="description">{{shopItem.description}}</div>
     </div>
-    <div id="toast">
-      <div id="desc">Only have {{shopItem.quantity}} in stock</div>
-    </div>
   </div>
 </template>
 
