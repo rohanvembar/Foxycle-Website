@@ -58,7 +58,10 @@
         </div>
       </div>
     </div>
-    <AddItem :brands = "brands" v-bind:is-showing="showAddItem" v-on:success="successAdd()" v-on:cancel="cancelAdd()"/>
+    <AddItem 
+    :categorynames = "categorynames"
+    :brands = "brands"
+    v-bind:is-showing="showAddItem" v-on:success="successAdd()" v-on:cancel="cancelAdd()"/>
 
     <modal
       v-bind:is-showing="showEditItem"
@@ -75,17 +78,17 @@
 
         <div class="field">
           <b-field label="Brand">
-          <b-select required v-model="brandIdStr">
-          <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
-          <option value="-1">Other</option>
-        </b-select>
-      </b-field>
+            <b-select required v-model="brandIdStr">
+            <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
+            <option value="-100">Other</option>
+          </b-select>
+        </b-field>
       <b-field label="New Brand Name">
         <b-input
-          :disabled="brandIdStr != '-1'"
+          :disabled="brandIdStr != '-100'"
           type="text"
           placeholder="new brand"
-          v-model="newItemBrand"
+          v-model="ItemBrand"
           rounded
           required
         ></b-input>
@@ -137,10 +140,8 @@
             <div class="select is-multiple">
               <span>{{ItemCategories}}</span>
               <b-select required multiple v-model="ItemCategories">
-                <option value="apparel">Apparel</option>
-                <option value="roadbike">Road Bike</option>
-                <option value="mountainbike">Mountain Bike</option>
-                <option value="other">Other</option>
+                <option v-for="category in categorynames" v-bind:key="category.id" :value="category.category">{{category.category}}</option>
+                <option value="other" >Other</option>
               </b-select>
             </div>
           </div>
@@ -169,6 +170,7 @@ import { iBrand } from "../models/brand.interface";
 import { categoryItem } from "../models/category.interface";
 import AddItem from "@/components/AddItem.vue";
 import Modal from "@/components/Modal.vue";
+import { Category } from "../../../api/entity";
 
 @Component({
   components: {
@@ -196,6 +198,7 @@ export default class AdminEditProduct extends Vue {
   CategoryId: number = 0;
   brandId: number = -1;
   brandIdStr: string = "";
+  categorynames: Category[] = [];
 
 
 
@@ -208,6 +211,7 @@ export default class AdminEditProduct extends Vue {
       })
       .then((response: AxiosResponse) => {
         console.log("[AddItem.vue] new brand" + JSON.stringify(response.data));
+        this.ItemBrand = "";
       })
       .catch((response: AxiosResponse) => {
         console.log("[AddItem.vue] brand" + "catch");
@@ -230,7 +234,8 @@ export default class AdminEditProduct extends Vue {
       .delete(APIConfig.buildUrl("/deletecategory/" + this.CategoryId))
       .then((response: AxiosResponse) => {
         this.$emit("success");
-        this.badToast();
+        console.log("target category id: " + this.CategoryId);
+        //this.badToast();
       })
       .catch((response: AxiosResponse) => {
         this.error = "bad";
@@ -334,9 +339,8 @@ export default class AdminEditProduct extends Vue {
         this.ItemImage = this.items[item].image;
         this.ItemSalePrice = this.items[item].saleprice;
         this.ItemDescription = this.items[item].description;
-        this.ItemBrand = String(this.items[item].brand);
-        console.log("[AdminEditProduct.vue] brand id: " + this.ItemBrand);
-        this.setItemBrand();
+        this.brandIdStr = String(this.items[item].brand);
+        console.log("[AdminEditProduct.vue] brand id: " + this.brandIdStr);
         this.ItemQuantity = this.items[item].quantity;
         this.ItemShipping = this.items[item].delivery;
         this.CategoryId = this.items[item].categoryId;
@@ -361,15 +365,6 @@ export default class AdminEditProduct extends Vue {
     }
   }
 
-  setItemBrand() {
-    for (var i in this.brands) {
-      if (this.brands[i].id == Number(this.ItemBrand)) {
-        this.ItemBrand = this.brands[i].name;
-        console.log("Item brand matched and name: " + this.ItemBrand);
-      }
-    }
-  }
-
   showAddItemModal() {
     this.showAddItem = true;
   }
@@ -385,6 +380,17 @@ export default class AdminEditProduct extends Vue {
       onAction: () => {
         this.error = false;
         axios
+          .delete(APIConfig.buildUrl("/deletecategory/" + item.categoryId))
+          .then((response: AxiosResponse) => {
+            this.$emit("success");
+            console.log("target category id: " + item.categoryId);
+            //this.badToast();
+          })
+          .catch((response: AxiosResponse) => {
+            this.error = "bad";
+          });
+
+        axios
           .delete(APIConfig.buildUrl("/deleteitem/" + item.id))
           .then((response: AxiosResponse) => {
             const deletedItem = response.data;
@@ -397,6 +403,7 @@ export default class AdminEditProduct extends Vue {
           .catch((response: AxiosResponse) => {
             this.error = "bad";
           });
+        
       }
     });
   }
@@ -422,6 +429,17 @@ export default class AdminEditProduct extends Vue {
       .get(APIConfig.buildUrl("/brands"))
       .then((response: AxiosResponse) => {
         this.brands = response.data;
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        console.log("[AdminEditProduct.vue] Error@@");
+      });
+
+    axios
+      .get(APIConfig.buildUrl("/uniqueitemcategories"))
+      .then((response: AxiosResponse) => {
+        this.categorynames = response.data;
+        console.log("loaded categories" + JSON.stringify(this.categorynames));
         this.$emit("success");
       })
       .catch((res: AxiosError) => {

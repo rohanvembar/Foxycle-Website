@@ -18,6 +18,25 @@ export class CategoryController extends DefaultController {
                     res.status(200).send(categories);
                 })
             });
+
+        router.route("/uniqueitemcategories")
+            .get((req: Request, res: Response) => {
+                console.log("retrieving all item category names");
+                itemCategoryRepo.find().then((categories: Category[]) => {
+                    var unique_names: string[] = [];
+                    var unique_categories: Category[] = [];
+                    for(var i in categories){
+                        var ind = unique_names.indexOf(categories[i].category);
+                        console.log(ind);
+                        if(ind == -1){
+                            unique_names.push(categories[i].category);
+                            unique_categories.push(categories[i]);
+                        }
+                    }
+                    console.log("unique categories: " + unique_names);
+                    res.status(200).send(unique_categories);
+                })
+            });
         router.route("/itemscategory/:id")
             .get((req: Request, res: Response) => {
                 var id = req.params.id;
@@ -26,7 +45,7 @@ export class CategoryController extends DefaultController {
                     var refined_categories: Category[] = [];
                     for (var i in categories) {
                         if (categories[i].categoryId == id) {
-                            refined_categories.push(categories[i])
+                            refined_categories.push(categories[i]);
                         }
                     }
                     console.log(refined_categories)
@@ -38,7 +57,6 @@ export class CategoryController extends DefaultController {
                 var id = req.params.id;
                 console.log("deleting all entries for item with category id of " + id);
                 itemCategoryRepo.find(id).then((categories: Category[]) => {
-                    var refined_categories: Category[] = [];
                     for (var i in categories) {
                         if (categories[i].categoryId == id) {
                             itemCategoryRepo.delete(categories[i]).then(x => {

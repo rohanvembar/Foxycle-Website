@@ -15,19 +15,17 @@
       <b-field label="Brand">
         <b-select required v-model="brandIdStr">
           <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
-          <option value="-1">Other</option>
+          <option value="-100">Other</option>
         </b-select>
       </b-field>
-      <b-field label="New Brand Name">
-        <b-input
-          :disabled="brandIdStr != '-1'"
-          type="text"
-          placeholder="new brand"
-          v-model="newItemBrand"
-          rounded
-          required
-        ></b-input>
-      </b-field>
+      <b-input
+        :disabled="brandIdStr != '-100'"
+        type="text"
+        placeholder="new brand"
+        v-model="newItemBrand"
+        rounded
+        required
+      ></b-input>
       <b-field label="Price">
         <b-input
           type="number"
@@ -72,15 +70,21 @@
         <label class="label">Categories</label>
         <div class="control">
           <div class="select is-multiple">
-            <select multiple v-model="newItemCategories">
-              <option value="apparel">Apparel</option>
-              <option value="roadbike">Road Bike</option>
-              <option value="mountainbike">Mountain Bike</option>
-              <option value="other">Other</option>
-            </select>
+            <b-select required multiple v-model="newItemCategories">
+              <option v-for="category in categorynames" v-bind:key="category.id" :value="category.category">{{category.category}}</option>
+              <option value="other" >Other</option>
+            </b-select>
           </div>
         </div>
       </div>
+      <b-input
+        :disabled="!newItemCategories.includes('other')"
+        type="text"
+        placeholder="new category"
+        v-model="newItemCategory"
+        rounded
+        required
+      ></b-input>
       <b-field label="Item Description">
         <b-input
           type="textarea"
@@ -99,7 +103,7 @@
 <script lang="ts">
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Provide } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
 import { iBrand } from "../models/brand.interface";
 
@@ -112,6 +116,7 @@ import Modal from "./Modal.vue";
 export default class AddItem extends Vue {
   @Prop(Boolean) isShowing: boolean = false;
   @Prop() brands: iBrand[] = [];
+  @Prop() categorynames: Category[] = [];
   newItemTitle: string = "";
   newItemPrice: number | string = "";
   newItemSalePrice: number | string = "";
@@ -124,6 +129,7 @@ export default class AddItem extends Vue {
   newItemShipping: boolean = false;
   brandId: number = -1;
   brandIdStr: string = "";
+  newItemCategory: string = "";
 
   generate() {
     var len;
@@ -195,6 +201,10 @@ export default class AddItem extends Vue {
 
   success() {
     var categorynumber = this.generate();
+    if(this.newItemCategory != ""){
+      var newCatInd = this.newItemCategories.indexOf('other');
+      this.newItemCategories[newCatInd] = this.newItemCategory;
+    }
     // Adding categories of item
     for (var i = 0; i < this.newItemCategories.length; i++) {
       axios
