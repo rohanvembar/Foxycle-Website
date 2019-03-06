@@ -58,15 +58,6 @@
         >
       </center>
     </div>
-    <div id="toast">
-      <div id="img">
-        <font-awesome-icon icon="shopping-cart"/>
-      </div>
-      <div id="desc">successfully added to your cart</div>
-    </div>
-    <div id="badtoast">
-      <div id="desc">Insufficient stock</div>
-    </div>
   </div>
 </template>
 
@@ -259,187 +250,10 @@ export default class ViewShopItems extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#toast {
-  visibility: hidden;
-  max-width: 50px;
-  height: 55px;
-  margin: auto;
-  background-color: #00d0b2;
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-
-  position: fixed;
-  z-index: 5;
-  left: 0;
-  right: 0;
-  bottom: 50px;
-  font-size: 17px;
-  white-space: nowrap;
-}
-#badtoast {
-  visibility: hidden;
-  max-width: 50px;
-  height: 55px;
-  margin: auto;
-  background-color: rgb(212, 49, 63);
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-
-  position: fixed;
-  z-index: 5;
-  left: 0;
-  right: 0;
-  bottom: 50px;
-  font-size: 17px;
-  white-space: nowrap;
-}
-#toast #img {
-  width: 55px;
-  height: 55px;
-
-  float: left;
-
-  padding-top: 16px;
-  padding-bottom: 16px;
-
-  box-sizing: border-box;
-  border-radius: 5px;
-
-  background-color: rgb(0, 194, 165);
-  color: #fff;
-}
-#toast #desc {
-  color: #fff;
-
-  padding: 16px;
-
-  overflow: hidden;
-  white-space: nowrap;
-}
-#badtoast #desc {
-  color: #fff;
-
-  padding: 16px;
-
-  overflow: hidden;
-  white-space: nowrap;
-}
 
 .ribbon {
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   border-radius: 1px;
-}
-#toast.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,
-    fadeout 0.5s 2s;
-  animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s,
-    fadeout 0.5s 2.5s;
-}
-#badtoast.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,
-    fadeout 0.5s 2s;
-  animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s,
-    fadeout 0.5s 2.5s;
-}
-
-@-webkit-keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 50px;
-    opacity: 1;
-  }
-}
-
-@keyframes fadein {
-  from {
-    bottom: 0;
-    opacity: 0;
-  }
-  to {
-    bottom: 50px;
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes expand {
-  from {
-    min-width: 50px;
-  }
-  to {
-    min-width: 350px;
-  }
-}
-
-@keyframes expand {
-  from {
-    min-width: 50px;
-  }
-  to {
-    min-width: 350px;
-  }
-}
-@-webkit-keyframes stay {
-  from {
-    min-width: 350px;
-  }
-  to {
-    min-width: 350px;
-  }
-}
-
-@keyframes stay {
-  from {
-    min-width: 350px;
-  }
-  to {
-    min-width: 350px;
-  }
-}
-@-webkit-keyframes shrink {
-  from {
-    min-width: 350px;
-  }
-  to {
-    min-width: 50px;
-  }
-}
-
-@keyframes shrink {
-  from {
-    min-width: 350px;
-  }
-  to {
-    min-width: 50px;
-  }
-}
-
-@-webkit-keyframes fadeout {
-  from {
-    bottom: 50px;
-    opacity: 1;
-  }
-  to {
-    bottom: 60px;
-    opacity: 0;
-  }
-}
-
-@keyframes fadeout {
-  from {
-    bottom: 50px;
-    opacity: 1;
-  }
-  to {
-    bottom: 60px;
-    opacity: 0;
-  }
 }
 
 #wrap {
@@ -501,7 +315,6 @@ div#columns figure figcaption {
 }
 
 .buttonadd {
-  // background: #239cec;
   margin: px;
   display: block;
   text-align: center;
@@ -546,14 +359,5 @@ div#columns figure figcaption {
 .filter {
   height: 100%;
   margin-left: 20px;
-}
-
-.editbutton {
-  margin: px;
-  display: block;
-  text-align: center;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  width: 100%;
 }
 </style>
