@@ -189,7 +189,8 @@ export default class ViewShopItems extends Vue {
 
   get categoryRefinedItems() {
     console.log("categoryIds: " + this.category_Ids);
-    if(this.category_Ids == undefined){
+    return this.sortedItems;
+    if(typeof(this.category_Ids) == undefined){
       console.log("this.category_Ids is undefined.. value: " + this.category_Ids);
       return this.sortedItems;
     }
@@ -199,7 +200,7 @@ export default class ViewShopItems extends Vue {
       } 
       else {
         return this.sortedItems.filter(function(s) {
-          return this.category_Ids.includes(s.categoryId);
+          return this.category_Ids[0] == s.categoryId;
         });
       }
     }
