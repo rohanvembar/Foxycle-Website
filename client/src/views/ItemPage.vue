@@ -89,6 +89,13 @@ export default class ItemPage extends Vue {
       } else {
         for (var k = 0; k < this.quantity; k++) {
           this.$store.commit("cart", this.shopItem);
+          this.$toast.open({
+            queue: false,
+            duration: 2000,
+            message: `item successfuly added to cart`,
+            position: "is-bottom",
+            type: "is-primary"
+          });
         }
       }
     }
