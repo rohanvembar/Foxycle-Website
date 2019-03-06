@@ -115,5 +115,9 @@ export default class ShopPageFilterBox extends Vue {
 }
 .filters {
   padding-left: 15px;
+  padding-right:15px;
+}
+.select {
+  max-width: 100%;
 }
 </style>
