@@ -197,7 +197,7 @@
     </nav>
 
     <router-view/>
-    <div v-if="!isLoggedIn" class="footer2">
+    <!-- <div v-if="!isLoggedIn" class="footer2">
       <div class="content has-text-centered v-align">
         <p>
           <strong style="padding-right:2em">&copy; Foxycle</strong>
@@ -216,7 +216,7 @@
           info@foxycle.com
         </p>
       </div>
-    </div>
+    </div> -->
   </div>
 </body>
 </template>
