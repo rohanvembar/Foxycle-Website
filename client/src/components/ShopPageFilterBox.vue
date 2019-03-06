@@ -6,26 +6,28 @@
 
     <div class="filters">
       <p>Category</p>
-      <div class = "select">
+      <div class="select">
         <select name="category">
           <option selected="true" value="all">All</option>
-          <option value="bikes">Bikes</option>
-          <option value="apparel">Apparel</option>
-          <option value="parts">Parts</option>
+          <option
+            v-for="category in categorynames"
+            v-bind:key="category.id"
+            :value="category.category"
+          >{{category.category}}</option>
         </select>
       </div>
-      
+
       <p>Brand</p>
-      <div class = "select">
-        <select name="brand" v-model="brandselect" v-on:change = "filterBrand">
+      <div class="select">
+        <select name="brand" v-model="brandselect" v-on:change="filterBrand">
           <option value="all">All</option>
-          <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id"> {{brand.name}} </option>
+          <option v-for="brand in brands" v-bind:key="brand.id" :value="brand.id">{{brand.name}}</option>
         </select>
       </div>
-    
+
       <p>Price</p>
-      <div class = "select"> 
-        <select name="price" v-on:change ="filterPrice($event)">
+      <div class="select">
+        <select name="price" v-on:change="filterPrice($event)">
           <option selected="true" value="all">All</option>
           <option value="0-25">$0 - $25</option>
           <option value="25-50">$25 - $50</option>
@@ -34,11 +36,10 @@
           <option value="100">$100 +</option>
         </select>
       </div>
-    
 
       <p>Store Pickup</p>
-      <div class = "select">
-        <select name="pickup" v-on:change ="filterDelivery($event)">
+      <div class="select">
+        <select name="pickup" v-on:change="filterDelivery($event)">
           <option selected="true" value="all">Either</option>
           <option value="false">Store Pickup</option>
           <option value="true">Ship to Me</option>
@@ -53,24 +54,25 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { iBrand } from "../models/brand.interface";
-
+import { Category } from "../../../api/entity";
 
 @Component
 export default class ShopPageFilterBox extends Vue {
   //@Prop() private msg!: string;
-  brands : iBrand[] = [];
+  brands: iBrand[] = [];
   brandselect: string = "all";
+  categorynames: Category[] = [];
 
-  filterPrice(e){
-    this.$emit('priceFilter', e.target.value);
+  filterPrice(e) {
+    this.$emit("priceFilter", e.target.value);
   }
 
-  filterDelivery(e){
-    this.$emit('deliveryFilter', e.target.value);
+  filterDelivery(e) {
+    this.$emit("deliveryFilter", e.target.value);
   }
 
-  filterBrand(){
-    this.$emit('brandFilter', this.brandselect);
+  filterBrand() {
+    this.$emit("brandFilter", this.brandselect);
   }
 
   created() {
@@ -85,9 +87,19 @@ export default class ShopPageFilterBox extends Vue {
         this.$emit("success");
       })
       .catch((res: AxiosError) => {
-        console.log("[AdminEditProduct.vue] Error@@");
+        console.log("[ShopPageFilterBox.vue] Error@@");
       });
 
+    axios
+      .get(APIConfig.buildUrl("/uniqueitemcategories"))
+      .then((response: AxiosResponse) => {
+        this.categorynames = response.data;
+        console.log("loaded categories" + JSON.stringify(this.categorynames));
+        this.$emit("success");
+      })
+      .catch((res: AxiosError) => {
+        console.log("[ShopPageFilterBox.vue] Error@@");
+      });
   }
 }
 </script>
@@ -95,7 +107,6 @@ export default class ShopPageFilterBox extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .filter-box {
-
   height: 350px;
   width: 170px;
   background-color: #fefefe;
