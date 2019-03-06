@@ -84,27 +84,28 @@ export default class ShopPageFilterBox extends Vue {
     var categories_: Category[] = [];
     var categoryIds: number[] = [];
     // get categories with the given category name
+
     if(this.categoryselect == "all"){
-      categoryIds.push(0);
-      this.$emit("categoryFilter", categoryIds); 
     }
-    axios
-      .get(APIConfig.buildUrl("/itemscategory/" + this.categoryselect))
-      .then((response: AxiosResponse) => {
-          categories_ = response.data;
-          console.log("retrieved categories: " + JSON.stringify(response.data));
-          this.$emit("success");
-            
-          var i;
-          for(i = 0; i < categories_.length; i++){
-            console.log("pushing category ids: " + categories_[i].categoryId);
-            categoryIds.push(categories_[i].categoryId);
-          }
-          console.log("category Ids: " + categoryIds);
-      })
-      .catch((res: AxiosError) => {
-        console.log("[ViewShopItems.vue] Error@@");
-      });
+    else{
+      axios
+        .get(APIConfig.buildUrl("/itemscategory/" + this.categoryselect))
+        .then((response: AxiosResponse) => {
+            categories_ = response.data;
+            console.log("retrieved categories: " + JSON.stringify(response.data));
+            this.$emit("success");
+              
+            var i;
+            for(i = 0; i < categories_.length; i++){
+              console.log("pushing category ids: " + categories_[i].categoryId);
+              categoryIds.push(categories_[i].categoryId);
+            }
+            console.log("category Ids: " + categoryIds);
+        })
+        .catch((res: AxiosError) => {
+          console.log("[ViewShopItems.vue] Error@@");
+        });
+    }
     this.$emit("categoryFilter", categoryIds);
   }
 

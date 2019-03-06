@@ -189,22 +189,18 @@ export default class ViewShopItems extends Vue {
 
   get categoryRefinedItems() {
     console.log("categoryIds: " + this.category_Ids);
-    return this.sortedItems;
-    if(typeof(this.category_Ids) == undefined){
-      console.log("this.category_Ids is undefined.. value: " + this.category_Ids);
+    var catIds :number[] = this.category_Ids;
+    console.log("typeof catIds: " + typeof(catIds));
+    console.log("catIds: " + catIds);
+    if (catIds.length == 0) {
+      console.log("all selected");
       return this.sortedItems;
+    } 
+    else {
+      return this.sortedItems.filter(function(s) {
+        return catIds.includes(s.categoryId);
+      });
     }
-    else{
-      if (this.category_Ids.length == 0) {
-        return this.sortedItems;
-      } 
-      else {
-        return this.sortedItems.filter(function(s) {
-          return this.category_Ids[0] == s.categoryId;
-        });
-      }
-    }
-    
   }
 
   get brandRefinedItems() {
