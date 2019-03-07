@@ -392,6 +392,7 @@ $colors: (
   )
 );
 
+$navbar-breakpoint: 200px;
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
 @import "./assets/mainstyle.scss";

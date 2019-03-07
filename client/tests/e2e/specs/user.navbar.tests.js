@@ -5,12 +5,12 @@ describe("User Navbar", function() {
     cy.viewport('macbook-15');
   })
   it("Click on navbar", function(){
-    cy.visit("localhost:8080")
+    cy.visit("http://10.0.75.1:8080")
     cy.get('.navbar')
     cy.get('.navbar-menu')
   })
   it("Click on shop button", function(){
-    cy.get('.navbar').contains('Shop').click()
+    cy.get('.navbar').contains('shop').click()
     cy.url().should('include', '/shop')
   })
 })
