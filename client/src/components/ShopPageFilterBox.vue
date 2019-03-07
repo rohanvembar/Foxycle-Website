@@ -89,7 +89,7 @@ export default class ShopPageFilterBox extends Vue {
     }
     else{
       axios
-        .get(APIConfig.buildUrl("/itemscategory/" + this.categoryselect))
+        .get(APIConfig.buildUrl("/itemscategoryname/" + this.categoryselect))
         .then((response: AxiosResponse) => {
             categories_ = response.data;
             console.log("retrieved categories: " + JSON.stringify(response.data));

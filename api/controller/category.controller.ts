@@ -40,7 +40,7 @@ export class CategoryController extends DefaultController {
                 })
             });
 
-        router.route("/itemscategory/:name")
+        router.route("/itemscategoryname/:name")
             .get((req: Request, res: Response) => {
                 var name = req.params.name;
                 console.log("retrieving item categories with name of " + name);
