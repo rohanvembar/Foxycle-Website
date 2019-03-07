@@ -106,6 +106,7 @@ import { APIConfig } from "../utils/api.utils";
 import { Component, Prop, Vue, Provide } from "vue-property-decorator";
 import { iShopItem } from "../models/shopitem.interface";
 import { iBrand } from "../models/brand.interface";
+import { Category } from "../../../api/entity";
 
 import Modal from "./Modal.vue";
 @Component({
