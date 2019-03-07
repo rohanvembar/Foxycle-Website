@@ -13,4 +13,16 @@ describe("User Navbar", function() {
     cy.get('.navbar').contains('shop').click()
     cy.url().should('include', '/shop')
   })
+  it("Click on home button", function(){
+    cy.get('.navbar').contains('home').click()
+    cy.url().should('include', '/')
+  })
+  it("Click on service button", function(){
+    cy.get('.navbar').contains('services').click()
+    cy.url().should('include', '/services')
+  })
+  it("Click on contact button", function(){
+    cy.get('.navbar').contains('contact').click()
+    cy.url().should('include', '/contact')
+  })
 })
