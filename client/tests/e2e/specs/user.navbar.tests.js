@@ -5,7 +5,7 @@ describe("User Navbar", function() {
     cy.viewport('macbook-15');
   })
   it("Click on navbar", function(){
-    cy.visit("http://10.0.75.1:8080")
+    cy.visit('/')
     cy.get('.navbar')
     cy.get('.navbar-menu')
   })
@@ -24,5 +24,9 @@ describe("User Navbar", function() {
   it("Click on contact button", function(){
     cy.get('.navbar').contains('contact').click()
     cy.url().should('include', '/contact')
+  })
+  it("Click on track button", function(){
+    cy.get('.navbar').contains('track order').click()
+    cy.url().should('include', '/ordertracking')
   })
 })
