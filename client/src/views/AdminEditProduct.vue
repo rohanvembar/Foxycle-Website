@@ -138,7 +138,6 @@
           <label class="label">Categories</label>
           <div class="control">
             <div class="select is-multiple">
-              <span>{{ItemCategories}}</span>
               <b-select required multiple v-model="ItemCategories">
                 <option v-for="category in categorynames" v-bind:key="category.id" :value="category.category">{{category.category}}</option>
                 <option value="other" >Other</option>
