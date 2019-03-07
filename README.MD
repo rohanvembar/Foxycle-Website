@@ -11,7 +11,7 @@ Team Members + Roles:
 
 ---
 
-## Setup and Testing
+## Setup
 0. Install docker and npm
 1. `git clone https://github.com/CSC307Winter2019/TheGiraffes.git` in whatever directory you want.
 2. `cd` into that directory.
@@ -53,6 +53,17 @@ Team Members + Roles:
 10. In your browser, navigate to `localhost:8080`
 
 ---
+
+## Testing
+### Frontend 
+
+0. `cd` into the client folder
+
+1. run `npm run test:e2e`
+
+2. In Cypress select `Electron` as the default value
+
+3. Click `Run all specs`
 
 ## Login Info
 #### Admin
