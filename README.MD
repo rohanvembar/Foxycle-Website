@@ -15,8 +15,8 @@ Team Members + Roles:
 0. Install docker and npm
 1. `git clone https://github.com/CSC307Winter2019/TheGiraffes.git` in whatever directory you want.
 2. `cd` into that directory.
-
-3. Run a SQL query to create a database `dev` and `test`
+3. In the repo's root directory, run `docker-compose up`.
+4. Run a SQL query to create a database `dev` and `test`
 
   ``` 
   create database dev
@@ -24,8 +24,7 @@ Team Members + Roles:
   create database test 
   ```
 
-4. Run `npm install` in the `/client` and `/api` directory.
-5. In the repo's root directory, run `docker-compose up`.
+5. Run `npm install` in the `/client` and `/api` directory. 
 6. In the `/api` directory, run `npm run dev`.
 7. In the `/client` directory, run `npm run serve`.
 8. Query the `dev` database with the contents of `data.sql` 
