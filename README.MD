@@ -43,6 +43,10 @@ Team Members + Roles:
 
 3. Click `Run all specs`
 
+### Backend 
+0. `cd` into the api folder
+1. run `npm run coverage`
+
 ## Login Info
 #### Admin
 * username: owner
