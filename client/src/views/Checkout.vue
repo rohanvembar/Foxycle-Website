@@ -387,14 +387,28 @@ export default class Checkout extends Vue {
     }
   }
 
+  validateEmail()
+  {
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*$/;
+    return mailformat.test(this.email);
+  }
+
+  validateCity(){
+    return (this.city.length >= 2);
+  }
+
+  validateAddress(){
+    return (this.address.length >= 5);
+  }
+
   get isFilled(): boolean {
     if (this.isShippable()) {
       if (
-        this.address &&
-        this.city &&
+        this.validateAddress() &&
+        this.validateCity() &&
         this.state &&
         this.zip &&
-        this.email &&
+        this.validateEmail() &&
         this.firstName &&
         this.lastName
       ) {
