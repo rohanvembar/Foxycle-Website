@@ -58,71 +58,71 @@
               <div class="field inputbox">
                 <label>City, State</label>
                 <p class="control is-expanded">
-                <b-field>
-                  <b-input
-                  class="city"
-                    v-model="city"
-                    placeholder="city"
-                    minlength="2"
-                    type="text"
-                    icon-pack="fas"
-                    icon="map-marker-alt"
-                  ></b-input>
-                                  <span class="select state">
-                    <select v-model="state" name="state">
-                      <option value="AL">AL</option>
-                      <option value="AK">AK</option>
-                      <option value="AR">AR</option>
-                      <option value="AZ">AZ</option>
-                      <option value="CA">CA</option>
-                      <option value="CO">CO</option>
-                      <option value="CT">CT</option>
-                      <option value="DC">DC</option>
-                      <option value="DE">DE</option>
-                      <option value="FL">FL</option>
-                      <option value="GA">GA</option>
-                      <option value="HI">HI</option>
-                      <option value="IA">IA</option>
-                      <option value="ID">ID</option>
-                      <option value="IL">IL</option>
-                      <option value="IN">IN</option>
-                      <option value="KS">KS</option>
-                      <option value="KY">KY</option>
-                      <option value="LA">LA</option>
-                      <option value="MA">MA</option>
-                      <option value="MD">MD</option>
-                      <option value="ME">ME</option>
-                      <option value="MI">MI</option>
-                      <option value="MN">MN</option>
-                      <option value="MO">MO</option>
-                      <option value="MS">MS</option>
-                      <option value="MT">MT</option>
-                      <option value="NC">NC</option>
-                      <option value="NE">NE</option>
-                      <option value="NH">NH</option>
-                      <option value="NJ">NJ</option>
-                      <option value="NM">NM</option>
-                      <option value="NV">NV</option>
-                      <option value="NY">NY</option>
-                      <option value="ND">ND</option>
-                      <option value="OH">OH</option>
-                      <option value="OK">OK</option>
-                      <option value="OR">OR</option>
-                      <option value="PA">PA</option>
-                      <option value="RI">RI</option>
-                      <option value="SC">SC</option>
-                      <option value="SD">SD</option>
-                      <option value="TN">TN</option>
-                      <option value="TX">TX</option>
-                      <option value="UT">UT</option>
-                      <option value="VT">VT</option>
-                      <option value="VA">VA</option>
-                      <option value="WA">WA</option>
-                      <option value="WI">WI</option>
-                      <option value="WV">WV</option>
-                      <option value="WY">WYYYYY</option>
-                    </select>
-                  </span>
+                  <b-field>
+                    <b-input
+                      class="city"
+                      v-model="city"
+                      placeholder="city"
+                      minlength="2"
+                      type="text"
+                      icon-pack="fas"
+                      icon="map-marker-alt"
+                    ></b-input>
+                    <span class="select state">
+                      <select v-model="state" name="state">
+                        <option value="AL">AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AR">AR</option>
+                        <option value="AZ">AZ</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DC">DC</option>
+                        <option value="DE">DE</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="IA">IA</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="MA">MA</option>
+                        <option value="MD">MD</option>
+                        <option value="ME">ME</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MO">MO</option>
+                        <option value="MS">MS</option>
+                        <option value="MT">MT</option>
+                        <option value="NC">NC</option>
+                        <option value="NE">NE</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NV">NV</option>
+                        <option value="NY">NY</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WI">WI</option>
+                        <option value="WV">WV</option>
+                        <option value="WY">WYYYYY</option>
+                      </select>
+                    </span>
                   </b-field>
                 </p>
               </div>
@@ -351,6 +351,12 @@ export default class Checkout extends Vue {
   }
 
   isShippable() {
+    defaultProps = {
+      number: "",
+      name: "",
+      expiry: "",
+      cvc: ""
+    };
     for (var i in this.items) {
       console.log(this.items[i].delivery);
       if (!this.items[i].delivery) {
@@ -387,18 +393,17 @@ export default class Checkout extends Vue {
     }
   }
 
-  validateEmail()
-  {
+  validateEmail() {
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*$/;
     return mailformat.test(this.email);
   }
 
-  validateCity(){
-    return (this.city.length >= 2);
+  validateCity() {
+    return this.city.length >= 2;
   }
 
-  validateAddress(){
-    return (this.address.length >= 5);
+  validateAddress() {
+    return this.address.length >= 5;
   }
 
   get isFilled(): boolean {
@@ -505,7 +510,8 @@ export default class Checkout extends Vue {
 
     for (var i in this.cart) {
       if (this.cart[i].item.saleprice)
-        var individualPrice = this.cart[i].item.saleprice * this.cart[i].quantity;
+        var individualPrice =
+          this.cart[i].item.saleprice * this.cart[i].quantity;
       else
         var individualPrice = this.cart[i].item.price * this.cart[i].quantity;
       axios
@@ -527,23 +533,23 @@ export default class Checkout extends Vue {
         this.subtotal += this.items[i].price;
       }
       axios
-      .put(APIConfig.buildUrl("/shopitem/" + this.cart[i].item.id), {
-        name: this.cart[i].item.name,
-        price: this.cart[i].item.price,
-        saleprice: this.cart[i].item.saleprice,
-        delivery: this.cart[i].item.delivery,
-        brand: this.cart[i].item.brand,
-        categories: this.cart[i].item.categoryId,
-        image: this.cart[i].item.image,
-        quantity: this.cart[i].item.quantity - this.cart[i].quantity,
-        description: this.cart[i].item.description
-      })
-      .then((response: AxiosResponse) => {
-        this.$emit("success");
-      })
-      .catch((response: AxiosResponse) => {
-        console.log("catch");
-      });
+        .put(APIConfig.buildUrl("/shopitem/" + this.cart[i].item.id), {
+          name: this.cart[i].item.name,
+          price: this.cart[i].item.price,
+          saleprice: this.cart[i].item.saleprice,
+          delivery: this.cart[i].item.delivery,
+          brand: this.cart[i].item.brand,
+          categories: this.cart[i].item.categoryId,
+          image: this.cart[i].item.image,
+          quantity: this.cart[i].item.quantity - this.cart[i].quantity,
+          description: this.cart[i].item.description
+        })
+        .then((response: AxiosResponse) => {
+          this.$emit("success");
+        })
+        .catch((response: AxiosResponse) => {
+          console.log("catch");
+        });
     }
   }
 }
@@ -629,7 +635,9 @@ label {
   font-weight: bold;
   padding-bottom: 5px;
 }
-th,tr,td {
+th,
+tr,
+td {
   border-bottom: black 2px solid;
   padding-bottom: 10px;
   vertical-align: middle;
