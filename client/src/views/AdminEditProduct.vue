@@ -351,7 +351,6 @@ export default class AdminEditProduct extends Vue {
         this.ItemSalePrice = this.items[item].saleprice;
         this.ItemDescription = this.items[item].description;
         this.brandIdStr = String(this.items[item].brand);
-        console.log("[AdminEditProduct.vue] brand id: " + this.brandIdStr);
         this.ItemQuantity = this.items[item].quantity;
         this.ItemShipping = this.items[item].delivery;
         this.CategoryId = this.items[item].categoryId;
@@ -377,6 +376,14 @@ export default class AdminEditProduct extends Vue {
   }
 
   showAddItemModal() {
+    this.ItemTitle = "";
+    this.ItemPrice = "";
+    this.ItemSalePrice = "";
+    this.brandId = -1;
+    this.ItemImage = "";
+    this.ItemShipping = false;
+    this.ItemQuantity = "";
+    this.ItemDescription = "";
     this.showAddItem = true;
   }
 

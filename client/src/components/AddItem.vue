@@ -194,6 +194,14 @@ export default class AddItem extends Vue {
         this.savedItem = response.data;
         this.$emit("success");
         this.goodToast();
+        this.newItemTitle = "";
+        this.newItemPrice = "";
+        this.newItemSalePrice = "";
+        this.brandId = -1;
+        this.newItemImage = "";
+        this.newItemShipping = false;
+        this.newItemQuantity = "";
+        this.newItemDescription = "";
       })
       .catch((response: AxiosResponse) => {
         console.log("[AddItem.vue]" + "catch");
@@ -235,7 +243,6 @@ export default class AddItem extends Vue {
     } else {
       this.addNewItem(categorynumber);
     }
-
     this.$emit("success");
   }
 
